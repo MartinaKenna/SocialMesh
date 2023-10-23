@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Prova2</string>
+    <string name="login">Login</string>
+    <string name="Email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="Joined">Joined us before?</string>
+    <string name="register">Register</string>
+    <string name="newUser">New to SocialMesh?</string>
+    <string name="txt_or">OR</string>
+    <string name="logo">logo</string>
+    <string name="google_login">Login with Google</string>
+    <string name="forgot_password">Forgot password?</string>
+</resources>
