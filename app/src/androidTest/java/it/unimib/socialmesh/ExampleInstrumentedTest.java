@@ -1,4 +1,4 @@
-package com.unimib.socialmesh;
+package it.unimib.socialmesh;
 
 import android.content.Context;
 
