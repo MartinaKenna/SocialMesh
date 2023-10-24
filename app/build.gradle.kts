@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.facebook.android:facebook-login:latest.release")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")

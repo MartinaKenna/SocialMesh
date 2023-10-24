@@ -10,4 +10,5 @@
     <string name="logo">logo</string>
     <string name="google_login">Login with Google</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="facebook_login">Login with Facebook</string>
 </resources>
