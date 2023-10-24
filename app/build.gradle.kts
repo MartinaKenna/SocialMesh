@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.unimib.socialmesh"
+    namespace = "it.unimib.socialmesh"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.unimib.socialmesh"
+        applicationId = "it.unimib.socialmesh"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
