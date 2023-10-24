@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SocialMeshProject"
+rootProject.name = "Prova2"
 include(":app")
  
