@@ -1,4 +1,4 @@
-package com.unimib.prova2;
+package com.unimib.socialmesh;
 
 import android.content.Context;
 

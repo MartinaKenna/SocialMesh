@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.unimib.prova2"
+    namespace = "com.unimib.socialmesh"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.unimib.prova2"
+        applicationId = "com.unimib.socialmesh"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -29,6 +29,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
