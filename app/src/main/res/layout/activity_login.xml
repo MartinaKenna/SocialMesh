@@ -133,8 +133,8 @@
 
     <RelativeLayout
         android:id="@+id/relative_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="408dp"
+        android:layout_height="279dp"
         android:layout_centerVertical="true"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,8 +144,9 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_centerVertical="true"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
             android:layout_toStartOf="@id/textview_or"
             android:background="@color/grey_separator" />
 
@@ -153,60 +154,33 @@
             android:id="@+id/textview_or"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="10dp"
-            android:text="@string/txt_or"
-            android:textSize="16sp" />
+            android:text="Sign In Whit"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="24dp"
             android:layout_toEndOf="@id/textview_or"
             android:background="@color/grey_separator" />
 
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_or"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="#00000000"
+            app:srcCompat="@drawable/googleg_standard_color_18" />
+
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/button_google_login"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/google_login"
-        android:textColor="@color/google_login_text"
-        android:textSize="16sp"
-        app:backgroundTint="@color/google_login_button"
-        app:icon="@drawable/googleg_standard_color_18"
-        app:iconGravity="textStart"
-        app:iconTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/relative_layout" />
-
-    <Button
-        android:id="@+id/button_facebook_login"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/facebook_login"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:backgroundTint="@color/facebook_login_button"
-        app:icon="@drawable/com_facebook_button_icon"
-        app:iconGravity="textStart"
-        app:iconTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_google_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
