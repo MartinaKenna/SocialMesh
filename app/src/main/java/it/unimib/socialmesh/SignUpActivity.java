@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -19,6 +20,8 @@ public class SignUpActivity extends AppCompatActivity {
     private TextInputLayout textInputLayoutFullName;
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
+    private TextInputLayout textInputLayoutPasswordConfirm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,20 +30,31 @@ public class SignUpActivity extends AppCompatActivity {
         textInputLayoutFullName = findViewById(R.id.textInputLayoutFullName);
         textInputLayoutEmail = findViewById(R.id.textInputLayoutEmail);
         textInputLayoutPassword = findViewById(R.id.textInputLayoutPassword);
+        textInputLayoutPasswordConfirm = findViewById(R.id.textInputLayoutPasswordRetype);
         final Button signupLogin = findViewById(R.id.button_signup);
 
         signupLogin.setOnClickListener(v -> {
 
             String email = textInputLayoutEmail.getEditText().getText().toString();
-            String password = textInputLayoutPassword.getEditText().getText().toString();
+            String password1 = textInputLayoutPassword.getEditText().getText().toString();
+            String password2 = textInputLayoutPasswordConfirm.getEditText().getText().toString();
+
+            textInputLayoutEmail.setError(null);
+            textInputLayoutPassword.setError(null);
+            textInputLayoutPasswordConfirm.setError(null);
 
             // Start login if email and password are ok
-            if (isEmailOk(email) & isPasswordOk(password)) {
-                //TODO implementare salvataggio dati
-                //saveLoginData(email, password);
+            if (isEmailOk(email) & isPasswordOk(password1) && passwordsMatch(password1, password2)) {
+
+                textInputLayoutEmail.setError(null);
+                textInputLayoutPassword.setError(null);
+                textInputLayoutPasswordConfirm.setError(null);
+
+                //TODO registrazione firebase
+
             } else {
-//                Snackbar.make(findViewById(android.R.id.content),
-//                        R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content),
+                        R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -70,7 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
      * 2. It contains at least one digit
      * 3. It contains at least one upper case alphabet
      * 4. It contains at least one lower case alphabet
-     * 5. It contains at least one special character which includes !@#$%&*()-+=^
+     * 5. It contains at least one special character which includes @#$%^&+=!()_%
      * 5. It doesn’t contain any white space
      * @param password The password to be checked
      * @return True if the password is acceptable, false if not
@@ -79,7 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         // If the password is empty return false
         if (password == null) {
-            textInputLayoutPassword.setError(getString(R.string.error_password));
+            textInputLayoutPassword.setError(getString(R.string.error_password_invalid));
             return false;
         }
 
@@ -98,10 +112,32 @@ public class SignUpActivity extends AppCompatActivity {
 
         // If password matches pattern return true
         if(!match) {
-            textInputLayoutPassword.setError(getString(R.string.error_password));
+            textInputLayoutPassword.setError(getString(R.string.error_password_invalid));
             return false;
         } else {
             textInputLayoutPassword.setError(null);
+            return true;
+        }
+    }
+
+    /**
+     * Check if passwords matches (to avoid typing errors).
+     * In case of mismatch an error is set on password text fields.
+     * @param password1
+     * @param password2
+     * @return true if passwords match, false instead.
+     */
+    private boolean passwordsMatch(String password1, String password2) {
+
+        boolean match = password1.equals(password2);
+
+        if(!match) {
+            textInputLayoutPassword.setError(getString(R.string.error_password_mismatch));
+            textInputLayoutPasswordConfirm.setError(getString(R.string.error_password_mismatch));
+            return false;
+        } else {
+            textInputLayoutPassword.setError(null);
+            textInputLayoutPasswordConfirm.setError(null);
             return true;
         }
     }
