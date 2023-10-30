@@ -11,4 +11,9 @@
     <string name="google_login">Login with Google</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="facebook_login">Login with Facebook</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="full_name">Full Name</string>
+    <string name="error_password">Password non valida</string>
+    <string name="error_email">Email non valida</string>
+    <string name="check_login_data_message">Dati di login non corretti</string>
 </resources>
