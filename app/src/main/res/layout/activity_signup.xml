@@ -64,10 +64,11 @@
         android:id="@+id/textInputLayoutEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@id/guidelineDx"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/guidelineSx"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFullName">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDate">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailInputText"
@@ -84,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@id/guidelineDx"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/guidelineSx"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail"
         app:passwordToggleEnabled="true">
@@ -101,8 +103,9 @@
         android:id="@+id/textInputLayoutPasswordRetype"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toStartOf="@id/guidelineDx"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/guidelineSx"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
         app:passwordToggleEnabled="true">
@@ -117,14 +120,33 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button_signup"
+        android:id="@+id/signupButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="48dp"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDx"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineSx"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPasswordRetype" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineDx"
+        app:layout_constraintStart_toStartOf="@+id/guidelineSx"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFullName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dateInputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/baseline_date_range_24"
+            android:hint="@string/date_of_birth"
+            android:inputType="date"
+            android:focusable="false" /> <!-- disable keyboard -->
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

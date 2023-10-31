@@ -1,15 +1,25 @@
 package it.unimib.socialmesh;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,9 +28,11 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = SignUpActivity.class.getSimpleName();
 
     private TextInputLayout textInputLayoutFullName;
+    private TextInputEditText dateInputText;
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
     private TextInputLayout textInputLayoutPasswordConfirm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +40,39 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         textInputLayoutFullName = findViewById(R.id.textInputLayoutFullName);
+        dateInputText = findViewById(R.id.dateInputText);
         textInputLayoutEmail = findViewById(R.id.textInputLayoutEmail);
         textInputLayoutPassword = findViewById(R.id.textInputLayoutPassword);
         textInputLayoutPasswordConfirm = findViewById(R.id.textInputLayoutPasswordRetype);
-        final Button signupLogin = findViewById(R.id.button_signup);
+        final Button signupLogin = findViewById(R.id.signupButton);
+
+        dateInputText.setOnClickListener(v -> {
+            // on below line we are getting
+            // the instance of our calendar.
+            final Calendar c = Calendar.getInstance();
+
+            // on below line we are getting
+            // our day, month and year.
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // on below line we are creating a variable for date picker dialog.
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    // on below line we are passing context.
+                    SignUpActivity.this,
+                    (view, year1, monthOfYear, dayOfMonth) -> {
+                        // on below line we are setting date to our edit text.
+                        dateInputText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1);
+
+                    },
+                    // on below line we are passing year,
+                    // month and day for selected date in our date picker.
+                    year, month, day);
+            // at last we are calling show to
+            // display our date picker dialog.
+            datePickerDialog.show();
+        });
 
         signupLogin.setOnClickListener(v -> {
 
@@ -139,6 +180,27 @@ public class SignUpActivity extends AppCompatActivity {
             textInputLayoutPassword.setError(null);
             textInputLayoutPasswordConfirm.setError(null);
             return true;
+        }
+    }
+
+    //static class for time picker
+    private static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker.
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+
+            // Create a new instance of TimePickerDialog and return it.
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            // Do something with the time the user picks.
         }
     }
 }
