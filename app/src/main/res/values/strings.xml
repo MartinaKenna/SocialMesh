@@ -5,6 +5,8 @@
     <string name="password">Password</string>
     <string name="password_retype">Conferma Password</string>
     <string name="date_of_birth">Data di Nascita</string>
+    <string name="date_of_birth_error">Devi avere almeno 16 anni</string>
+    <string name="fullname_error">Inserisci nome e cognome</string>
     <string name="Joined">Joined us before?</string>
     <string name="register">Register</string>
     <string name="newUser">New to SocialMesh?</string>

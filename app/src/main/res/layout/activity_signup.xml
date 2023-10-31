@@ -10,7 +10,7 @@
         android:id="@+id/imageView"
         android:layout_width="120dp"
         android:layout_height="140dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,7 +20,7 @@
         android:id="@+id/registerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:text="@string/sign_up"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -33,7 +33,7 @@
         android:id="@+id/textInputLayoutFullName"
         android:layout_width="0dp"
         android:layout_height="63dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDx"
         app:layout_constraintStart_toStartOf="@+id/guidelineSx"
         app:layout_constraintTop_toBottomOf="@+id/registerTextView">
@@ -83,7 +83,7 @@
         android:id="@+id/textInputLayoutPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@id/guidelineDx"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/guidelineSx"
@@ -123,7 +123,7 @@
         android:id="@+id/signupButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDx"
         app:layout_constraintHorizontal_bias="0.0"
@@ -144,9 +144,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/baseline_date_range_24"
+            android:focusable="false"
             android:hint="@string/date_of_birth"
-            android:inputType="date"
-            android:focusable="false" /> <!-- disable keyboard -->
+            android:inputType="date" /> <!-- disable keyboard -->
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

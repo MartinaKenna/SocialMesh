@@ -1,17 +1,15 @@
 package it.unimib.socialmesh;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TimePicker;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -26,8 +24,10 @@ import java.util.regex.Pattern;
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = SignUpActivity.class.getSimpleName();
+    protected static final int LIMIT_AGE = 16;
 
     private TextInputLayout textInputLayoutFullName;
+    private TextInputLayout textInputLayoutDate;
     private TextInputEditText dateInputText;
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
@@ -40,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         textInputLayoutFullName = findViewById(R.id.textInputLayoutFullName);
+        textInputLayoutDate = findViewById(R.id.textInputLayoutDate);
         dateInputText = findViewById(R.id.dateInputText);
         textInputLayoutEmail = findViewById(R.id.textInputLayoutEmail);
         textInputLayoutPassword = findViewById(R.id.textInputLayoutPassword);
@@ -47,46 +48,49 @@ public class SignUpActivity extends AppCompatActivity {
         final Button signupLogin = findViewById(R.id.signupButton);
 
         dateInputText.setOnClickListener(v -> {
-            // on below line we are getting
-            // the instance of our calendar.
+
             final Calendar c = Calendar.getInstance();
 
-            // on below line we are getting
-            // our day, month and year.
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
 
-            // on below line we are creating a variable for date picker dialog.
             DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    // on below line we are passing context.
                     SignUpActivity.this,
+                    R.style.ThemeOverlay_App_Dialog,
                     (view, year1, monthOfYear, dayOfMonth) -> {
-                        // on below line we are setting date to our edit text.
-                        dateInputText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1);
-
+                        if( validDate(year1, monthOfYear, dayOfMonth) ) {
+                            dateInputText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1);
+                            textInputLayoutDate.setError(null);
+                        } else {
+                            dateInputText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1);
+                            textInputLayoutDate.setError(getString(R.string.date_of_birth_error));
+                        }
                     },
-                    // on below line we are passing year,
-                    // month and day for selected date in our date picker.
                     year, month, day);
-            // at last we are calling show to
-            // display our date picker dialog.
+            // show date picker
             datePickerDialog.show();
         });
 
         signupLogin.setOnClickListener(v -> {
 
+            String fullname = textInputLayoutFullName.getEditText().getText().toString();
             String email = textInputLayoutEmail.getEditText().getText().toString();
             String password1 = textInputLayoutPassword.getEditText().getText().toString();
             String password2 = textInputLayoutPasswordConfirm.getEditText().getText().toString();
 
+            textInputLayoutFullName.setError(null);
             textInputLayoutEmail.setError(null);
             textInputLayoutPassword.setError(null);
             textInputLayoutPasswordConfirm.setError(null);
 
             // Start login if email and password are ok
-            if (isEmailOk(email) & isPasswordOk(password1) && passwordsMatch(password1, password2)) {
+            if (isNameOk(fullname) &&
+                    isEmailOk(email) &&
+                    isPasswordOk(password1) &&
+                    passwordsMatch(password1, password2)) {
 
+                textInputLayoutFullName.setError(null);
                 textInputLayoutEmail.setError(null);
                 textInputLayoutPassword.setError(null);
                 textInputLayoutPasswordConfirm.setError(null);
@@ -98,6 +102,51 @@ public class SignUpActivity extends AppCompatActivity {
                         R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean isNameOk(String fullname) {
+        if(fullname.isEmpty() || fullname == null)
+            return false;
+        else {
+            Pattern pattern = Pattern.compile("\\b\\w+\\b"); // Trova parole separate da spazi
+            Matcher matcher = pattern.matcher(fullname);
+            int countWords = 0;
+
+            while (matcher.find()) {
+                countWords++;
+                if (countWords >= 2) {
+                    return true;
+                }
+            }
+            textInputLayoutFullName.setError(getString(R.string.fullname_error));
+            return false;
+        }
+    }
+
+    /**
+     * Check if user is (at least) LIMIT_AGE years old.
+     * @param year_of_birth
+     * @param month_of_birth
+     * @param day_of_birth
+     * @return true if age is valid, false instead.
+     */
+    private boolean validDate(int year_of_birth, int month_of_birth, int day_of_birth) {
+
+        Calendar dataCorrente = Calendar.getInstance();
+
+        int day = dataCorrente.get(Calendar.DAY_OF_MONTH);
+        int month = dataCorrente.get(Calendar.MONTH);
+        int year = dataCorrente.get(Calendar.YEAR);
+
+        if(year - year_of_birth < LIMIT_AGE)
+            return false;
+        else if(year - year_of_birth == LIMIT_AGE) {
+            if(month_of_birth > month)
+                return false;
+            else if(month_of_birth == month && day_of_birth > day)
+                return false;
+        }
+        return true;
     }
 
     /**
