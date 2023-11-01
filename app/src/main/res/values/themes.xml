@@ -1,8 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.SocialMesh" parent="Theme.Material3.DayNight.NoActionBar">
-         <item name="colorPrimary">#50FFFFFF</item>
+         <item name="colorPrimary">@color/socialmesh_orange</item>
     </style>
 
     <style name="Theme.SocialMesh" parent="Base.Theme.SocialMesh" />
+
+    <!-- Date picker theme -->
+    <style name="ThemeOverlay.App.Dialog" parent="@style/ThemeOverlay.MaterialComponents.Dialog">
+        <item name="colorSecondary">@color/socialmesh_orange</item>
+        <item name="colorPrimary">@color/socialmesh_orange</item> <!-- button text color -->
+    </style>
+
 </resources>

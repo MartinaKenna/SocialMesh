@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">SocialMesh</string>
     <string name="login">Login</string>
-    <string name="Email">E-mail</string>
+    <string name="email">E-mail</string>
     <string name="password">Password</string>
+    <string name="password_retype">Conferma Password</string>
+    <string name="date_of_birth">Data di Nascita</string>
+    <string name="date_of_birth_error">Devi avere almeno 16 anni</string>
+    <string name="fullname_error">Inserisci nome e cognome</string>
     <string name="Joined">Joined us before?</string>
     <string name="register">Register</string>
     <string name="newUser">New to SocialMesh?</string>
@@ -11,7 +15,10 @@
     <string name="google_login">Login with Google</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="facebook_login">Login with Facebook</string>
-    <string name="Icona_Facebook">Descrizione</string>
-    <string name="Icona_Google" />
-    <string name="Icona_Twitter" />
+    <string name="sign_up">Sign Up</string>
+    <string name="full_name">Full Name</string>
+    <string name="error_password_invalid">Password non valida</string>
+    <string name="error_password_mismatch">Password non coincidono</string>
+    <string name="error_email">Email non valida</string>
+    <string name="check_login_data_message">Dati di login non corretti</string>
 </resources>
