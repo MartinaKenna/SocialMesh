@@ -5,21 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:contentDescription="ca"
     app:layout_constraintEnd_toStartOf="parent"
     tools:context=".LoginActivity"
     tools:layout_editor_absoluteY="0dp">
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="120dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="4dp"
-        android:contentDescription="@string/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -28,41 +17,16 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="16dp" />
 
-    <TextView
-        android:id="@+id/otherText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="@string/newUser"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/registerButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/registerButton"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/otherText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/otherText" />
-
 
     <RelativeLayout
         android:layout_width="402dp"
         android:layout_height="729dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email"
@@ -73,8 +37,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="350dp"
             android:layout_marginEnd="30dp"
-            app:boxBackgroundColor="#50FFFFFF"
-            >
+            app:boxBackgroundColor="#50FFFFFF">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/testo_email"
@@ -112,9 +75,11 @@
             android:layout_marginTop="13dp"
             android:layout_marginEnd="120dp"
             android:text="@string/login"
+            android:textColor="#000000"
             android:textColorLink="#30FFFFFF"
             android:textSize="16sp"
-            app:icon="@drawable/baseline_login_black_24dp" />
+            app:icon="@drawable/baseline_login_black_24dp"
+            app:iconTint="#000000" />
 
         <Button
             android:id="@+id/button_forgot_password"
@@ -122,9 +87,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonLogin"
-            android:layout_marginEnd="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="230dp"
             android:text="@string/forgot_password"
-            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textSize="12sp"
             app:textAllCaps="false" />
 
         <View
@@ -134,22 +102,88 @@
             android:layout_below="@id/buttonLogin"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="50dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="150dp"
             android:background="@color/grey_separator" />
 
         <TextView
-            android:id="@+id/textview_or"
+            android:id="@+id/SignInWhit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/barra"
-            android:layout_marginStart="170dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="169dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="167dp"
             android:text="Sign In Whit"
             android:textSize="12sp"
             android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/Facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/SignInWhit"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="250dp"
+            android:layout_marginBottom="51dp"
+            android:backgroundTint="#030FFFFF"
+            android:contentDescription="@string/Icona_Facebook"
+            app:srcCompat="@drawable/facebook" />
+
+        <ImageButton
+            android:id="@+id/Google"
+            android:layout_width="54dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/SignInWhit"
+            android:layout_alignRight="@id/Facebook"
+            android:layout_marginRight="-70dp"
+            android:backgroundTint="#03000000"
+            android:contentDescription="@string/Icona_Google"
+            app:srcCompat="@drawable/Google" />
+
+        <ImageButton
+            android:id="@+id/Twitter"
+            android:layout_width="54dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/SignInWhit"
+            android:layout_alignRight="@id/Google"
+            android:layout_marginRight="-70dp"
+            android:backgroundTint="#03000000"
+            android:contentDescription="@string/Icona_Twitter"
+            app:srcCompat="@drawable/Twitter" />
+
+        <TextView
+            android:id="@+id/New_to_SM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Facebook"
+            android:layout_marginTop="-30dp"
+            android:text="@string/newUser"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/registerButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Google"
+            android:layout_alignRight="@id/New_to_SM"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="-105dp"
+            android:layout_marginRight="-116dp"
+            android:background="#000000"
+            android:backgroundTint="#000000"
+            android:text="@string/register"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
