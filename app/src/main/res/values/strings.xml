@@ -21,4 +21,7 @@
     <string name="error_password_mismatch">Password non coincidono</string>
     <string name="error_email">Email non valida</string>
     <string name="check_login_data_message">Dati di login non corretti</string>
+    <string name="Icona_Twitter">Icona Twitter</string>
+    <string name="Icona_Google">Icona Google</string>
+    <string name="Icona_Facebook">Icona Facebook</string>
 </resources>
