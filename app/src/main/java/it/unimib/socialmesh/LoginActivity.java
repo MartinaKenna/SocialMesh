@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.facebook.FacebookCallback;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
 public class LoginActivity extends AppCompatActivity {
 
     @Override
