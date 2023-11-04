@@ -4,9 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+
+import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -15,4 +23,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
+
+    callbackManager = CallbackManager.Factory.create();
+
+    LoginManager.getInstance().registerCallback(callbackManager,
+            new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult Object loginResult;
+        loginResult) {
+            // App code
+        }
+
+        @Override
+        public void onCancel() {
+            // App code
+        }
+
+        @Override
+        public void onError(FacebookException Object exception) {
+            // App code
+        }
+    });
+
 }

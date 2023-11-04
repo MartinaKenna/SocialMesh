@@ -1,10 +1,16 @@
 plugins {
-    id("com.android.application")
+    id("com.android.socialmesh")
 }
 
 android {
     namespace = "it.unimib.socialmesh"
     compileSdk = 34
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
 
     defaultConfig {
         applicationId = "it.unimib.socialmesh"
@@ -34,7 +40,6 @@ android {
 
 dependencies {
     implementation ("com.facebook.android:facebook-login:latest.release")
-
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -43,4 +48,5 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("commons-validator:commons-validator:1.7")
+
 }
