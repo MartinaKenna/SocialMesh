@@ -24,4 +24,6 @@
     <string name="Icona_Twitter">Icona Twitter</string>
     <string name="Icona_Google">Icona Google</string>
     <string name="Icona_Facebook">Icona Facebook</string>
+    <string name="facebook_app_id">867410848419160</string>
+    <string name="fb_login_protocol_scheme">fb867410848419160</string>
 </resources>

@@ -142,7 +142,8 @@
             android:layout_marginBottom="65dp"
             android:backgroundTint="#030FFFFF"
             android:contentDescription="@string/Icona_Facebook"
-            app:srcCompat="@drawable/facebook" />
+            app:srcCompat="@drawable/facebook"
+            android:onClick="onFacebookLoginClick"/>
 
         <ImageButton
             android:id="@+id/Google"

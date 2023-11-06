@@ -42,4 +42,5 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("commons-validator:commons-validator:1.7")
+    implementation("com.facebook.android:facebook-login:16.0.0")
 }
