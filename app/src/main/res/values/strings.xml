@@ -24,10 +24,4 @@
     <string name="Icona_Twitter">Icona Twitter</string>
     <string name="Icona_Google">Icona Google</string>
     <string name="Icona_Facebook">Icona Facebook</string>
-    <string name="facebook_app_id">360068779810943</string>
-    <string name="fb_login_protocol_scheme">fb360068779810943</string>
-    <string name="facebook_client_token">47a0c3afde85833cb5734b5776f6bfcd</string>
-    <string name="socialmesh">SocialMesh</string>
-
-
 </resources>
