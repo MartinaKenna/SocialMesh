@@ -4,36 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".SignUpActivity">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_no_drinks_orange_a700_48dp" />
 
     <TextView
         android:id="@+id/registerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="108dp"
         android:text="@string/sign_up"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutFullName"
         android:layout_width="0dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDx"
         app:layout_constraintStart_toStartOf="@+id/guidelineSx"
         app:layout_constraintTop_toBottomOf="@+id/registerTextView">
@@ -42,8 +33,10 @@
             android:id="@+id/fullNameInputText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#6AFFFFFF"
             android:drawableStart="@drawable/baseline_person_outline_24"
-            android:hint="@string/full_name" />
+            android:hint="@string/full_name"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -72,8 +65,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailInputText"
+            style="@style/Base.Theme.SocialMesh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#6AFFFFFF"
             android:drawableStart="@drawable/baseline_alternate_email_black_24dp"
             android:hint="@string/email"
             android:inputType="textEmailAddress" />
@@ -94,6 +89,7 @@
             android:id="@+id/passwordInputText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#6AFFFFFF"
             android:drawableStart="@drawable/baseline_password_24"
             android:hint="@string/password"
             android:inputType="textPassword" />
@@ -103,7 +99,7 @@
         android:id="@+id/textInputLayoutPasswordRetype"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toStartOf="@id/guidelineDx"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/guidelineSx"
@@ -114,6 +110,7 @@
             android:id="@+id/passwordRetypeInputText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#6AFFFFFF"
             android:drawableStart="@drawable/baseline_password_24"
             android:hint="@string/password_retype"
             android:inputType="textPassword" />
@@ -121,12 +118,18 @@
 
     <Button
         android:id="@+id/signupButton"
-        android:layout_width="0dp"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:backgroundTint="#6AFFFFFF"
+        android:drawableStart="@drawable/baseline_login_black_24dp"
         android:text="@string/sign_up"
+        android:textColor="#000000"
+        android:textColorLink="#30FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDx"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/guidelineSx"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPasswordRetype" />
 
@@ -143,10 +146,12 @@
             android:id="@+id/dateInputText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#6AFFFFFF"
             android:drawableStart="@drawable/baseline_date_range_24"
             android:focusable="false"
             android:hint="@string/date_of_birth"
-            android:inputType="date" /> <!-- disable keyboard -->
+            android:inputType="date"
+            android:textStyle="bold" /> <!-- disable keyboard -->
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
