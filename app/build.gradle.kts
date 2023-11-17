@@ -33,7 +33,9 @@ android {
     buildToolsVersion = "34.0.0"
 }
 
+
 dependencies {
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -42,5 +44,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("commons-validator:commons-validator:1.7")
-    implementation("com.facebook.android:facebook-login:16.0.0")
+    implementation("com.facebook.android:facebook-android-sdk:[8,9)")
+    implementation("androidx.transition:transition:1.4.0")
+    implementation ("androidx.appcompat:appcompat:1.4.0")
 }
