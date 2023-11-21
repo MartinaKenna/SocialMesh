@@ -73,9 +73,9 @@
             android:background="@drawable/signup2"
             android:backgroundTint="#6AFFFFFF"
             android:hint="@string/email"
-            android:textStyle="bold"
+            android:inputType="textEmailAddress"
 
-            />
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -99,6 +99,7 @@
             android:background="@drawable/signup2"
             android:backgroundTint="#6AFFFFFF"
             android:hint="Password"
+            android:inputType="textPassword"
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,6 +125,7 @@
             android:backgroundTint="#6AFFFFFF"
             android:gravity="center"
             android:hint="Confirm Password"
+            android:inputType="textPassword"
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
