@@ -3,6 +3,7 @@ package it.unimib.socialmesh;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.facebook.CallbackManager;
@@ -41,14 +43,10 @@ public class LoginTabFragment extends Fragment {
     GoogleSignInClient gsc;
     private TextInputLayout passTextInput, emailTextInput;
     CallbackManager callbackManager;
-    TabLayout tabLayout;
     TextView forget_password;
     ImageButton fb, google, twitter;
-    ViewPager viewPager;
     Button login, register;
     Intent intent;
-
-    float v=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -64,25 +62,15 @@ public class LoginTabFragment extends Fragment {
         fb = root.findViewById(R.id.Facebook);
         google = root.findViewById(R.id.Google);
         twitter = root.findViewById(R.id.Twitter);
-        tabLayout= root.findViewById(R.id.tablayout);
-        viewPager= root.findViewById(R.id.viewpager);
+        register=root.findViewById(R.id.buttonRegister);
 
-        fb.setTranslationX(800);
-        google.setTranslationX(800);
-        twitter.setTranslationX(800);
-        emailTextInput.setTranslationX(800);
-        passTextInput.setTranslationX(800);
-        forget_password.setTranslationX(800);
-        login.setTranslationX(800);
-
-        fb.setAlpha(v);
-        google.setAlpha(v);
-        twitter.setAlpha(v);
-        emailTextInput.setAlpha(v);
-        passTextInput.setAlpha(v);
-        forget_password.setAlpha(v);
-        login.setAlpha(v);
-
+        fb.setTranslationX(1000);
+        google.setTranslationX(1000);
+        twitter.setTranslationX(1000);
+        emailTextInput.setTranslationX(1000);
+        passTextInput.setTranslationX(1000);
+        forget_password.setTranslationX(1000);
+        login.setTranslationX(1000);
 
         emailTextInput.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         passTextInput.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
@@ -99,11 +87,9 @@ public class LoginTabFragment extends Fragment {
             if(isEmailOk(email) && isPasswordOk(password)) {
                 emailTextInput.setError(null);
                 passTextInput.setError(null);
-
-
             }
             else{
-                Snackbar.make(root.findViewById(android.R.id.content), "E-mail o Password errate", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), "E-mail o Password errate", Snackbar.LENGTH_SHORT).show();
             }
         });
         //Facebook
@@ -118,6 +104,13 @@ public class LoginTabFragment extends Fragment {
         google.setOnClickListener(item -> {
             signIn();
 
+        });
+
+        register.setOnClickListener(item -> {
+            SignupTabFragment fragment = new SignupTabFragment();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container_fragment, fragment);
+            transaction.commit();
         });
 
 
@@ -146,7 +139,7 @@ public class LoginTabFragment extends Fragment {
 
     void navigateToSecondActivity(){
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), HomeActivity.class);
+            intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
         }
     }

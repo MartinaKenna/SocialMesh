@@ -26,4 +26,10 @@
     <string name="Icona_Facebook">Icona Facebook</string>
     <string name="facebook_app_id">867410848419160</string>
     <string name="fb_login_protocol_scheme">fb867410848419160</string>
+    <string name="Eventi">Eventi</string>
+    <string name="Match">Match</string>
+    <string name="Profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chat">Chat</string>
 </resources>

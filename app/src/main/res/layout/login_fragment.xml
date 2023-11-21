@@ -62,124 +62,125 @@
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="182dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/insertPassword"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="120dp"
-        android:backgroundTint="#6AFFFFFF"
-        android:text="@string/login"
-        android:textColor="#000000"
-        android:textColorLink="#30FFFFFF"
-        android:textSize="16sp"
-        app:icon="@drawable/baseline_login_black_24dp"
-        app:iconTint="#000000"
-        tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/buttonLogin"
+            android:layout_width="182dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/insertPassword"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="120dp"
+            android:backgroundTint="#6AFFFFFF"
+            android:text="@string/login"
+            android:textColor="#000000"
+            android:textColorLink="#30FFFFFF"
+            android:textSize="16sp"
+            app:icon="@drawable/baseline_login_black_24dp"
+            app:iconTint="#000000"
+            tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/button_forgot_password"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonLogin"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="241dp"
-        android:text="@string/forgot_password"
-        android:textColor="#94FFFFFF"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:textAllCaps="false"
-        tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/button_forgot_password"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonLogin"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="241dp"
+            android:text="@string/forgot_password"
+            android:textColor="#94FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:textAllCaps="false"
+            tools:ignore="MissingConstraints" />
 
-    <View
-        android:id="@+id/barra"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_below="@id/buttonLogin"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="150dp"
-        android:background="@color/grey_separator"
-        tools:ignore="MissingConstraints" />
+        <View
+            android:id="@+id/barra"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/buttonLogin"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="150dp"
+            android:background="@color/grey_separator"
+            tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/SignInWhit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/barra"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="169dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="167dp"
-        android:text="Sign In With"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/SignInWhit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/barra"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="169dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="167dp"
+            android:text="Sign In With"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
 
 
-    <ImageButton
-        android:id="@+id/Facebook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/SignInWhit"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentBottom="false"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="65dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/Icona_Facebook"
-        android:onClick="onFacebookLoginClick"
-        app:srcCompat="@drawable/facebook"
-        tools:ignore="MissingConstraints" />
+        <ImageButton
+            android:id="@+id/Facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/SignInWhit"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="false"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="65dp"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="@string/Icona_Facebook"
+            android:onClick="onFacebookLoginClick"
+            app:srcCompat="@drawable/facebook"
+            tools:ignore="MissingConstraints" />
 
-    <ImageButton
-        android:id="@+id/Google"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/SignInWhit"
-        android:layout_alignRight="@id/Facebook"
-        android:layout_marginTop="19dp"
-        android:layout_marginRight="-61dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/Icona_Google"
-        android:hapticFeedbackEnabled="false"
-        app:srcCompat="@drawable/google"
-        tools:ignore="MissingConstraints" />
+        <ImageButton
+            android:id="@+id/Google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/SignInWhit"
+            android:layout_alignRight="@id/Facebook"
+            android:layout_marginTop="19dp"
+            android:layout_marginRight="-61dp"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="@string/Icona_Google"
+            android:hapticFeedbackEnabled="false"
+            app:srcCompat="@drawable/google"
+            tools:ignore="MissingConstraints" />
 
-    <ImageButton
-        android:id="@+id/Twitter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/SignInWhit"
-        android:layout_alignRight="@id/Google"
-        android:layout_marginTop="19dp"
-        android:layout_marginRight="-50dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/Icona_Twitter"
-        app:srcCompat="@drawable/twitter"
-        tools:ignore="MissingConstraints" />
+        <ImageButton
+            android:id="@+id/Twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/SignInWhit"
+            android:layout_alignRight="@id/Google"
+            android:layout_marginTop="19dp"
+            android:layout_marginRight="-50dp"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="@string/Icona_Twitter"
+            app:srcCompat="@drawable/twitter"
+            tools:ignore="MissingConstraints" />
 
 
         <Button
+            android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:text="@string/register"
             android:layout_below="@id/buttonLogin"
             android:layout_marginStart="15dp"
-            />
+            android:background="#00FFFFFF"
+            android:text="@string/register"
+            android:textColor="#94FFFFFF" />
 
 
     </RelativeLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
