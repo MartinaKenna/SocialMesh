@@ -45,7 +45,8 @@ public class LoginTabFragment extends Fragment {
     TextView forget_password;
     ImageButton fb, google, twitter;
     ViewPager viewPager;
-    Button login;
+    Button login, register;
+    Intent intent;
 
     float v=0;
 
@@ -94,9 +95,12 @@ public class LoginTabFragment extends Fragment {
         login.setOnClickListener(item -> {
             String email = emailTextInput.getEditText().getText().toString();
             String password = passTextInput.getEditText().getText().toString();
+            navigateToSecondActivity();
             if(isEmailOk(email) && isPasswordOk(password)) {
                 emailTextInput.setError(null);
                 passTextInput.setError(null);
+
+
             }
             else{
                 Snackbar.make(root.findViewById(android.R.id.content), "E-mail o Password errate", Snackbar.LENGTH_SHORT).show();
@@ -115,6 +119,8 @@ public class LoginTabFragment extends Fragment {
             signIn();
 
         });
+
+
 
         return root;
     }
@@ -139,9 +145,10 @@ public class LoginTabFragment extends Fragment {
     }
 
     void navigateToSecondActivity(){
-        //Intent intent= new Intent(this, HomeActivity.class);
-        //startActivity(intent);
-        //TODO mi da errore in HomeActivity.class, da risolvere
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), HomeActivity.class);
+            startActivity(intent);
+        }
     }
 
 

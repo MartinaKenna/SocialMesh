@@ -171,26 +171,15 @@
         tools:ignore="MissingConstraints" />
 
 
-        <ImageView
-            android:id="@+id/cerchioregistrazione"
-            android:layout_width="22dp"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:text="@string/register"
             android:layout_below="@id/buttonLogin"
-            android:layout_alignLeft="@id/button_forgot_password"
-            android:layout_marginLeft="-26dp"
-            android:layout_marginTop="31dp"
-            android:layout_marginRight="-96dp"
-            android:background="@drawable/cerchio_vuoto"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginStart="15dp"
+            />
 
-        <ImageView
-            android:id="@+id/cerchiologin"
-            android:layout_width="22dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonLogin"
-            android:layout_alignLeft="@id/cerchioregistrazione"
-            android:layout_marginTop="31dp"
-            android:layout_marginLeft="-30dp"
-            android:background="@drawable/cerchio_vuoto" />
+
     </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
