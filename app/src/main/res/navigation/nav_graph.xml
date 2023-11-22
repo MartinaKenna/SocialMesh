@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/eventFragment"
-        android:name="it.unimib.socialmesh.EventFragment"
+        android:name="it.unimib.socialmesh.ui.main.EventFragment"
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" />
     <fragment
         android:id="@+id/matchFragment"
-        android:name="it.unimib.socialmesh.MatchFragment"
+        android:name="it.unimib.socialmesh.ui.main.MatchFragment"
         android:label="fragment_match"
         tools:layout="@layout/fragment_match" />
     <fragment
         android:id="@+id/chatFragment"
-        android:name="it.unimib.socialmesh.ChatFragment"
+        android:name="it.unimib.socialmesh.ui.main.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="it.unimib.socialmesh.ProfileFragment"
+        android:name="it.unimib.socialmesh.ui.main.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

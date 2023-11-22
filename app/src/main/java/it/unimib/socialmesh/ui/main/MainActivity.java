@@ -1,8 +1,10 @@
-package it.unimib.socialmesh;
+package it.unimib.socialmesh.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import it.unimib.socialmesh.R;
 
 public class MainActivity extends AppCompatActivity {
 

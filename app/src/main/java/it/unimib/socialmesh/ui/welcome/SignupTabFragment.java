@@ -1,4 +1,4 @@
-package it.unimib.socialmesh;
+package it.unimib.socialmesh.ui.welcome;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
+
+import it.unimib.socialmesh.R;
 
 public class SignupTabFragment extends Fragment {
     TextInputLayout nome, datanasc, email, pass, confirmpass;

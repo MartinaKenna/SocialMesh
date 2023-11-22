@@ -1,22 +1,18 @@
-package it.unimib.socialmesh;
+package it.unimib.socialmesh.ui.welcome;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
@@ -26,9 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -36,6 +30,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import it.unimib.socialmesh.ui.main.HomeActivity;
+import it.unimib.socialmesh.R;
 
 
 public class LoginTabFragment extends Fragment {
@@ -83,7 +80,11 @@ public class LoginTabFragment extends Fragment {
         login.setOnClickListener(item -> {
             String email = emailTextInput.getEditText().getText().toString();
             String password = passTextInput.getEditText().getText().toString();
+
+            //TODO rimuovere sto coso quando non serve piu'
             navigateToSecondActivity();
+
+
             if(isEmailOk(email) && isPasswordOk(password)) {
                 emailTextInput.setError(null);
                 passTextInput.setError(null);

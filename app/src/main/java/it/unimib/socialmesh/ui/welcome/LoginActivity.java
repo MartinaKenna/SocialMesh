@@ -1,4 +1,4 @@
-package it.unimib.socialmesh;
+package it.unimib.socialmesh.ui.welcome;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,15 +6,10 @@ import androidx.fragment.app.Fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-
-
-
-
+import it.unimib.socialmesh.R;
 
 public class LoginActivity extends AppCompatActivity {
     Fragment fragment;
-
-
     float v=0;
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
@@ -24,11 +19,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         fragment=new LoginTabFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, fragment).addToBackStack(null).commit();
-
-
     }
-
-
 }
 
 

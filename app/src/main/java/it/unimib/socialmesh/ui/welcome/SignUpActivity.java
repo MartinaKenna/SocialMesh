@@ -1,4 +1,4 @@
-package it.unimib.socialmesh;
+package it.unimib.socialmesh.ui.welcome;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -20,6 +20,8 @@ import org.apache.commons.validator.routines.EmailValidator;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import it.unimib.socialmesh.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
