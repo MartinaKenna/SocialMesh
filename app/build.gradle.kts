@@ -42,6 +42,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-base:18.2.0")
     implementation("androidx.navigation:navigation-fragment:2.7.5")
     implementation("androidx.navigation:navigation-ui:2.7.5")
+    implementation("com.google.firebase:firebase-crashlytics-buildtools:2.9.9")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -49,4 +50,7 @@ dependencies {
     implementation("com.facebook.android:facebook-android-sdk:[8,9)")
     implementation("androidx.transition:transition:1.4.0")
     implementation ("androidx.appcompat:appcompat:1.4.0")
+    implementation("commons-io:commons-io:2.15.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.json:json:20230227")
 }
