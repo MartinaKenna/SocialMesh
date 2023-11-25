@@ -9,12 +9,11 @@ public class Event {
     private String notes;
     private String image;
     private Boolean ageRestrictions;
+    private String place;
 
-    public Event(String name, String id, String url,
-                 String image,
-                 String startDate, String endDate,
-                 String notes,
-                 Boolean ageRestrictions) {
+    public Event(String name, String id, String url, String image,
+                 String startDate, String endDate, String notes,
+                 Boolean ageRestrictions, String place) {
         this.name = name;
         this.id = id;
         this.url = url;
@@ -23,6 +22,7 @@ public class Event {
         this.notes = notes;
         this.image = image;
         this.ageRestrictions = ageRestrictions;
+        this.place = place;
     }
 
     public String getName() {

@@ -1,5 +1,7 @@
 package it.unimib.socialmesh.util;
 
+import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -8,19 +10,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class TicketMasterJson {
+    private final String API_KEY = "ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j";
+    private final String BASE_URL = "https://app.ticketmaster.com/discovery/v2/events?";
 
-    public String getTicketmasterEvents(String apiKey, String country, String startDateParameter, String localDateParameter, String localTimeParameter) {
+    public TicketMasterJson() {}
+
+    public String getTicketmasterEvents(String country, String startDateTime, String endDateTime) {
         try {
-            // Costruisci l'URL per la richiesta degli eventi da Ticketmaster
-            String urlString = "https://app.ticketmaster.com/discovery/v2/events?"
-                    + "apikey=" + apiKey
-                    //+ "&city=" + city
-                    + "&country=" + country;
-            //+ "&startDateTime=" + startDateTime
-            //+ "&endDateTime=" + endDateTime;
-            System.out.println(urlString);
+            //Crea l'url con i parametri richiesti
+            String api_call_url = BASE_URL
+                                + "apikey=" + API_KEY
+                                + "&country=" + country
+                                + "&startDateTime=" + startDateTime
+                                + "&endDateTime=" + endDateTime;
 
-            URL url = new URL(urlString);
+            URL url = new URL(api_call_url);
+
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
@@ -36,14 +41,17 @@ public class TicketMasterJson {
                     response.append(line);
                 }
                 reader.close();
+                connection.disconnect();
+
+                return response.toString();
             } else {
                 // Stampare un messaggio di errore in caso di risposta non 200 OK
-                Log.d(TAG, "Errore nella chiamata alle API di Ticketmaster. Codice errore: " + responseCode);
+                Log.d("TEST JSON PARSER", "Errore nella chiamata alle API di Ticketmaster. Codice errore: " + responseCode);
+                connection.disconnect();
             }
-
-            connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

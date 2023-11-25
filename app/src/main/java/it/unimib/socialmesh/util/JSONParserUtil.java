@@ -2,29 +2,19 @@ package it.unimib.socialmesh.util;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 
 public class JSONParserUtil {
-
     private final Context context;
     private final String embeddedParameter = "_embedded";
     private final String nameParameter = "name";
@@ -37,82 +27,57 @@ public class JSONParserUtil {
     private final String eventsParameter = "events";
     private final String dateParameter = "dates";
     private final String TAG = "PARSER JSON";
+    private final String startDateParameter = "start";
+    private final String localDateParameter = "localDate";
+    private final String localTimeParameter = "localTime";
+    private final String legalAgeEnforcedParameter = "legalAgeEnforced";
 
     public JSONParserUtil(Application application) {
         this.context = application.getApplicationContext();
     }
 
-    public EventApiResponse getTicketmasterEvents(String apiKey, String country, String startDateParameter, String localDateParameter, String localTimeParameter) {
+    public EventApiResponse getTicketmasterEvents(String country, String startDateTime, String endDateTime) throws JSONException {
 
-        try {
-            // Costruisci l'URL per la richiesta degli eventi da Ticketmaster
-            String urlString = "https://app.ticketmaster.com/discovery/v2/events?"
-                    + "apikey=" + apiKey
-                    //+ "&city=" + city
-                    + "&country=" + country;
-            //+ "&startDateTime=" + startDateTime
-            //+ "&endDateTime=" + endDateTime;
-            //System.out.println(urlString);
+        TicketMasterJson apiCall = new TicketMasterJson();
+        String to_parse = apiCall.getTicketmasterEvents(country, startDateTime, endDateTime);
 
-            URL url = new URL(urlString);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+        // Parsa il JSON restituito
+        JSONObject json = new JSONObject(to_parse.toString());
+        JSONObject embedded = json.getJSONObject(embeddedParameter);
+        JSONArray events = embedded.getJSONArray(eventsParameter);
 
-            // Verifica lo status code della risposta
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Leggi la risposta
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
+        //Variabili e classi di ritorno
+        EventApiResponse ear = new EventApiResponse();
+        List<Event> event_list = new ArrayList<>();
 
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
+        // Estrai informazioni rilevanti
+        for (int i = 0; i < events.length(); i++) {
 
-                // Parsa il JSON restituito
-                JSONObject json = new JSONObject(response.toString());
-                JSONObject embedded = json.getJSONObject(embeddedParameter);
-                JSONArray events = embedded.getJSONArray(eventsParameter);
+            JSONObject event = events.getJSONObject(i);
 
-                // Estrai informazioni rilevanti
-                for (int i = 0; i < events.length(); i++) {
+            String eventName = event.getString(nameParameter);
 
-                    JSONObject event = events.getJSONObject(i);
+            String eventId = event.getString(idParameter);
 
-                    String eventName = event.getString(nameParameter);
+            String eventUrl = event.getString(urlParameter);
 
-                    String eventId = event.getString(idParameter);
+            String eventImageUrl = event.getJSONArray(imagesParameter).getString(0);
 
-                    String eventUrl = event.getString(urlParameter);
+            String eventDate = event.getJSONObject(dateParameter).getJSONObject(startDateParameter).getString(localDateParameter);
 
-                    String eventImageUrl = event.getJSONArray(imagesParameter).getString(0);
+            String eventTime = event.getJSONObject(dateParameter).getJSONObject(startDateParameter).getString(localTimeParameter);
 
-                    String eventDate = event.getJSONObject(dateParameter).getJSONObject(startDateParameter).getString(localDateParameter);
+            String eventNotes = event.getString(infoParameter);
 
-                    String eventTime = event.getJSONObject(dateParameter).getJSONObject(startDateParameter).getString(localTimeParameter);
+            Boolean eventAgeRestrictions = event.getJSONObject(ageRestrictionsParameter).getBoolean(legalAgeEnforcedParameter);
 
-                    String eventNotes = event.getString(infoParameter);
+            String place = event.getJSONObject(embeddedParameter).getJSONArray(venuesParameter).getString(0);
 
-                    Boolean eventAgeRestrictions = event.getJSONObject(ageRestrictionsParameter).getBoolean("legalAgeEnforced");
-
-                    //TODO values._embedded.venues.addres.line1
-
-                    Event e = new Event(eventName, eventId,
-                                        eventUrl, eventImageUrl,
-                                        eventDate, eventTime,
-                                        eventNotes, eventAgeRestrictions);
-
-                }
-            } else {
-                // Stampare un messaggio di errore in caso di risposta non 200 OK
-                Log.d(TAG,"Errore nella chiamata alle API di Ticketmaster. Codice errore: " + responseCode);
-            }
-
-            connection.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
+            Event e = new Event(eventName, eventId, eventUrl,
+                                eventImageUrl, eventDate, eventTime,
+                                eventNotes, eventAgeRestrictions, place);
+            event_list.add(e);
         }
+        return new EventApiResponse(event_list);
     }
 }
