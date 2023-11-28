@@ -16,6 +16,10 @@ public class EventApiResponse implements Parcelable {
         this.embedded = embedded;
     }
 
+    public List<Event> getEvents() {
+        return embedded;
+    }
+
     protected EventApiResponse(Parcel in) {
     }
 

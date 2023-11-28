@@ -1,0 +1,24 @@
+package it.unimib.socialmesh.service;
+
+import static it.unimib.socialmesh.util.Constants.EVENTS_COUNTRY_PARAMETER;
+import static it.unimib.socialmesh.util.Constants.EVENTS_ENDPOINT;
+import static it.unimib.socialmesh.util.Constants.EVENTS_START_DATE_PARAMETER;
+import static it.unimib.socialmesh.util.Constants.EVENTS_END_DATE_PARAMETER;
+
+import it.unimib.socialmesh.model.EventApiResponse;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Query;
+
+/**
+ * Interface for Service to get news from the Web Service.
+ */
+public interface EventApiService {
+    @GET(EVENTS_ENDPOINT)
+    Call<EventApiResponse> getEvents(
+            @Query(EVENTS_COUNTRY_PARAMETER) String country,
+            @Query(EVENTS_START_DATE_PARAMETER) String startDateTime,
+            @Query(EVENTS_END_DATE_PARAMETER) String endDateTime,
+            @Header("Authorization") String apiKey);
+}
