@@ -1,14 +1,25 @@
 package it.unimib.socialmesh.ui.main;
 
+import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import it.unimib.socialmesh.R;
+import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
+import it.unimib.socialmesh.model.Event;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,13 +33,12 @@ public class EventFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView recyclerViewEvents;
+    private RecyclerViewEventsAdapter recyclerViewEventsAdapter;
 
-    public EventFragment() {
-        // Required empty public constructor
-    }
+    private List<Event> eventsList;
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -51,16 +61,29 @@ public class EventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        eventsList = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_event, container, false);
     }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        recyclerViewEvents = view.findViewById(R.id.recyclerview);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+
+        recyclerViewEvents.setLayoutManager(layoutManager);
+        recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+    }
+
+
 }
