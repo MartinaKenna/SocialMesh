@@ -29,22 +29,23 @@ public class EventsRepository {
 
     public EventsRepository(Application application, ResponseCallback responseCallback) {
         this.application = application;
-        //TODO da sistemare sta roba
         this.eventsApiService = ServiceLocator.getInstance().getEventsApiService();
+        this.responseCallback = responseCallback;
+
+        //TODO da sistemare sta roba
         //NewsRoomDatabase newsRoomDatabase = ServiceLocator.getInstance().getNewsDao(application);
         //this.newsDao = newsRoomDatabase.newsDao();
-        this.responseCallback = responseCallback;
     }
 
-    public void fetchEvents(String country, String startDateTime, String endDateTime, long lastUpdate) {
-
-        long currentTime = System.currentTimeMillis();
+    public void fetchEvents(String type, String city, String startDateTime, String endDateTime, long lastUpdate) {
+        //long currentTime = System.currentTimeMillis();
 
         // It gets the news from the Web Service if the last download
         // of the news has been performed more than FRESH_TIMEOUT value ago
-        if (currentTime - lastUpdate > FRESH_TIMEOUT) {
-            Call<EventApiResponse> eventsResponseCall = eventsApiService.getEvents(country,
-                    startDateTime, endDateTime, application.getString(R.string.events_api_key));
+        //if (currentTime - lastUpdate > FRESH_TIMEOUT) {
+        if (true) {
+            Call<EventApiResponse> eventsResponseCall = eventsApiService.getEvents(type, city, startDateTime, endDateTime,
+                                                                                    application.getString(R.string.events_api_key));
 
             eventsResponseCall.enqueue(new Callback<EventApiResponse>() {
                 @Override
@@ -53,6 +54,7 @@ public class EventsRepository {
 
                     if (response.body() != null && response.isSuccessful()) {
                         List<Event> eventsList = response.body().getEvents();
+                        responseCallback.onSuccess(eventsList, System.currentTimeMillis());
                         //TODO saveDataInDatabase(eventsList);
                     } else {
                         responseCallback.onFailure(application.getString(R.string.error_retrieving_events));

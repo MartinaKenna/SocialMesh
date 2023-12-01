@@ -7,7 +7,9 @@ public class Constants {
 
     public static final String EVENTS_ENDPOINT = "events";
 
-    public static final String EVENTS_COUNTRY_PARAMETER = "country";
+    public static final String EVENTS_TYPE_PARAMETER = "music";
+
+    public static final String EVENTS_CITY_PARAMETER = "dmaId";
     public static final String EVENTS_START_DATE_PARAMETER = "startDateTime";
     public static final String EVENTS_END_DATE_PARAMETER = "endDateTime";
     public static final int FRESH_TIMEOUT = 1000 * 60 * 60; // 1 hour in milliseconds

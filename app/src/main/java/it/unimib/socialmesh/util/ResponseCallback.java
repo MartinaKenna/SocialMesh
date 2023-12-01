@@ -9,6 +9,5 @@ import it.unimib.socialmesh.model.Event;
 public interface ResponseCallback {
     void onSuccess(List<Event> eventsList, long lastUpdate);
     void onFailure(String errorMessage);
-    void onNewsFavoriteStatusChanged(Event event);
 }
 
