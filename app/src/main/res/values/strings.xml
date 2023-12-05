@@ -32,6 +32,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="chat">Chat</string>
-    <string name="events_api_key">ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j</string>
     <string name="error_retrieving_events">Si è verificato un problema nel recuperare gli eventi</string>
 </resources>

@@ -1,18 +1,22 @@
 package it.unimib.socialmesh.repository;
 
-import static it.unimib.socialmesh.util.Constants.FRESH_TIMEOUT;
+import static it.unimib.socialmesh.util.Constants.FILE_JSON_TEST_API;
 
 import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.service.EventApiService;
+import it.unimib.socialmesh.util.JSONParserUtil;
 import it.unimib.socialmesh.util.ResponseCallback;
 import it.unimib.socialmesh.util.ServiceLocator;
 import retrofit2.Call;
@@ -23,9 +27,9 @@ public class EventsRepository {
     private static final String TAG = EventsRepository.class.getSimpleName();
     private final Application application;
     private final EventApiService eventsApiService;
+    private final ResponseCallback responseCallback;
 
     //TODO aggiungere database
-    private final ResponseCallback responseCallback;
 
     public EventsRepository(Application application, ResponseCallback responseCallback) {
         this.application = application;
@@ -37,23 +41,32 @@ public class EventsRepository {
         //this.newsDao = newsRoomDatabase.newsDao();
     }
 
-    public void fetchEvents(String type, String city, String startDateTime, String endDateTime, long lastUpdate) {
-        //long currentTime = System.currentTimeMillis();
+
+    /*
+    * Metodo scritto secondo le indicazioni del prof, al momento non funziona
+    *
+    * Dovrebbe recuperare i dati da TicketMaster e parsarli con una classe
+    * GSON gestita da Retrofit
+    * */
+    public void fetchEvents(String type, String city, String startDateTime, String time, long lastUpdate) {
+
+        long currentTime = System.currentTimeMillis();
 
         // It gets the news from the Web Service if the last download
         // of the news has been performed more than FRESH_TIMEOUT value ago
+        //TODO sistemare la condizione per l'aggiornamento
         //if (currentTime - lastUpdate > FRESH_TIMEOUT) {
         if (true) {
-            Call<EventApiResponse> eventsResponseCall = eventsApiService.getEvents(type, city, startDateTime, endDateTime,
-                                                                                    application.getString(R.string.events_api_key));
+            Call<EventApiResponse> eventsResponseCall = eventsApiService.getEvents(type, city, startDateTime, time,
+                                                                                    "ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j");
 
             eventsResponseCall.enqueue(new Callback<EventApiResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<EventApiResponse> call,
                                        @NonNull Response<EventApiResponse> response) {
 
-                    if (response.body() != null && response.isSuccessful()) {
-                        List<Event> eventsList = response.body().getEvents();
+                    if(response.body() != null && response.isSuccessful()) {
+                    List<Event> eventsList = response.body().getEvents();
                         responseCallback.onSuccess(eventsList, System.currentTimeMillis());
                         //TODO saveDataInDatabase(eventsList);
                     } else {
@@ -63,6 +76,12 @@ public class EventsRepository {
 
                 @Override
                 public void onFailure(@NonNull Call<EventApiResponse> call, @NonNull Throwable t) {
+
+                    if(t.getMessage() != null)
+                        Log.d(TAG, t.getMessage());
+                    else
+                        Log.d(TAG, "messaggio di errore nullo");
+
                     responseCallback.onFailure(t.getMessage());
                 }
             });
@@ -70,6 +89,27 @@ public class EventsRepository {
             //TODO
             //Log.d(TAG, application.getString(R.string.data_read_from_local_database));
             //readDataFromDatabase(lastUpdate);
+        }
+    }
+
+    /*
+     * Metodo che recupera i dati dal file JSON nella cartella "assets", questo funziona
+     * ma ovviamente non si aggiorna con i dati di Ticketmaster in automatico
+     */
+    public void fetchEventsFromJsonFile(String type, String city, String startDateTime, String time, long lastUpdate) {
+
+        JSONParserUtil jsonParserUtil = new JSONParserUtil(application);
+        EventApiResponse eventsApiResponse = null;
+
+        try {
+            eventsApiResponse = jsonParserUtil.getTicketmasterEventsFromFile(FILE_JSON_TEST_API);
+        } catch (JSONException e) {
+            Log.d(TAG, "ERRORE PARSING" + e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if(eventsApiResponse != null) {
+            List<Event> eventsList = eventsApiResponse.getEvents();
         }
     }
 

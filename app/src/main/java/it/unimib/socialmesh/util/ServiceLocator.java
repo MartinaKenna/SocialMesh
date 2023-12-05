@@ -1,5 +1,6 @@
 package it.unimib.socialmesh.util;
 
+import it.unimib.socialmesh.repository.EventsRepository;
 import it.unimib.socialmesh.service.EventApiService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -11,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceLocator {
 
     private static volatile ServiceLocator INSTANCE = null;
+    private static final String TAG = ServiceLocator.class.getSimpleName();
 
     private ServiceLocator() {}
 

@@ -4,26 +4,28 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavType;
 
 import java.util.List;
 
 public class EventApiResponse implements Parcelable {
-    private List<Event> embedded;
+    private List<Event> eventList;
 
     public EventApiResponse() {}
 
-    public EventApiResponse(List<Event> embedded) {
-        this.embedded = embedded;
+    public EventApiResponse(List<Event> eventsList) {
+        this.eventList = eventsList;
     }
 
     public List<Event> getEvents() {
-        return embedded;
+        return eventList;
     }
 
     protected EventApiResponse(Parcel in) {
+        this.eventList = in.createTypedArrayList(Event.CREATOR);
     }
 
-    public static final Creator<EventApiResponse> CREATOR = new Creator<EventApiResponse>() {
+    public static final Parcelable.Creator<EventApiResponse> CREATOR = new Parcelable.Creator<EventApiResponse>() {
         @Override
         public EventApiResponse createFromParcel(Parcel in) {
             return new EventApiResponse(in);
@@ -42,5 +44,6 @@ public class EventApiResponse implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeTypedList(this.eventList);
     }
 }

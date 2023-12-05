@@ -1,28 +1,46 @@
 package it.unimib.socialmesh.model;
 
-public class Event {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Event implements Parcelable {
     private String name;
     private String id;
     private String url;
     private String startDate;
-    private String endDate;
+    private String time;
     private String notes;
     private String image;
     private Boolean ageRestrictions;
-    private String place;
+    private EventPlace place;
 
-    public Event(String name, String id, String url, String image,
-                 String startDate, String endDate, String notes,
-                 Boolean ageRestrictions, String place) {
+    public Event() {}
+
+    public Event(String name, String id, String url, String image, String startDate,
+                 String time, String notes, boolean ageRestrictions, EventPlace place) {
         this.name = name;
         this.id = id;
         this.url = url;
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.time = time;
         this.notes = notes;
         this.image = image;
         this.ageRestrictions = ageRestrictions;
         this.place = place;
+    }
+
+    protected Event(Parcel in) {
+        this.name = in.readString();
+        this.id = in.readString();
+        this.url = in.readString();
+        this.startDate = in.readString();
+        this.time = in.readString();
+        this.notes = in.readString();
+        this.image = in.readString();
+        this.ageRestrictions = in.readByte() != 0;
+        this.place = in.readParcelable(EventPlace.class.getClassLoader());
     }
 
     public String getName() {
@@ -57,12 +75,12 @@ public class Event {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getTime() {
+        return time;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getNotes() {
@@ -87,5 +105,36 @@ public class Event {
 
     public void setAgeRestrictions(Boolean ageRestrictions) {
         this.ageRestrictions = ageRestrictions;
+    }
+
+
+    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel source) {
+            return new Event(source);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.id);
+        dest.writeString(this.url);
+        dest.writeString(this.startDate);
+        dest.writeString(this.time);
+        dest.writeString(this.notes);
+        dest.writeString(this.image);
+        dest.writeByte(this.ageRestrictions ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.place, flags);
     }
 }
