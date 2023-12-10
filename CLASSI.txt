@@ -1,0 +1,1391 @@
+-----------------------------------it.unimib.socialmesh.Accessibility.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Accessibility {
+
+@SerializedName("ticketLimit")
+@Expose
+private Integer ticketLimit;
+
+public Integer getTicketLimit() {
+return ticketLimit;
+}
+
+public void setTicketLimit(Integer ticketLimit) {
+this.ticketLimit = ticketLimit;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.AgeRestrictions.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class AgeRestrictions {
+
+@SerializedName("legalAgeEnforced")
+@Expose
+private Boolean legalAgeEnforced;
+
+public Boolean getLegalAgeEnforced() {
+return legalAgeEnforced;
+}
+
+public void setLegalAgeEnforced(Boolean legalAgeEnforced) {
+this.legalAgeEnforced = legalAgeEnforced;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.AllInclusivePricing.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class AllInclusivePricing {
+
+@SerializedName("enabled")
+@Expose
+private Boolean enabled;
+
+public Boolean getEnabled() {
+return enabled;
+}
+
+public void setEnabled(Boolean enabled) {
+this.enabled = enabled;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Attraction.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Attraction {
+
+@SerializedName("href")
+@Expose
+private String href;
+
+public String getHref() {
+return href;
+}
+
+public void setHref(String href) {
+this.href = href;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Classification.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Classification {
+
+@SerializedName("primary")
+@Expose
+private Boolean primary;
+@SerializedName("segment")
+@Expose
+private Segment segment;
+@SerializedName("genre")
+@Expose
+private Genre genre;
+@SerializedName("subGenre")
+@Expose
+private SubGenre subGenre;
+@SerializedName("type")
+@Expose
+private Type type;
+@SerializedName("subType")
+@Expose
+private SubType subType;
+@SerializedName("family")
+@Expose
+private Boolean family;
+
+public Boolean getPrimary() {
+return primary;
+}
+
+public void setPrimary(Boolean primary) {
+this.primary = primary;
+}
+
+public Segment getSegment() {
+return segment;
+}
+
+public void setSegment(Segment segment) {
+this.segment = segment;
+}
+
+public Genre getGenre() {
+return genre;
+}
+
+public void setGenre(Genre genre) {
+this.genre = genre;
+}
+
+public SubGenre getSubGenre() {
+return subGenre;
+}
+
+public void setSubGenre(SubGenre subGenre) {
+this.subGenre = subGenre;
+}
+
+public Type getType() {
+return type;
+}
+
+public void setType(Type type) {
+this.type = type;
+}
+
+public SubType getSubType() {
+return subType;
+}
+
+public void setSubType(SubType subType) {
+this.subType = subType;
+}
+
+public Boolean getFamily() {
+return family;
+}
+
+public void setFamily(Boolean family) {
+this.family = family;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Dates.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Dates {
+
+@SerializedName("start")
+@Expose
+private Start start;
+@SerializedName("initialStartDate")
+@Expose
+private InitialStartDate initialStartDate;
+@SerializedName("timezone")
+@Expose
+private String timezone;
+@SerializedName("status")
+@Expose
+private Status status;
+@SerializedName("spanMultipleDays")
+@Expose
+private Boolean spanMultipleDays;
+
+public Start getStart() {
+return start;
+}
+
+public void setStart(Start start) {
+this.start = start;
+}
+
+public InitialStartDate getInitialStartDate() {
+return initialStartDate;
+}
+
+public void setInitialStartDate(InitialStartDate initialStartDate) {
+this.initialStartDate = initialStartDate;
+}
+
+public String getTimezone() {
+return timezone;
+}
+
+public void setTimezone(String timezone) {
+this.timezone = timezone;
+}
+
+public Status getStatus() {
+return status;
+}
+
+public void setStatus(Status status) {
+this.status = status;
+}
+
+public Boolean getSpanMultipleDays() {
+return spanMultipleDays;
+}
+
+public void setSpanMultipleDays(Boolean spanMultipleDays) {
+this.spanMultipleDays = spanMultipleDays;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Event.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import java.util.List;
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Event {
+
+@SerializedName("name")
+@Expose
+private String name;
+@SerializedName("type")
+@Expose
+private String type;
+@SerializedName("id")
+@Expose
+private String id;
+@SerializedName("test")
+@Expose
+private Boolean test;
+@SerializedName("url")
+@Expose
+private String url;
+@SerializedName("locale")
+@Expose
+private String locale;
+@SerializedName("images")
+@Expose
+private List<Image> images;
+@SerializedName("sales")
+@Expose
+private Sales sales;
+@SerializedName("dates")
+@Expose
+private Dates dates;
+@SerializedName("classifications")
+@Expose
+private List<Classification> classifications;
+@SerializedName("promoter")
+@Expose
+private Promoter promoter;
+@SerializedName("promoters")
+@Expose
+private List<Promoter__1> promoters;
+@SerializedName("info")
+@Expose
+private String info;
+@SerializedName("pleaseNote")
+@Expose
+private String pleaseNote;
+@SerializedName("priceRanges")
+@Expose
+private List<PriceRange> priceRanges;
+@SerializedName("seatmap")
+@Expose
+private Seatmap seatmap;
+@SerializedName("accessibility")
+@Expose
+private Accessibility accessibility;
+@SerializedName("ticketLimit")
+@Expose
+private TicketLimit ticketLimit;
+@SerializedName("ageRestrictions")
+@Expose
+private AgeRestrictions ageRestrictions;
+@SerializedName("ticketing")
+@Expose
+private Ticketing ticketing;
+@SerializedName("_links")
+@Expose
+private Links links;
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public String getType() {
+return type;
+}
+
+public void setType(String type) {
+this.type = type;
+}
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public Boolean getTest() {
+return test;
+}
+
+public void setTest(Boolean test) {
+this.test = test;
+}
+
+public String getUrl() {
+return url;
+}
+
+public void setUrl(String url) {
+this.url = url;
+}
+
+public String getLocale() {
+return locale;
+}
+
+public void setLocale(String locale) {
+this.locale = locale;
+}
+
+public List<Image> getImages() {
+return images;
+}
+
+public void setImages(List<Image> images) {
+this.images = images;
+}
+
+public Sales getSales() {
+return sales;
+}
+
+public void setSales(Sales sales) {
+this.sales = sales;
+}
+
+public Dates getDates() {
+return dates;
+}
+
+public void setDates(Dates dates) {
+this.dates = dates;
+}
+
+public List<Classification> getClassifications() {
+return classifications;
+}
+
+public void setClassifications(List<Classification> classifications) {
+this.classifications = classifications;
+}
+
+public Promoter getPromoter() {
+return promoter;
+}
+
+public void setPromoter(Promoter promoter) {
+this.promoter = promoter;
+}
+
+public List<Promoter__1> getPromoters() {
+return promoters;
+}
+
+public void setPromoters(List<Promoter__1> promoters) {
+this.promoters = promoters;
+}
+
+public String getInfo() {
+return info;
+}
+
+public void setInfo(String info) {
+this.info = info;
+}
+
+public String getPleaseNote() {
+return pleaseNote;
+}
+
+public void setPleaseNote(String pleaseNote) {
+this.pleaseNote = pleaseNote;
+}
+
+public List<PriceRange> getPriceRanges() {
+return priceRanges;
+}
+
+public void setPriceRanges(List<PriceRange> priceRanges) {
+this.priceRanges = priceRanges;
+}
+
+public Seatmap getSeatmap() {
+return seatmap;
+}
+
+public void setSeatmap(Seatmap seatmap) {
+this.seatmap = seatmap;
+}
+
+public Accessibility getAccessibility() {
+return accessibility;
+}
+
+public void setAccessibility(Accessibility accessibility) {
+this.accessibility = accessibility;
+}
+
+public TicketLimit getTicketLimit() {
+return ticketLimit;
+}
+
+public void setTicketLimit(TicketLimit ticketLimit) {
+this.ticketLimit = ticketLimit;
+}
+
+public AgeRestrictions getAgeRestrictions() {
+return ageRestrictions;
+}
+
+public void setAgeRestrictions(AgeRestrictions ageRestrictions) {
+this.ageRestrictions = ageRestrictions;
+}
+
+public Ticketing getTicketing() {
+return ticketing;
+}
+
+public void setTicketing(Ticketing ticketing) {
+this.ticketing = ticketing;
+}
+
+public Links getLinks() {
+return links;
+}
+
+public void setLinks(Links links) {
+this.links = links;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Genre.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Genre {
+
+@SerializedName("id")
+@Expose
+private String id;
+@SerializedName("name")
+@Expose
+private String name;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.HealthCheck.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class HealthCheck {
+
+@SerializedName("summary")
+@Expose
+private String summary;
+@SerializedName("description")
+@Expose
+private String description;
+@SerializedName("learnMoreUrl")
+@Expose
+private String learnMoreUrl;
+
+public String getSummary() {
+return summary;
+}
+
+public void setSummary(String summary) {
+this.summary = summary;
+}
+
+public String getDescription() {
+return description;
+}
+
+public void setDescription(String description) {
+this.description = description;
+}
+
+public String getLearnMoreUrl() {
+return learnMoreUrl;
+}
+
+public void setLearnMoreUrl(String learnMoreUrl) {
+this.learnMoreUrl = learnMoreUrl;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Image.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Image {
+
+@SerializedName("ratio")
+@Expose
+private String ratio;
+@SerializedName("url")
+@Expose
+private String url;
+@SerializedName("width")
+@Expose
+private Integer width;
+@SerializedName("height")
+@Expose
+private Integer height;
+@SerializedName("fallback")
+@Expose
+private Boolean fallback;
+
+public String getRatio() {
+return ratio;
+}
+
+public void setRatio(String ratio) {
+this.ratio = ratio;
+}
+
+public String getUrl() {
+return url;
+}
+
+public void setUrl(String url) {
+this.url = url;
+}
+
+public Integer getWidth() {
+return width;
+}
+
+public void setWidth(Integer width) {
+this.width = width;
+}
+
+public Integer getHeight() {
+return height;
+}
+
+public void setHeight(Integer height) {
+this.height = height;
+}
+
+public Boolean getFallback() {
+return fallback;
+}
+
+public void setFallback(Boolean fallback) {
+this.fallback = fallback;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.InitialStartDate.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class InitialStartDate {
+
+@SerializedName("localDate")
+@Expose
+private String localDate;
+@SerializedName("localTime")
+@Expose
+private String localTime;
+@SerializedName("dateTime")
+@Expose
+private String dateTime;
+
+public String getLocalDate() {
+return localDate;
+}
+
+public void setLocalDate(String localDate) {
+this.localDate = localDate;
+}
+
+public String getLocalTime() {
+return localTime;
+}
+
+public void setLocalTime(String localTime) {
+this.localTime = localTime;
+}
+
+public String getDateTime() {
+return dateTime;
+}
+
+public void setDateTime(String dateTime) {
+this.dateTime = dateTime;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Links.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import java.util.List;
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Links {
+
+@SerializedName("self")
+@Expose
+private Self self;
+@SerializedName("attractions")
+@Expose
+private List<Attraction> attractions;
+@SerializedName("venues")
+@Expose
+private List<Venue> venues;
+
+public Self getSelf() {
+return self;
+}
+
+public void setSelf(Self self) {
+this.self = self;
+}
+
+public List<Attraction> getAttractions() {
+return attractions;
+}
+
+public void setAttractions(List<Attraction> attractions) {
+this.attractions = attractions;
+}
+
+public List<Venue> getVenues() {
+return venues;
+}
+
+public void setVenues(List<Venue> venues) {
+this.venues = venues;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.PriceRange.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class PriceRange {
+
+@SerializedName("type")
+@Expose
+private String type;
+@SerializedName("currency")
+@Expose
+private String currency;
+@SerializedName("min")
+@Expose
+private Double min;
+@SerializedName("max")
+@Expose
+private Double max;
+
+public String getType() {
+return type;
+}
+
+public void setType(String type) {
+this.type = type;
+}
+
+public String getCurrency() {
+return currency;
+}
+
+public void setCurrency(String currency) {
+this.currency = currency;
+}
+
+public Double getMin() {
+return min;
+}
+
+public void setMin(Double min) {
+this.min = min;
+}
+
+public Double getMax() {
+return max;
+}
+
+public void setMax(Double max) {
+this.max = max;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Promoter.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Promoter {
+
+@SerializedName("id")
+@Expose
+private String id;
+@SerializedName("name")
+@Expose
+private String name;
+@SerializedName("description")
+@Expose
+private String description;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public String getDescription() {
+return description;
+}
+
+public void setDescription(String description) {
+this.description = description;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Promoter__1.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Promoter__1 {
+
+@SerializedName("id")
+@Expose
+private String id;
+@SerializedName("name")
+@Expose
+private String name;
+@SerializedName("description")
+@Expose
+private String description;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public String getDescription() {
+return description;
+}
+
+public void setDescription(String description) {
+this.description = description;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Public.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Public {
+
+@SerializedName("startDateTime")
+@Expose
+private String startDateTime;
+@SerializedName("startTBD")
+@Expose
+private Boolean startTBD;
+@SerializedName("startTBA")
+@Expose
+private Boolean startTBA;
+@SerializedName("endDateTime")
+@Expose
+private String endDateTime;
+
+public String getStartDateTime() {
+return startDateTime;
+}
+
+public void setStartDateTime(String startDateTime) {
+this.startDateTime = startDateTime;
+}
+
+public Boolean getStartTBD() {
+return startTBD;
+}
+
+public void setStartTBD(Boolean startTBD) {
+this.startTBD = startTBD;
+}
+
+public Boolean getStartTBA() {
+return startTBA;
+}
+
+public void setStartTBA(Boolean startTBA) {
+this.startTBA = startTBA;
+}
+
+public String getEndDateTime() {
+return endDateTime;
+}
+
+public void setEndDateTime(String endDateTime) {
+this.endDateTime = endDateTime;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.SafeTix.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class SafeTix {
+
+@SerializedName("enabled")
+@Expose
+private Boolean enabled;
+
+public Boolean getEnabled() {
+return enabled;
+}
+
+public void setEnabled(Boolean enabled) {
+this.enabled = enabled;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Sales.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Sales {
+
+@SerializedName("public")
+@Expose
+private Public _public;
+
+public Public getPublic() {
+return _public;
+}
+
+public void setPublic(Public _public) {
+this._public = _public;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Seatmap.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Seatmap {
+
+@SerializedName("staticUrl")
+@Expose
+private String staticUrl;
+
+public String getStaticUrl() {
+return staticUrl;
+}
+
+public void setStaticUrl(String staticUrl) {
+this.staticUrl = staticUrl;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Segment.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Segment {
+
+@SerializedName("id")
+@Expose
+private String id;
+@SerializedName("name")
+@Expose
+private String name;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Self.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Self {
+
+@SerializedName("href")
+@Expose
+private String href;
+
+public String getHref() {
+return href;
+}
+
+public void setHref(String href) {
+this.href = href;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Start.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Start {
+
+@SerializedName("localDate")
+@Expose
+private String localDate;
+@SerializedName("localTime")
+@Expose
+private String localTime;
+@SerializedName("dateTime")
+@Expose
+private String dateTime;
+@SerializedName("dateTBD")
+@Expose
+private Boolean dateTBD;
+@SerializedName("dateTBA")
+@Expose
+private Boolean dateTBA;
+@SerializedName("timeTBA")
+@Expose
+private Boolean timeTBA;
+@SerializedName("noSpecificTime")
+@Expose
+private Boolean noSpecificTime;
+
+public String getLocalDate() {
+return localDate;
+}
+
+public void setLocalDate(String localDate) {
+this.localDate = localDate;
+}
+
+public String getLocalTime() {
+return localTime;
+}
+
+public void setLocalTime(String localTime) {
+this.localTime = localTime;
+}
+
+public String getDateTime() {
+return dateTime;
+}
+
+public void setDateTime(String dateTime) {
+this.dateTime = dateTime;
+}
+
+public Boolean getDateTBD() {
+return dateTBD;
+}
+
+public void setDateTBD(Boolean dateTBD) {
+this.dateTBD = dateTBD;
+}
+
+public Boolean getDateTBA() {
+return dateTBA;
+}
+
+public void setDateTBA(Boolean dateTBA) {
+this.dateTBA = dateTBA;
+}
+
+public Boolean getTimeTBA() {
+return timeTBA;
+}
+
+public void setTimeTBA(Boolean timeTBA) {
+this.timeTBA = timeTBA;
+}
+
+public Boolean getNoSpecificTime() {
+return noSpecificTime;
+}
+
+public void setNoSpecificTime(Boolean noSpecificTime) {
+this.noSpecificTime = noSpecificTime;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Status.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Status {
+
+@SerializedName("code")
+@Expose
+private String code;
+
+public String getCode() {
+return code;
+}
+
+public void setCode(String code) {
+this.code = code;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.SubGenre.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class SubGenre {
+
+@SerializedName("id")
+@Expose
+private String id;
+@SerializedName("name")
+@Expose
+private String name;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.SubType.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class SubType {
+
+@SerializedName("id")
+@Expose
+private String id;
+@SerializedName("name")
+@Expose
+private String name;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.TicketLimit.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class TicketLimit {
+
+@SerializedName("info")
+@Expose
+private String info;
+
+public String getInfo() {
+return info;
+}
+
+public void setInfo(String info) {
+this.info = info;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Ticketing.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Ticketing {
+
+@SerializedName("healthCheck")
+@Expose
+private HealthCheck healthCheck;
+@SerializedName("safeTix")
+@Expose
+private SafeTix safeTix;
+@SerializedName("allInclusivePricing")
+@Expose
+private AllInclusivePricing allInclusivePricing;
+
+public HealthCheck getHealthCheck() {
+return healthCheck;
+}
+
+public void setHealthCheck(HealthCheck healthCheck) {
+this.healthCheck = healthCheck;
+}
+
+public SafeTix getSafeTix() {
+return safeTix;
+}
+
+public void setSafeTix(SafeTix safeTix) {
+this.safeTix = safeTix;
+}
+
+public AllInclusivePricing getAllInclusivePricing() {
+return allInclusivePricing;
+}
+
+public void setAllInclusivePricing(AllInclusivePricing allInclusivePricing) {
+this.allInclusivePricing = allInclusivePricing;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Type.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Type {
+
+@SerializedName("id")
+@Expose
+private String id;
+@SerializedName("name")
+@Expose
+private String name;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+}
+-----------------------------------it.unimib.socialmesh.Venue.java-----------------------------------
+
+package it.unimib.socialmesh;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Generated("jsonschema2pojo")
+public class Venue {
+
+@SerializedName("href")
+@Expose
+private String href;
+
+public String getHref() {
+return href;
+}
+
+public void setHref(String href) {
+this.href = href;
+}
+
+}
