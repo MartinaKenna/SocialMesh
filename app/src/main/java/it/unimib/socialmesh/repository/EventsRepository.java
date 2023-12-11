@@ -1,22 +1,17 @@
 package it.unimib.socialmesh.repository;
 
-import static it.unimib.socialmesh.util.Constants.FILE_JSON_TEST_API;
-
 import android.app.Application;
 import android.util.Log;
+
+import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.service.EventApiService;
 
 import androidx.annotation.NonNull;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.List;
 
 import it.unimib.socialmesh.R;
-import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
-import it.unimib.socialmesh.service.EventApiService;
 import it.unimib.socialmesh.util.ResponseCallback;
 import it.unimib.socialmesh.util.ServiceLocator;
 import retrofit2.Call;
@@ -66,9 +61,8 @@ public class EventsRepository {
                                        @NonNull Response<EventApiResponse> response) {
 
                     if(response.body() != null && response.isSuccessful()) {
-                        String s = response.body().toString();
-                // List<Event> eventsList = response.body().getEvents();
-                    //    responseCallback.onSuccess(eventsList, System.currentTimeMillis());
+                        List<Event> eventsList = response.body().getEvents();
+                        responseCallback.onSuccess(eventsList, System.currentTimeMillis());
                         //TODO saveDataInDatabase(eventsList);
                     } else {
                         responseCallback.onFailure(application.getString(R.string.error_retrieving_events));

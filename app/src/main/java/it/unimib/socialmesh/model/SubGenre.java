@@ -2,7 +2,6 @@ package it.unimib.socialmesh.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class SubGenre {
-
     @SerializedName("id")
     @Expose
     private String id;
@@ -25,5 +24,4 @@ public class SubGenre {
     public void setName(String name) {
         this.name = name;
     }
-
 }

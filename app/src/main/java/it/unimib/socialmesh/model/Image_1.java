@@ -1,7 +1,7 @@
 package it.unimib.socialmesh.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class Image__1 {
+public class Image_1 {
 
     @SerializedName("ratio")
     @Expose

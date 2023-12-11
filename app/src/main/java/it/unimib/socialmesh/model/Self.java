@@ -1,9 +1,7 @@
 package it.unimib.socialmesh.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 public class Self {
-
     @SerializedName("href")
     @Expose
     private String href;
@@ -15,6 +13,4 @@ public class Self {
     public void setHref(String href) {
         this.href = href;
     }
-
 }
-

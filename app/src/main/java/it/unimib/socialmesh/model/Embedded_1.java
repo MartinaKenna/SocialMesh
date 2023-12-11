@@ -3,28 +3,28 @@ package it.unimib.socialmesh.model;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class Embedded__1 {
+public class Embedded_1 {
 
     @SerializedName("venues")
     @Expose
-    private List<Venue__1> venues;
+    private List<Venue> venues;
     @SerializedName("attractions")
     @Expose
-    private List<Attraction__1> attractions;
+    private List<Attraction> attractions;
 
-    public List<Venue__1> getVenues() {
+    public List<Venue> getVenues() {
         return venues;
     }
 
-    public void setVenues(List<Venue__1> venues) {
+    public void setVenues(List<Venue> venues) {
         this.venues = venues;
     }
 
-    public List<Attraction__1> getAttractions() {
+    public List<Attraction> getAttractions() {
         return attractions;
     }
 
-    public void setAttractions(List<Attraction__1> attractions) {
+    public void setAttractions(List<Attraction> attractions) {
         this.attractions = attractions;
     }
 }

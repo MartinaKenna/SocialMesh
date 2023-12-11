@@ -1,11 +1,5 @@
 package it.unimib.socialmesh.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-import androidx.navigation.NavType;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,8 +12,8 @@ public class EventApiResponse {
     private Embedded embedded;
 
 
-    public Embedded getEmbedded() {
-        return embedded;
+    public List<Event> getEvents() {
+        return embedded.getEvents();
     }
 
     public void setEmbedded(Embedded embedded) {

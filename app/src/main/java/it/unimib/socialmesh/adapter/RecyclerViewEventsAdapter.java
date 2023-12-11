@@ -1,18 +1,5 @@
 package it.unimib.socialmesh.adapter;
 
-import android.app.Application;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.List;
-
-import it.unimib.socialmesh.R;
-import it.unimib.socialmesh.model.Event;
 /*
 public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerViewEventsAdapter.EventsViewHolder>{
     public interface OnItemClickListener {

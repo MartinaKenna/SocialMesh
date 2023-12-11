@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 public class Embedded {
     @SerializedName("events")
     @Expose
-    private List<Event__1> events;
+    private List<Event> events;
 
-    public List<Event__1> getEvents() {
+    public List<Event> getEvents() {
         return events;
     }
 
-    public void setEvents(List<Event__1> events) {
+    public void setEvents(List<Event> events) {
         this.events = events;
     }
 }

@@ -4,21 +4,26 @@ import com.google.gson.annotations.SerializedName;
 public class Classification {
 
 
+    @SerializedName("segment")
+    @Expose
+    private Segment segment;
     @SerializedName("genre")
     @Expose
     private Genre genre;
     @SerializedName("subGenre")
     @Expose
     private SubGenre subGenre;
-    @SerializedName("type")
-    @Expose
-    private Type type;
-    @SerializedName("subType")
-    @Expose
-    private SubType subType;
-    @SerializedName("family")
-    @Expose
-    private Boolean family;
+
+
+
+
+    public Segment getSegment() {
+        return segment;
+    }
+
+    public void setSegment(Segment segment) {
+        this.segment = segment;
+    }
 
     public Genre getGenre() {
         return genre;
@@ -36,27 +41,4 @@ public class Classification {
         this.subGenre = subGenre;
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public SubType getSubType() {
-        return subType;
-    }
-
-    public void setSubType(SubType subType) {
-        this.subType = subType;
-    }
-
-    public Boolean getFamily() {
-        return family;
-    }
-
-    public void setFamily(Boolean family) {
-        this.family = family;
-    }
 }
