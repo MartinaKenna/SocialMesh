@@ -17,21 +17,6 @@ public class EventApiResponse {
     @Expose
     private Embedded embedded;
 
-    private List<Event> events;
-    public EventApiResponse(Embedded embedded, List<Event> events) {
-        this.embedded = embedded;
-        this.events = events;
-    }
-
-    private List<Event> events;
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
 
     public Embedded getEmbedded() {
         return embedded;

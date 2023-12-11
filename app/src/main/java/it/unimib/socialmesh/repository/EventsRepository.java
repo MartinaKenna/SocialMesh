@@ -66,8 +66,9 @@ public class EventsRepository {
                                        @NonNull Response<EventApiResponse> response) {
 
                     if(response.body() != null && response.isSuccessful()) {
-                           List<Event> eventsList = response.body().getEvents();
-                       responseCallback.onSuccess(eventsList, System.currentTimeMillis());
+                        String s = response.body().toString();
+                // List<Event> eventsList = response.body().getEvents();
+                    //    responseCallback.onSuccess(eventsList, System.currentTimeMillis());
                         //TODO saveDataInDatabase(eventsList);
                     } else {
                         responseCallback.onFailure(application.getString(R.string.error_retrieving_events));
