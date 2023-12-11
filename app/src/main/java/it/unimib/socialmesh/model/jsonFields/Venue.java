@@ -1,8 +1,17 @@
-package it.unimib.socialmesh.model;
+package it.unimib.socialmesh.model.jsonFields;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import it.unimib.socialmesh.model.jsonFields.Address;
+import it.unimib.socialmesh.model.jsonFields.City;
+import it.unimib.socialmesh.model.jsonFields.Country;
+import it.unimib.socialmesh.model.jsonFields.GeneralInfo;
+import it.unimib.socialmesh.model.jsonFields.Image_1;
+import it.unimib.socialmesh.model.jsonFields.Location;
+import it.unimib.socialmesh.model.jsonFields.State;
+
 public class Venue {
 
     @SerializedName("name")

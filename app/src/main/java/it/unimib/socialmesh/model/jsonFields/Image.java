@@ -1,7 +1,7 @@
-package it.unimib.socialmesh.model;
+package it.unimib.socialmesh.model.jsonFields;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class Image_2 {
+public class Image {
 
     @SerializedName("ratio")
     @Expose
@@ -58,5 +58,4 @@ public class Image_2 {
     public void setFallback(Boolean fallback) {
         this.fallback = fallback;
     }
-
 }

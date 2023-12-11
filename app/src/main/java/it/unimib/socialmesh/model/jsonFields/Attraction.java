@@ -1,7 +1,8 @@
-package it.unimib.socialmesh.model;
+package it.unimib.socialmesh.model.jsonFields;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 public class Attraction {
 
     @SerializedName("name")

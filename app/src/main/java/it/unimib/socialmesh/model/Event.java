@@ -2,6 +2,12 @@ package it.unimib.socialmesh.model;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import it.unimib.socialmesh.model.jsonFields.AgeRestrictions;
+import it.unimib.socialmesh.model.jsonFields.Dates;
+import it.unimib.socialmesh.model.jsonFields.Embedded_1;
+import it.unimib.socialmesh.model.jsonFields.Image;
+
 public class Event {
 
     @SerializedName("name")

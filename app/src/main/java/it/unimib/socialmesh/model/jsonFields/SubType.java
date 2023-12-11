@@ -1,7 +1,8 @@
-package it.unimib.socialmesh.model;
+package it.unimib.socialmesh.model.jsonFields;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class Type {
+
+public class SubType {
 
     @SerializedName("id")
     @Expose
@@ -25,4 +26,5 @@ public class Type {
     public void setName(String name) {
         this.name = name;
     }
+
 }
