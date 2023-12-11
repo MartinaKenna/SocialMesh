@@ -13,7 +13,7 @@ import java.util.List;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
-
+/*
 public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerViewEventsAdapter.EventsViewHolder>{
     public interface OnItemClickListener {
         void onEventsItemClick(Event event);
@@ -40,12 +40,12 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         return new EventsViewHolder(view);
     }
 
-    @Override
+  /*  @Override
     public void onBindViewHolder(EventsViewHolder holder, int position) {
         holder.bind(eventsList.get(position));
     }
 
-    @Override
+
     public int getItemCount() {
         if (eventsList != null) {
             return eventsList.size();
@@ -68,9 +68,9 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
             buttonclick.setOnClickListener(this);
         }
 
-        public void bind(Event event) {
+      /*  public void bind(Event event) {
             textViewName.setText(event.getName());
-            textViewDate.setText(event.getStartDate());
+          //  textViewDate.setText(event.getStartDateTime());
         }
 
         @Override
@@ -81,3 +81,4 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
 
 
 }
+*/

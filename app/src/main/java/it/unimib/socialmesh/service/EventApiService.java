@@ -1,3 +1,4 @@
+
 package it.unimib.socialmesh.service;
 
 import static it.unimib.socialmesh.util.Constants.EVENTS_CITY_PARAMETER;
@@ -15,7 +16,8 @@ import retrofit2.http.Query;
 /**
  * Interface for Service to get news from the Web Service.
  */
-public interface EventApiService {
+public interface
+EventApiService {
     @GET(EVENTS_ENDPOINT)
     Call<EventApiResponse> getEvents(
             @Query(EVENTS_TYPE_PARAMETER) String type,

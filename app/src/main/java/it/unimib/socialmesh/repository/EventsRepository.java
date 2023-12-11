@@ -4,6 +4,7 @@ import static it.unimib.socialmesh.util.Constants.FILE_JSON_TEST_API;
 
 import android.app.Application;
 import android.util.Log;
+import it.unimib.socialmesh.service.EventApiService;
 
 import androidx.annotation.NonNull;
 
@@ -16,7 +17,6 @@ import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.service.EventApiService;
-import it.unimib.socialmesh.util.JSONParserUtil;
 import it.unimib.socialmesh.util.ResponseCallback;
 import it.unimib.socialmesh.util.ServiceLocator;
 import retrofit2.Call;
@@ -66,8 +66,8 @@ public class EventsRepository {
                                        @NonNull Response<EventApiResponse> response) {
 
                     if(response.body() != null && response.isSuccessful()) {
-                    List<Event> eventsList = response.body().getEvents();
-                        responseCallback.onSuccess(eventsList, System.currentTimeMillis());
+                           List<Event> eventsList = response.body().getEvents();
+                       responseCallback.onSuccess(eventsList, System.currentTimeMillis());
                         //TODO saveDataInDatabase(eventsList);
                     } else {
                         responseCallback.onFailure(application.getString(R.string.error_retrieving_events));
@@ -92,10 +92,13 @@ public class EventsRepository {
         }
     }
 
+
     /*
      * Metodo che recupera i dati dal file JSON nella cartella "assets", questo funziona
      * ma ovviamente non si aggiorna con i dati di Ticketmaster in automatico
      */
+
+    /*
     public void fetchEventsFromJsonFile(String type, String city, String startDateTime, String time, long lastUpdate) {
 
         JSONParserUtil jsonParserUtil = new JSONParserUtil(application);
@@ -113,7 +116,7 @@ public class EventsRepository {
         }
     }
 
-
+*/
 
 
     /**

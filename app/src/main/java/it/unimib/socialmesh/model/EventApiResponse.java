@@ -6,26 +6,52 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.navigation.NavType;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
-public class EventApiResponse implements Parcelable {
-    private List<Event> eventList;
+public class EventApiResponse {
+    @SerializedName("_embedded")
 
-    public EventApiResponse() {}
+    @Expose
+    private Embedded embedded;
 
-    public EventApiResponse(List<Event> eventsList) {
-        this.eventList = eventsList;
+    private List<Event> events;
+    public EventApiResponse(Embedded embedded, List<Event> events) {
+        this.embedded = embedded;
+        this.events = events;
     }
+
+    private List<Event> events;
 
     public List<Event> getEvents() {
-        return eventList;
+        return events;
     }
 
-    protected EventApiResponse(Parcel in) {
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public Embedded getEmbedded() {
+        return embedded;
+    }
+
+    public void setEmbedded(Embedded embedded) {
+        this.embedded = embedded;
+    }
+
+
+    public EventApiResponse() {
+    }
+
+
+
+   /* protected EventApiResponse(Parcel in) {
         this.eventList = in.createTypedArrayList(Event.CREATOR);
-    }
+    }*/
 
-    public static final Parcelable.Creator<EventApiResponse> CREATOR = new Parcelable.Creator<EventApiResponse>() {
+  /*  public static final Parcelable.Creator<EventApiResponse> CREATOR = new Parcelable.Creator<EventApiResponse>() {
         @Override
         public EventApiResponse createFromParcel(Parcel in) {
             return new EventApiResponse(in);
@@ -35,15 +61,16 @@ public class EventApiResponse implements Parcelable {
         public EventApiResponse[] newArray(int size) {
             return new EventApiResponse[size];
         }
-    };
+    };*/
 
-    @Override
+
     public int describeContents() {
         return 0;
     }
-
+/*
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeTypedList(this.eventList);
     }
+}*/
 }

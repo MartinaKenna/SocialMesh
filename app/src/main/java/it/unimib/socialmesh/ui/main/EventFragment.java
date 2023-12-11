@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.socialmesh.R;
-import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
+
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.repository.EventsRepository;
 import it.unimib.socialmesh.util.ResponseCallback;
@@ -29,7 +29,7 @@ public class EventFragment extends Fragment implements ResponseCallback {
 
     private static final String TAG = EventFragment.class.getSimpleName();
     private RecyclerView recyclerViewEvents;
-    private RecyclerViewEventsAdapter recyclerViewEventsAdapter;
+  //  private RecyclerViewEventsAdapter recyclerViewEventsAdapter;
 
     private List<Event> eventsList;
     private EventsRepository eventsRepository;
@@ -61,9 +61,9 @@ public class EventFragment extends Fragment implements ResponseCallback {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
 
         recyclerViewEvents.setLayoutManager(layoutManager);
-        recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+       // recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
 
-        eventsRepository.fetchEventsFromJsonFile("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
+        eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
     }
 
     @Override
