@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Dates {
 
-    @SerializedName("initialStartDate")
+    @SerializedName("start")
     @Expose
-    private InitialStartDate initialStartDate;
+    private Start start;
     @SerializedName("timezone")
     @Expose
     private String timezone;
@@ -17,12 +17,12 @@ public class Dates {
     @Expose
     private Boolean spanMultipleDays;
 
-    public InitialStartDate getInitialStartDate() {
-        return initialStartDate;
+    public Start getStart() {
+        return start;
     }
 
-    public void setInitialStartDate(InitialStartDate initialStartDate) {
-        this.initialStartDate = initialStartDate;
+    public void setStart(Start start) {
+        this.start = start;
     }
 
     public String getTimezone() {

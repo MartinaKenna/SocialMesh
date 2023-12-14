@@ -1,7 +1,7 @@
 package it.unimib.socialmesh.model.jsonFields;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class InitialStartDate {
+public class Start {
 
     @SerializedName("localDate")
     @Expose

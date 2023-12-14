@@ -82,7 +82,7 @@ public class Event {
         this.images = images;
     }
     public String getDates() {
-        return dates.getInitialStartDate().getDateTime();
+        return dates.getStart().getDateTime();
     }
     public void setDates(Dates dates) {
         this.dates = dates;
