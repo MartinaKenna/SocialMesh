@@ -1,7 +1,10 @@
 package it.unimib.socialmesh.model.jsonFields;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 public class Image {
+    private static final String TAG = Image.class.getSimpleName();
 
     @SerializedName("ratio")
     @Expose
@@ -9,6 +12,7 @@ public class Image {
     @SerializedName("url")
     @Expose
     private String url;
+
     @SerializedName("width")
     @Expose
     private Integer width;
@@ -27,7 +31,8 @@ public class Image {
         this.ratio = ratio;
     }
 
-    public String getUrl() {
+    public String getUrlImages() {
+
         return url;
     }
 

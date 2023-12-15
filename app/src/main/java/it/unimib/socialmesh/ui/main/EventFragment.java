@@ -56,14 +56,7 @@ public class EventFragment extends Fragment implements ResponseCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_event, container, false);
-    }
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        recyclerViewEventsNearYou = view.findViewById(R.id.recyclerviewNearYou);
-        recyclerViewEvents = view.findViewById(R.id.recyclerviewEvents);
+        View view = inflater.inflate(R.layout.fragment_event, container, false);
         hipHopRap = view.findViewById(R.id.HipHopRap);
         latin = view.findViewById(R.id.Latin);
         rock = view.findViewById(R.id.Rock);
@@ -71,17 +64,9 @@ public class EventFragment extends Fragment implements ResponseCallback {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
-
-        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
-        recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
-        recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
-
-        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList,1);
-        recyclerViewEvents.setLayoutManager(layoutManager);
-        recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
-
+        //TODO non funzionano i button, penso a causa di come ho impostato il chiamo della recycler all'interno dell'onsuccess
         hipHopRap.setOnClickListener(item -> {
+            Log.d(TAG, "dentro button hiphop" );
             recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0,0);
             recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
             recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
@@ -107,7 +92,16 @@ public class EventFragment extends Fragment implements ResponseCallback {
             recyclerViewEvents.setLayoutManager(layoutManager);
             recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
         });
+
+        return inflater.inflate(R.layout.fragment_event, container, false);
     }
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
+
+    }
+
 
     @Override
     public void onSuccess(List<Event> eventsList, long lastUpdate) {
@@ -115,11 +109,28 @@ public class EventFragment extends Fragment implements ResponseCallback {
             this.eventsList.clear();
             this.eventsList.addAll(eventsList);
         }
+        recyclerViewEventsNearYou = getView().findViewById(R.id.recyclerviewNearYou);
+        recyclerViewEvents = getView().findViewById(R.id.recyclerviewEvents);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+
+        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
+        recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
+        recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
+
+        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList,1);
+        recyclerViewEvents.setLayoutManager(layoutManager);
+        recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+
+
+
+
+
 
         requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //recyclerViewEventsAdapter.notifyDataSetChanged();
             }
         });
     }

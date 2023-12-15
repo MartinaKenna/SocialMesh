@@ -75,10 +75,10 @@ public class Event {
     public void setUrl(String url) {
         this.url = url;
     }
-    public List<Image> getImages() {
-        return images;
+    public String getUrlImages() {
+        return images.get(0).getUrlImages();
     }
-    public void setImages(List<Image> images) {
+    public void setimages(List<Image> images) {
         this.images = images;
     }
     public String getDates() {
@@ -117,7 +117,7 @@ public class Event {
             return name;
         }
         else if(filter.equalsIgnoreCase("hiphoprap") && getType().equalsIgnoreCase("hip-hop/rap")){
-            Log.d(TAG, "dentro if" + name);
+
             return name;
         }
         else if(filter.equals("")){

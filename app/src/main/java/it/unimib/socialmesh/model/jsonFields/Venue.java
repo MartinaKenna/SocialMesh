@@ -4,14 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import it.unimib.socialmesh.model.jsonFields.Address;
-import it.unimib.socialmesh.model.jsonFields.City;
-import it.unimib.socialmesh.model.jsonFields.Country;
-import it.unimib.socialmesh.model.jsonFields.GeneralInfo;
-import it.unimib.socialmesh.model.jsonFields.Image_1;
-import it.unimib.socialmesh.model.jsonFields.Location;
-import it.unimib.socialmesh.model.jsonFields.State;
-
 public class Venue {
 
     @SerializedName("name")
@@ -35,7 +27,7 @@ public class Venue {
     private List<String> aliases;
     @SerializedName("images")
     @Expose
-    private List<Image_1> images;
+    private List<Image> images;
     @SerializedName("postalCode")
     @Expose
     private String postalCode;
@@ -112,11 +104,11 @@ public class Venue {
         this.aliases = aliases;
     }
 
-    public List<Image_1> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(List<Image_1> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 

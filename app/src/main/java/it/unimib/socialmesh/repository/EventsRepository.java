@@ -93,7 +93,7 @@ public class EventsRepository {
      * ma ovviamente non si aggiorna con i dati di Ticketmaster in automatico
      */
 
-    /*
+/*
     public void fetchEventsFromJsonFile(String type, String city, String startDateTime, String time, long lastUpdate) {
 
         JSONParserUtil jsonParserUtil = new JSONParserUtil(application);

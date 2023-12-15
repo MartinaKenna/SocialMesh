@@ -4,10 +4,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -51,14 +54,14 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         Event event = eventsList.get(position);
         if (genre == -1) {
             if (viewType == 0) {
-                holder.bind(event.getName(""), event.getDates());
+                holder.bind(event.getName(""), event.getDates(),event.getUrlImages());
             } else {
-                holder.bind(event.getName(""), event.getDates());
+                holder.bind(event.getName(""), event.getDates(),event.getUrlImages());
             }
         } else if (genre == 0) {
             if (viewType == 0) {
                 if (event.getName("hiphoprap") != null) {
-                    holder.bind(event.getName("hiphoprap"), event.getDates());
+                    holder.bind(event.getName("hiphoprap"), event.getDates(),event.getUrlImages());
                 } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
                     holder.itemView.setVisibility(View.GONE);
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
@@ -69,7 +72,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
 
             } else {
                 if (event.getName("hiphoprap") != null) {
-                    holder.bind(event.getName("hiphoprap"), event.getType());
+                    holder.bind(event.getName("hiphoprap"), event.getType(),event.getUrlImages());
                 } else {
                     holder.itemView.setVisibility(View.GONE);
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
@@ -82,7 +85,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         } else if (genre == 1) {
             if (viewType == 0) {
                 if (event.getName("latin") != null) {
-                    holder.bind(event.getName("latin"), event.getType());
+                    holder.bind(event.getName("latin"), event.getType(),event.getUrlImages());
                 } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
                     holder.itemView.setVisibility(View.GONE);
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
@@ -92,7 +95,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
                 }
             } else {
                 if (event.getName("latin") != null) {
-                    holder.bind(event.getName("latin"), event.getType());
+                    holder.bind(event.getName("latin"), event.getType(),event.getUrlImages());
                 } else {
                     holder.itemView.setVisibility(View.GONE);
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
@@ -104,7 +107,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         } else if (genre == 2) {
             if (viewType == 0) {
                 if (event.getName("rock") != null) {
-                    holder.bind(event.getName("rock"), event.getDates());
+                    holder.bind(event.getName("rock"), event.getDates(),event.getUrlImages());
                 } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
                     holder.itemView.setVisibility(View.GONE);
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
@@ -114,7 +117,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
                 }
             } else {
                 if (event.getName("rock") != null) {
-                    holder.bind(event.getName("rock"), event.getDates());
+                    holder.bind(event.getName("rock"), event.getDates(), event.getUrlImages());
                 } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
                     holder.itemView.setVisibility(View.GONE);
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
@@ -126,41 +129,6 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         }
 
 
-        /*if(genre==-1){
-            if (viewType == 0) {
-                holder.bind(event.getName(""), event.getStartDate());
-            } else {
-                holder.bind(event.getName(""), event.getStartDate());
-            }
-        }
-        else if(genre==0){
-            if (viewType == 0) {
-                if(event.getName("hiphoprap")!=null){
-                    Log.d(TAG, "Evento HIPHOP" + event.getName("hiphoprap"));
-                    holder.bind(event.getName("hiphoprap"), event.getStartDate());
-                }
-            }   else {
-                holder.bind(event.getName("hiphoprap"), event.getType());
-            }
-        }
-        else if(genre==1){
-            if (viewType == 0) {
-                if(event.getName("latin")!=null){
-                    holder.bind(event.getName("latin"), event.getStartDate());
-                }
-            } else {
-                holder.bind(event.getName("latin"), event.getType());
-            }
-        }
-        else if(genre==2){
-            if (viewType == 0) {
-                if(event.getName("rock")!=null){
-                    holder.bind(event.getName("rock"), event.getStartDate());
-                }
-            } else {
-                holder.bind(event.getName("rock"), event.getType());
-            }
-        }*/
 
     }
 
@@ -174,17 +142,20 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
 
     public class EventsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView textViewName, textViewDate;
+        private final ImageView imageView;
 
         public EventsViewHolder(View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.item1);
             textViewDate = itemView.findViewById(R.id.item2);
+            imageView = itemView.findViewById(R.id.item3);
             itemView.setOnClickListener(this);
         }
 
-        public void bind(String name, String date) {
+        public void bind(String name, String date, String image) {
             textViewName.setText(name);
             textViewDate.setText(date);
+            Glide.with(itemView.getContext()).load(image).into(imageView);
         }
 
         @Override

@@ -53,10 +53,13 @@ dependencies {
     implementation("commons-validator:commons-validator:1.7")
     implementation("com.facebook.android:facebook-android-sdk:[8,9)")
     implementation("androidx.transition:transition:1.4.0")
-    implementation ("androidx.appcompat:appcompat:1.4.0")
     implementation("commons-io:commons-io:2.15.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("org.json:json:20230227")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("androidx.appcompat:appcompat:1.4.0")
+
 }

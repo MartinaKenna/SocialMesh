@@ -20,7 +20,7 @@ public class Attraction {
     private List<String> aliases;
     @SerializedName("images")
     @Expose
-    private List<Image_2> images;
+    private List<Image> images;
     @SerializedName("classifications")
     @Expose
     private List<Classification> classifications;
@@ -61,11 +61,11 @@ public class Attraction {
         this.aliases = aliases;
     }
 
-    public List<Image_2> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(List<Image_2> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 
