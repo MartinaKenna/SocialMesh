@@ -1,10 +1,14 @@
 package it.unimib.socialmesh.model.jsonFields;
+import androidx.room.Embedded;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class Venue {
+    public Venue() {
+    }
 
     @SerializedName("name")
     @Expose
@@ -22,6 +26,7 @@ public class Venue {
     @SerializedName("locale")
     @Expose
     private String locale;
+    @Embedded
     @SerializedName("aliases")
     @Expose
     private List<String> aliases;
@@ -34,21 +39,27 @@ public class Venue {
     @SerializedName("timezone")
     @Expose
     private String timezone;
+    @Embedded(prefix = "city_")
     @SerializedName("city")
     @Expose
     private City city;
+    @Embedded(prefix = "state_")
     @SerializedName("state")
     @Expose
     private State state;
+    @Embedded(prefix = "country_")
     @SerializedName("country")
     @Expose
     private Country country;
+    @Embedded(prefix = "address_")
     @SerializedName("address")
     @Expose
     private Address address;
+    @Embedded(prefix = "location_")
     @SerializedName("location")
     @Expose
     private Location location;
+    @Embedded(prefix = "generalInfo_")
 
     @SerializedName("generalInfo")
     @Expose
@@ -178,8 +189,4 @@ public class Venue {
         this.generalInfo = generalInfo;
     }
 
-
-
-
-    }
-
+}

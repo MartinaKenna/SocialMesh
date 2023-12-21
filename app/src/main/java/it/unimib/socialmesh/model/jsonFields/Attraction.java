@@ -1,9 +1,13 @@
 package it.unimib.socialmesh.model.jsonFields;
+import androidx.room.Embedded;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Attraction {
+    public Attraction() {
+    }
 
     @SerializedName("name")
     @Expose
@@ -14,16 +18,19 @@ public class Attraction {
     @SerializedName("id")
     @Expose
     private String id;
-
+    @Embedded(prefix = "aliases_")
     @SerializedName("aliases")
     @Expose
     private List<String> aliases;
+    @Embedded(prefix = "images_")
     @SerializedName("images")
     @Expose
     private List<Image> images;
+    @Embedded(prefix = "classifications_")
     @SerializedName("classifications")
     @Expose
     private List<Classification> classifications;
+    @Embedded(prefix = "links_")
     @SerializedName("_links")
     @Expose
     private Links links;

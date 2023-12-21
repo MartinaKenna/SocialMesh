@@ -109,31 +109,28 @@ public class EventFragment extends Fragment implements ResponseCallback {
             this.eventsList.clear();
             this.eventsList.addAll(eventsList);
         }
-        recyclerViewEventsNearYou = getView().findViewById(R.id.recyclerviewNearYou);
-        recyclerViewEvents = getView().findViewById(R.id.recyclerviewEvents);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-
-        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
-        recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
-        recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
-
-        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList,1);
-        recyclerViewEvents.setLayoutManager(layoutManager);
-        recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
-
-
-
-
-
 
         requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                recyclerViewEventsNearYou = getView().findViewById(R.id.recyclerviewNearYou);
+                recyclerViewEvents = getView().findViewById(R.id.recyclerviewEvents);
+
+                RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
+                recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
+                recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
+
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList, 1);
+                recyclerViewEvents.setLayoutManager(layoutManager);
+                recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
             }
         });
+
+        // Resto del codice, se necessario
     }
+
 
     @Override
     public void onFailure(String errorMessage) {

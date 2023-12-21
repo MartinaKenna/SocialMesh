@@ -54,14 +54,14 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         Event event = eventsList.get(position);
         if (genre == -1) {
             if (viewType == 0) {
-                holder.bind(event.getName(""), event.getDates(),event.getUrlImages());
+                holder.bind(event.getName(""), event.getDates1(),event.getUrlImages());
             } else {
-                holder.bind(event.getName(""), event.getDates(),event.getUrlImages());
+                holder.bind(event.getName(""), event.getDates1(),event.getUrlImages());
             }
         } else if (genre == 0) {
             if (viewType == 0) {
                 if (event.getName("hiphoprap") != null) {
-                    holder.bind(event.getName("hiphoprap"), event.getDates(),event.getUrlImages());
+                    holder.bind(event.getName("hiphoprap"), event.getDates1(),event.getUrlImages());
                 } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
                     holder.itemView.setVisibility(View.GONE);
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
@@ -107,7 +107,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         } else if (genre == 2) {
             if (viewType == 0) {
                 if (event.getName("rock") != null) {
-                    holder.bind(event.getName("rock"), event.getDates(),event.getUrlImages());
+                    holder.bind(event.getName("rock"), event.getDates1(),event.getUrlImages());
                 } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
                     holder.itemView.setVisibility(View.GONE);
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
@@ -117,7 +117,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
                 }
             } else {
                 if (event.getName("rock") != null) {
-                    holder.bind(event.getName("rock"), event.getDates(), event.getUrlImages());
+                    holder.bind(event.getName("rock"), event.getDates1(), event.getUrlImages());
                 } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
                     holder.itemView.setVisibility(View.GONE);
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();

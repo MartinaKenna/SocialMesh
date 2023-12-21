@@ -3,6 +3,8 @@ package it.unimib.socialmesh.repository;
 import android.app.Application;
 import android.util.Log;
 
+import it.unimib.socialmesh.database.EventDao;
+import it.unimib.socialmesh.database.EventRoomDatabase;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.service.EventApiService;
 
@@ -21,6 +23,7 @@ import retrofit2.Response;
 public class EventsRepository {
     private static final String TAG = EventsRepository.class.getSimpleName();
     private final Application application;
+    private final EventDao eventDao;
     private final EventApiService eventsApiService;
     private final ResponseCallback responseCallback;
 
@@ -32,17 +35,17 @@ public class EventsRepository {
         this.responseCallback = responseCallback;
 
         //TODO da sistemare sta roba
-        //NewsRoomDatabase newsRoomDatabase = ServiceLocator.getInstance().getNewsDao(application);
-        //this.newsDao = newsRoomDatabase.newsDao();
+        EventRoomDatabase eventRoomDatabase = ServiceLocator.getInstance().getEventDao(application);
+        this.eventDao = eventRoomDatabase.eventDao();
     }
 
 
     /*
-    * Metodo scritto secondo le indicazioni del prof, al momento non funziona
-    *
-    * Dovrebbe recuperare i dati da TicketMaster e parsarli con una classe
-    * GSON gestita da Retrofit
-    * */
+     * Metodo scritto secondo le indicazioni del prof, al momento non funziona
+     *
+     * Dovrebbe recuperare i dati da TicketMaster e parsarli con una classe
+     * GSON gestita da Retrofit
+     * */
     public void fetchEvents(String type, String city, String startDateTime, String time, long lastUpdate) {
 
         long currentTime = System.currentTimeMillis();
@@ -53,7 +56,7 @@ public class EventsRepository {
         //if (currentTime - lastUpdate > FRESH_TIMEOUT) {
         if (true) {
             Call<EventApiResponse> eventsResponseCall = eventsApiService.getEvents(type, city, startDateTime, time,
-                                                                                    "ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j");
+                    "ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j");
 
             eventsResponseCall.enqueue(new Callback<EventApiResponse>() {
                 @Override
@@ -63,7 +66,7 @@ public class EventsRepository {
                     if(response.body() != null && response.isSuccessful()) {
                         List<Event> eventsList = response.body().getEvents();
                         responseCallback.onSuccess(eventsList, System.currentTimeMillis());
-                        //TODO saveDataInDatabase(eventsList);
+                        saveDataInDatabase(eventsList);
                     } else {
                         responseCallback.onFailure(application.getString(R.string.error_retrieving_events));
                     }
@@ -82,8 +85,8 @@ public class EventsRepository {
             });
         } else {
             //TODO
-            //Log.d(TAG, application.getString(R.string.data_read_from_local_database));
-            //readDataFromDatabase(lastUpdate);
+            //  Log.d(TAG, application.getString(R.string.data_read_from_local_database));
+            readDataFromDatabase(lastUpdate);
         }
     }
 
@@ -118,43 +121,43 @@ public class EventsRepository {
      * Saves the news in the local database.
      * The method is executed in a Runnable because the database access
      * cannot been executed in the main thread.
-     * @param newsList the list of news to be written in the local database.
+     * @param eventsList the list of news to be written in the local database.
      */
-    /*
-    private void saveDataInDatabase(List<News> newsList) {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+
+    private void saveDataInDatabase(List<Event> eventsList) {
+        EventRoomDatabase.databaseWriteExecutor.execute(() -> {
             // Reads the news from the database
-            List<News> allNews = newsDao.getAll();
+            List<Event> allEvents = eventDao.getAll();
 
             // Checks if the news just downloaded has already been downloaded earlier
             // in order to preserve the news status (marked as favorite or not)
-            for (News news : allNews) {
+            for (Event event : allEvents) {
                 // This check works because News and NewsSource classes have their own
                 // implementation of equals(Object) and hashCode() methods
-                if (newsList.contains(news)) {
+                if (eventsList.contains(event)) {
                     // The primary key and the favorite status is contained only in the News objects
                     // retrieved from the database, and not in the News objects downloaded from the
                     // Web Service. If the same news was already downloaded earlier, the following
                     // line of code replaces the the News object in newsList with the corresponding
                     // News object saved in the database, so that it has the primary key and the
                     // favorite status.
-                    newsList.set(newsList.indexOf(news), news);
+                    eventsList.set(eventsList.indexOf(event), event);
                 }
             }
 
             // Writes the news in the database and gets the associated primary keys
-            List<Long> insertedNewsIds = newsDao.insertNewsList(newsList);
-            for (int i = 0; i < newsList.size(); i++) {
+            List<Long> insertedEventsIds = eventDao.insertEventsList(eventsList);
+            for (int i = 0; i < eventsList.size(); i++) {
                 // Adds the primary key to the corresponding object News just downloaded so that
                 // if the user marks the news as favorite (and vice-versa), we can use its id
                 // to know which news in the database must be marked as favorite/not favorite
-                newsList.get(i).setId(insertedNewsIds.get(i));
+                eventsList.get(i).setLocalId(insertedEventsIds.get(i));
             }
 
-            responseCallback.onSuccess(newsList, System.currentTimeMillis());
+            responseCallback.onSuccess(eventsList, System.currentTimeMillis());
         });
     }
-    */
+
 
 
     /**
@@ -162,11 +165,11 @@ public class EventsRepository {
      * The method is executed in a Runnable because the database access
      * cannot been executed in the main thread.
      */
-    /*
+
     private void readDataFromDatabase(long lastUpdate) {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
-            responseCallback.onSuccess(newsDao.getAll(), lastUpdate);
+        EventRoomDatabase.databaseWriteExecutor.execute(() -> {
+            responseCallback.onSuccess(eventDao.getAll(), lastUpdate);
         });
     }
-    */
+
 }

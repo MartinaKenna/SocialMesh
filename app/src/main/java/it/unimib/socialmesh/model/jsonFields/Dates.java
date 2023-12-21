@@ -1,15 +1,20 @@
 package it.unimib.socialmesh.model.jsonFields;
+import androidx.room.Embedded;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Dates {
-
+    public Dates() {
+    }
+    @Embedded(prefix = "start_")
     @SerializedName("start")
     @Expose
     private Start start;
     @SerializedName("timezone")
     @Expose
     private String timezone;
+    @Embedded(prefix = "status_")
     @SerializedName("status")
     @Expose
     private Status status;

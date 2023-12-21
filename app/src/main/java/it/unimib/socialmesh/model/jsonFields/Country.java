@@ -2,6 +2,8 @@ package it.unimib.socialmesh.model.jsonFields;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class Country {
+    public Country() {
+    }
 
     @SerializedName("name")
     @Expose

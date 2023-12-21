@@ -1,5 +1,8 @@
 package it.unimib.socialmesh.util;
 
+import android.app.Application;
+
+import it.unimib.socialmesh.database.EventRoomDatabase;
 import it.unimib.socialmesh.repository.EventsRepository;
 import it.unimib.socialmesh.service.EventApiService;
 import retrofit2.Retrofit;
@@ -37,9 +40,9 @@ public class ServiceLocator {
         return retrofit.create(EventApiService.class);
     }
 
-    /*
-    public NewsRoomDatabase getNewsDao(Application application) {
-        return NewsRoomDatabase.getDatabase(application);
+
+    public EventRoomDatabase getEventDao(Application application) {
+        return EventRoomDatabase.getDatabase(application);
     }
-    */
+
 }

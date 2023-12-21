@@ -4,51 +4,67 @@ import android.util.Log;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import it.unimib.socialmesh.model.jsonFields.AgeRestrictions;
 import it.unimib.socialmesh.model.jsonFields.Dates;
 import it.unimib.socialmesh.model.jsonFields.Embedded_1;
 import it.unimib.socialmesh.model.jsonFields.Image;
 import it.unimib.socialmesh.repository.EventsRepository;
+import it.unimib.socialmesh.util.Converters;
 
+
+@Entity
 public class Event {
+    @PrimaryKey(autoGenerate = true)
+    private long localId;
 
     private static final String TAG = EventsRepository.class.getSimpleName();
-
     @SerializedName("name")
     @Expose
+    @ColumnInfo(name = "name")
     private String name;
     @SerializedName("type")
     @Expose
     private String type;
     @SerializedName("id")
     @Expose
-    private String id;
+    private String remoteId;
 
-    @SerializedName("url")
-    @Expose
-    private String url;
+    public long getLocalId() {
+        return localId;
+    }
 
+    public void setLocalId(long localId) {
+        this.localId = localId;
+    }
+
+    @TypeConverters(Converters.class)
     @SerializedName("images")
     @Expose
     private List<Image> images;
-
+    @Embedded(prefix = "dates_")
     @SerializedName("dates")
     @Expose
     private Dates dates;
 
-    @SerializedName("info")
-    @Expose
-    private String info;
-
-    @SerializedName("ageRestrictions")
-    @Expose
-    private AgeRestrictions ageRestrictions;
-
-    @SerializedName("_embedded")
-    @Expose
-    private Embedded_1 embedded;
-
+    /* @SerializedName("info")
+     @Expose
+     private String info;
+     @Embedded(prefix = "ageRestrictions_")
+   @SerializedName("ageRestrictions")
+     @Expose
+     private AgeRestrictions ageRestrictions;
+     @Embedded(prefix = "_embedded_")
+     @SerializedName("_embedded")
+     @Expose
+     private Embedded_1 embedded;
+ */
+    public Event(){}
     public String getName() {
         return name;
     }
@@ -63,37 +79,39 @@ public class Event {
     public void setType(String type) {
         this.type = type;
     }
-    public String getId() {
-        return id;
+    public String getRemoteId() {
+        return remoteId;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setRemoteId(String remoteId) {
+        this.remoteId = remoteId;
     }
-    public String getUrl() {
-        return url;
+
+    public Dates getDates() {
+        return dates;
     }
-    public void setUrl(String url) {
-        this.url = url;
-    }
-    public String getUrlImages() {
-        return images.get(0).getUrlImages();
-    }
-    public void setimages(List<Image> images) {
-        this.images = images;
-    }
-    public String getDates() {
+
+    public String getDates1() {
         return dates.getStart().getDateTime();
     }
+
+
+    public List<Image> getImages() {
+        return images;
+    }
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
     public void setDates(Dates dates) {
         this.dates = dates;
     }
-    public String getInfo() {
+   /* public String getInfo() {
         return info;
     }
     public void setInfo(String info) {
         this.info = info;
     }
-    public AgeRestrictions getAgeRestrictions() {
+   public AgeRestrictions getAgeRestrictions() {
         return ageRestrictions;
     }
     public void setAgeRestrictions(AgeRestrictions ageRestrictions) {
@@ -107,7 +125,7 @@ public class Event {
 
     public void setEmbedded(Embedded_1 embedded) {
         this.embedded = embedded;
-    }
+    }*/
 
     public String getName(String filter) {
         if(filter.equalsIgnoreCase("rock") && getType().equalsIgnoreCase("rock")){
@@ -117,7 +135,7 @@ public class Event {
             return name;
         }
         else if(filter.equalsIgnoreCase("hiphoprap") && getType().equalsIgnoreCase("hip-hop/rap")){
-
+            Log.d(TAG, "dentro if" + name);
             return name;
         }
         else if(filter.equals("")){
@@ -125,7 +143,8 @@ public class Event {
         }
         return null;
     }
+    public String getUrlImages() {
+        return images.get(0).getUrlImages();
+    }
 
 }
-
-

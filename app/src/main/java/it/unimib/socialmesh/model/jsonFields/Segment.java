@@ -3,6 +3,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Segment {
+    public Segment() {
+    }
+
     @SerializedName("id")
     @Expose
     private String id;
@@ -26,3 +29,4 @@ public class Segment {
         this.name = name;
     }
 }
+

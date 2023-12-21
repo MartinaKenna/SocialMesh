@@ -2,6 +2,9 @@ package it.unimib.socialmesh.model.jsonFields;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class SubGenre {
+    public SubGenre() {
+    }
+
     @SerializedName("id")
     @Expose
     private String id;

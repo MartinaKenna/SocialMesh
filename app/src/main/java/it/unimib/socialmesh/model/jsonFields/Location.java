@@ -3,6 +3,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class Location {
 
+    public Location() {
+    }
+
     @SerializedName("longitude")
     @Expose
     private String longitude;

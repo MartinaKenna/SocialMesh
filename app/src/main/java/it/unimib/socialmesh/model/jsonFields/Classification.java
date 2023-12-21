@@ -1,16 +1,22 @@
 package it.unimib.socialmesh.model.jsonFields;
+import androidx.room.Embedded;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Classification {
+    public Classification() {
+    }
 
-
+    @Embedded(prefix = "segment_")
     @SerializedName("segment")
     @Expose
     private Segment segment;
+    @Embedded(prefix = "genre_")
     @SerializedName("genre")
     @Expose
     private Genre genre;
+    @Embedded(prefix = "subGenre_")
     @SerializedName("subGenre")
     @Expose
     private SubGenre subGenre;
