@@ -21,5 +21,3 @@ public class LoginActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, fragment).addToBackStack(null).commit();
     }
 }
-
-
