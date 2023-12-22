@@ -33,4 +33,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="chat">Chat</string>
     <string name="error_retrieving_events">Si è verificato un problema nel recuperare gli eventi</string>
+    <string name="logout">Logout</string>
+    <string name="nome">Nome:</string>
+    <string name="cognome">Cognome:</string>
+    <string name="nome_e_cognome">Nome e Cognome :</string>
+    <string name="email_1">Email:</string>
 </resources>

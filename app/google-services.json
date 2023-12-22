@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "458617322565",
+    "project_id": "socialmesh-8dbc4",
+    "storage_bucket": "socialmesh-8dbc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458617322565:android:4f2f4527dcadb1c202f72c",
+        "android_client_info": {
+          "package_name": "it.unimib.socialmesh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3WFIwU3fCEYmeuX0APxNQibeo6G4Kuww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
