@@ -191,7 +191,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:text="@string/logout"
-                android:id="@+id/buttonLogout" />
+                android:id="@+id/buttonLogout"
+                android:backgroundTint="@color/socialmesh_orange"
+                android:textColor="@color/white"
+                />
 
 
 
