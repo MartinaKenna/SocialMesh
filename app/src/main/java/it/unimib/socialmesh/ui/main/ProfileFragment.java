@@ -53,8 +53,8 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
-                    fullName.setText("First Name: " + user.fullName);
-                    userEmail.setText("Email: " + user.email);
+                    fullName.setText(user.fullName);
+                    userEmail.setText(user.email);
                 }
             }
 
