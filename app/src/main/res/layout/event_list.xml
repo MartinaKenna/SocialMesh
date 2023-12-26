@@ -5,26 +5,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:layout_marginRight="20dp"
-    android:background="@drawable/background_item">
+    android:background="@drawable/info_evento">
 
-        <ImageView
-            android:id="@+id/item3"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            app:cardCornerRadius="8dp"
+            android:layout_margin="5dp"
+            android:elevation="10dp">
 
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-             />
+                <ImageView
+                    android:id="@+id/item3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"
+                    />
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/item1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item3"
+            android:layout_below="@id/cardview"
             android:layout_centerHorizontal="true"
-            android:text="Titolo" />
+            android:text="Titolo"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/item2"
@@ -33,6 +40,7 @@
             android:layout_below="@id/item1"
             android:layout_centerHorizontal="true"
             android:text="Data"
+            android:textColor="@color/black"
             />
 
 

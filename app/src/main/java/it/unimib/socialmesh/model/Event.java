@@ -1,4 +1,5 @@
 package it.unimib.socialmesh.model;
+import android.graphics.Paint;
 import android.util.Log;
 
 import java.util.List;
@@ -11,8 +12,10 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import it.unimib.socialmesh.model.jsonFields.AgeRestrictions;
+import it.unimib.socialmesh.model.jsonFields.Classification;
 import it.unimib.socialmesh.model.jsonFields.Dates;
 import it.unimib.socialmesh.model.jsonFields.Embedded_1;
+import it.unimib.socialmesh.model.jsonFields.Genre;
 import it.unimib.socialmesh.model.jsonFields.Image;
 import it.unimib.socialmesh.repository.EventsRepository;
 import it.unimib.socialmesh.util.Converters;
@@ -20,10 +23,12 @@ import it.unimib.socialmesh.util.Converters;
 
 @Entity
 public class Event {
+
+
     @PrimaryKey(autoGenerate = true)
     private long localId;
 
-    private static final String TAG = EventsRepository.class.getSimpleName();
+    private static final String TAG = Event.class.getSimpleName();
     @SerializedName("name")
     @Expose
     @ColumnInfo(name = "name")
@@ -47,10 +52,20 @@ public class Event {
     @SerializedName("images")
     @Expose
     private List<Image> images;
+
+    @TypeConverters(Converters.class)
+    @SerializedName("classifications")
+    @Expose
+    private List<Classification> classifications;
     @Embedded(prefix = "dates_")
     @SerializedName("dates")
     @Expose
     private Dates dates;
+
+    @Embedded(prefix = "genre_")
+    @SerializedName("genre")
+    @Expose
+    private Genre genre;
 
     /* @SerializedName("info")
      @Expose
@@ -65,9 +80,31 @@ public class Event {
      private Embedded_1 embedded;
  */
     public Event(){}
-    public String getName() {
+
+    //getName con il filtro del max 20 parole
+    public String getName1() {
+        if (name.length() > 20) {
+            int count = 0;
+            StringBuilder word = new StringBuilder();
+
+            while (count < name.length()) {
+                char character = name.charAt(count);
+                if (character == '-' || character == ':') {
+                    return word.toString();
+                }
+                word.append(character);
+                count++;
+            }
+        }
         return name;
     }
+
+    public String getName(){
+        return name;
+    }
+
+
+
 
     public void setName(String name) {
         this.name = name;
@@ -91,7 +128,19 @@ public class Event {
     }
 
     public String getDates1() {
-        return dates.getStart().getDateTime();
+        int count = 0;
+        StringBuilder date = new StringBuilder();
+
+        while (count < dates.getStart().getDateTime().length()) {
+                char character = dates.getStart().getDateTime().charAt(count);
+                if (character == 'T') {
+                    return date.toString();
+                }
+                date.append(character);
+                count++;
+            }
+
+        return date.toString();
     }
 
 
@@ -104,6 +153,27 @@ public class Event {
 
     public void setDates(Dates dates) {
         this.dates = dates;
+    }
+
+    public Genre getGenre(){
+        return genre;
+    }
+
+    public void setGenre(Genre genre){
+        this.genre=genre;
+    }
+
+    public List<Classification> getClassifications() {
+        return classifications;
+    }
+
+    public void setClassifications(List<Classification> classifications){
+        this.classifications=classifications;
+    }
+
+    public String getGenreName(){
+        Log.d(TAG, classifications.get(0).getGenre().getName());
+        return classifications.get(0).getGenre().getName();
     }
    /* public String getInfo() {
         return info;
@@ -127,22 +197,6 @@ public class Event {
         this.embedded = embedded;
     }*/
 
-    public String getName(String filter) {
-        if(filter.equalsIgnoreCase("rock") && getType().equalsIgnoreCase("rock")){
-            return name;
-        }
-        else if(filter.equalsIgnoreCase("latin") && getType().equalsIgnoreCase("latin")){
-            return name;
-        }
-        else if(filter.equalsIgnoreCase("hiphoprap") && getType().equalsIgnoreCase("hip-hop/rap")){
-            Log.d(TAG, "dentro if" + name);
-            return name;
-        }
-        else if(filter.equals("")){
-            return name;
-        }
-        return null;
-    }
     public String getUrlImages() {
         return images.get(0).getUrlImages();
     }

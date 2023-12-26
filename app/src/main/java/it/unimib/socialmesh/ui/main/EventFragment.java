@@ -1,11 +1,17 @@
 package it.unimib.socialmesh.ui.main;
 
+import android.content.res.Resources;
+import android.graphics.Outline;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,11 +36,13 @@ import it.unimib.socialmesh.util.ResponseCallback;
 public class EventFragment extends Fragment implements ResponseCallback {
 
     private static final String TAG = EventFragment.class.getSimpleName();
+    private TextView nearyou, lastadded;
     private List<Event> eventsList;
     private EventsRepository eventsRepository;
 
     private RecyclerView recyclerViewEvents, recyclerViewEventsNearYou;
-    private View rootView, listEvents, listNearyou;
+    private View rootView, listEvents, listNearyou, barra1, barra2, barra3;
+    private SearchView searchView;
     private RecyclerViewEventsAdapter recyclerViewEventsAdapterNearYou, recyclerViewEventsAdapter;
 
     private Button hipHopRap, latin, rock;
@@ -51,6 +59,9 @@ public class EventFragment extends Fragment implements ResponseCallback {
         super.onCreate(savedInstanceState);
         eventsRepository = new EventsRepository(requireActivity().getApplication(), this);
         eventsList = new ArrayList<>();
+        eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
+
+
     }
 
     @Override
@@ -60,73 +71,103 @@ public class EventFragment extends Fragment implements ResponseCallback {
         hipHopRap = view.findViewById(R.id.HipHopRap);
         latin = view.findViewById(R.id.Latin);
         rock = view.findViewById(R.id.Rock);
+        recyclerViewEventsNearYou = view.findViewById(R.id.recyclerviewNearYou);
+        recyclerViewEvents = view.findViewById(R.id.recyclerviewEvents);
+        searchView = view.findViewById(R.id.searchView);
+        barra1 = view.findViewById(R.id.barra);
+        barra2 = view.findViewById(R.id.barra2);
+        barra3 = view.findViewById(R.id.barra3);
+        nearyou = view.findViewById(R.id.nearYou);
+        lastadded = view.findViewById(R.id.lastAdded);
+        int screenHeight = getResources().getDisplayMetrics().heightPixels;
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        hipHopRap.setTranslationX(-1000);
+        latin.setTranslationY(screenHeight);
+        rock.setTranslationX(1000);
+        recyclerViewEvents.setTranslationX(1000);
+        recyclerViewEventsNearYou.setTranslationX(1000);
+        searchView.setTranslationY(screenHeight);
+        barra2.setTranslationX(-1000);
+        barra1.setTranslationY(screenHeight);
+        barra3.setTranslationX(1000);
+        nearyou.setTranslationX(1500);
+        lastadded.setTranslationX(1500);
 
-        //TODO non funzionano i button, penso a causa di come ho impostato il chiamo della recycler all'interno dell'onsuccess
+        hipHopRap.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(500).start();
+        latin.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(800).start();
+        rock.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(1100).start();
+        searchView.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1400).start();
+        recyclerViewEventsNearYou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(1700).start();
+        recyclerViewEvents.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2000).start();
+        barra2.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
+        barra1.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
+        barra3.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
+        nearyou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
+        lastadded.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
+
+        rock.setOnClickListener(item -> {
+            recyclerViewEventsAdapter.filterByGenre("rock");
+            recyclerViewEventsAdapterNearYou.filterByGenre("rock");
+        });
+
         hipHopRap.setOnClickListener(item -> {
-            Log.d(TAG, "dentro button hiphop" );
-            recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0,0);
-            recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
-            recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
-            recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList,1, 0);
-            recyclerViewEvents.setLayoutManager(layoutManager);
-            recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+            recyclerViewEventsAdapter.filterByGenre("Hip-Hop/Rap");
+            recyclerViewEventsAdapterNearYou.filterByGenre("Hip-Hop/Rap");
         });
 
         latin.setOnClickListener(item -> {
-            recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0,1);
-            recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
-            recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
-            recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList,1, 1);
-            recyclerViewEvents.setLayoutManager(layoutManager);
-            recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+            recyclerViewEventsAdapter.filterByGenre("latin");
+            recyclerViewEventsAdapterNearYou.filterByGenre("latin");
         });
 
-        rock.setOnClickListener(item -> {
-            recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0,2);
-            recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
-            recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
-            recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList,1, 2);
-            recyclerViewEvents.setLayoutManager(layoutManager);
-            recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            //TODO raga funziona il filtro ma la searchview non permette di scriverci sopra, solo di incollare  del testo. Da questo problema solo dentro il fragment_event.
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                recyclerViewEventsAdapter.filterByQuery(query);
+                recyclerViewEventsAdapterNearYou.filterByQuery(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recyclerViewEventsAdapter.filterByQuery(newText);
+                recyclerViewEventsAdapterNearYou.filterByQuery(newText);
+                recyclerViewEventsAdapter.notifyDataSetChanged();
+                return true;
+            }
         });
 
-        return inflater.inflate(R.layout.fragment_event, container, false);
+
+
+        return view;
+
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
-
     }
 
 
     @Override
     public void onSuccess(List<Event> eventsList, long lastUpdate) {
         if (eventsList != null) {
-            this.eventsList.clear();
-            this.eventsList.addAll(eventsList);
+            requireActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                    recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
+                    recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
+                    recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
+
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                    recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList, 1);
+                    recyclerViewEvents.setLayoutManager(layoutManager);
+                    recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+                }
+            });
         }
-
-        requireActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                recyclerViewEventsNearYou = getView().findViewById(R.id.recyclerviewNearYou);
-                recyclerViewEvents = getView().findViewById(R.id.recyclerviewEvents);
-
-                RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
-                recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
-                recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
-
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList, 1);
-                recyclerViewEvents.setLayoutManager(layoutManager);
-                recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
-            }
-        });
 
         // Resto del codice, se necessario
     }

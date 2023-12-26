@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/socialmesh_orange"
+    android:background="@color/white"
     android:descendantFocusability="blocksDescendants">
 
         <Button
@@ -13,11 +13,12 @@
             android:layout_height="60dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:backgroundTint="#6AFFFFFF"
+
+            android:backgroundTint="#94FF6503"
             android:text="Hip-HopRap"
+            android:textAlignment="center"
             android:textColor="#000000"
-            android:textColorLink="#30FFFFFF"
-            android:textAlignment="center" />
+            android:textColorLink="#30FFFFFF" />
 
         <Button
             android:id="@+id/Latin"
@@ -27,7 +28,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="30dp"
             android:layout_toEndOf="@id/HipHopRap"
-            android:backgroundTint="#6AFFFFFF"
+            android:backgroundTint="#94FF6503"
             android:text="Latin"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -41,32 +42,44 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:layout_toEndOf="@id/Latin"
-            android:backgroundTint="#6AFFFFFF"
+            android:backgroundTint="#94FF6503"
             android:text="Rock"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textColorLink="#30FFFFFF" />
 
-
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="232dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+                app:cardCornerRadius="40dp"
             android:layout_below="@id/Latin"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/icona_di_ricerca"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp">
 
-        <TextView
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:hint="Cerca..."
+                    android:textColorLink="#30FFFFFF"
+                    android:backgroundTint="#6AFFFFFF"
+                    />
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+<TextView
             android:id="@+id/nearYou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/searchView"
+            android:layout_below="@id/cardview"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:backgroundTint="@color/white"
             android:text="Near You"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -87,7 +100,7 @@
             android:layout_below="@id/barra"
             android:layout_marginTop="15dp"
             android:text="Last Added"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginStart="20dp"
             android:textSize="20dp"/>
@@ -102,7 +115,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
-            android:background="@color/white"
+            android:background="@color/black"
             tools:ignore="MissingConstraints" />
         <View
             android:id="@+id/barra2"
@@ -111,7 +124,7 @@
             android:layout_below="@id/recyclerviewEvents"
             android:layout_marginEnd="370dp"
             android:layout_marginStart="30dp"
-            android:background="@color/white"
+            android:background="@color/black"
             tools:ignore="MissingConstraints"
             android:layout_marginTop="10dp"/>
 
@@ -122,7 +135,7 @@
             android:layout_below="@id/recyclerviewEvents"
             android:layout_marginEnd="30dp"
             android:layout_marginStart="370dp"
-            android:background="@color/white"
+            android:background="@color/black"
             tools:ignore="MissingConstraints"
             android:layout_marginTop="10dp"/>
 

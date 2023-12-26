@@ -18,6 +18,6 @@ public class Constants {
     public static final int FRESH_TIMEOUT = 1000 * 60 * 60; // 1 hour in milliseconds
     // Constants for Room database
     public static final String EVENTS_DATABASE_NAME = "events_db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
 }

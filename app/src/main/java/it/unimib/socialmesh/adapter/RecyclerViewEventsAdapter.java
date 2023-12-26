@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.socialmesh.R;
@@ -20,20 +21,46 @@ import it.unimib.socialmesh.ui.main.EventFragment;
 
 public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerViewEventsAdapter.EventsViewHolder> {
     private static final String TAG = RecyclerViewEventsAdapter.class.getSimpleName();
-    private final List<Event> eventsList;
     private final int viewType;
+    private final  List<Event> eventsList; // Lista originale
+    private List<Event> filteredList; // Lista filtrata
     private int genre;
 
-    public RecyclerViewEventsAdapter(List<Event> eventsList, int viewType, int genre) {
-        this.eventsList = eventsList;
-        this.viewType = viewType;
-        this.genre = genre;
-    }
 
     public RecyclerViewEventsAdapter(List<Event> eventsList, int viewType) {
         this.eventsList = eventsList;
         this.viewType = viewType;
-        this.genre = -1;
+        this.filteredList= new ArrayList<>(eventsList);
+
+    }
+
+    public void filterByGenre(String genre) {
+        filteredList.clear();
+        for (Event event : eventsList) {
+            if (event.getGenreName().equalsIgnoreCase(genre)) {
+                filteredList.add(event);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void filterByQuery(String query){
+        filteredList.clear();
+        for (Event event : eventsList) {
+            if (event.getGenreName().equalsIgnoreCase(query)) {
+                filteredList.add(event);
+            }
+            if (event.getName().equalsIgnoreCase(query)){
+                filteredList.add(event);
+            }
+            if(event.getDates1().equalsIgnoreCase(query)){
+                filteredList.add(event);
+            }
+        }
+        if (filteredList.isEmpty()) {
+            filteredList.addAll(eventsList);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -51,91 +78,19 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull EventsViewHolder holder, int position) {
-        Event event = eventsList.get(position);
-        if (genre == -1) {
-            if (viewType == 0) {
-                holder.bind(event.getName(""), event.getDates1(),event.getUrlImages());
-            } else {
-                holder.bind(event.getName(""), event.getDates1(),event.getUrlImages());
-            }
-        } else if (genre == 0) {
-            if (viewType == 0) {
-                if (event.getName("hiphoprap") != null) {
-                    holder.bind(event.getName("hiphoprap"), event.getDates1(),event.getUrlImages());
-                } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
-                    holder.itemView.setVisibility(View.GONE);
-                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-                    params.height = 0;
-                    params.width = 0;
-                    holder.itemView.setLayoutParams(params);
-                }
-
-            } else {
-                if (event.getName("hiphoprap") != null) {
-                    holder.bind(event.getName("hiphoprap"), event.getType(),event.getUrlImages());
-                } else {
-                    holder.itemView.setVisibility(View.GONE);
-                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-                    params.height = 0;
-                    params.width = 0;
-                    holder.itemView.setLayoutParams(params);
-                }
-
-            }
-        } else if (genre == 1) {
-            if (viewType == 0) {
-                if (event.getName("latin") != null) {
-                    holder.bind(event.getName("latin"), event.getType(),event.getUrlImages());
-                } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
-                    holder.itemView.setVisibility(View.GONE);
-                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-                    params.height = 0;
-                    params.width = 0;
-                    holder.itemView.setLayoutParams(params);
-                }
-            } else {
-                if (event.getName("latin") != null) {
-                    holder.bind(event.getName("latin"), event.getType(),event.getUrlImages());
-                } else {
-                    holder.itemView.setVisibility(View.GONE);
-                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-                    params.height = 0;
-                    params.width = 0;
-                    holder.itemView.setLayoutParams(params);
-                }
-            }
-        } else if (genre == 2) {
-            if (viewType == 0) {
-                if (event.getName("rock") != null) {
-                    holder.bind(event.getName("rock"), event.getDates1(),event.getUrlImages());
-                } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
-                    holder.itemView.setVisibility(View.GONE);
-                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-                    params.height = 0;
-                    params.width = 0;
-                    holder.itemView.setLayoutParams(params);
-                }
-            } else {
-                if (event.getName("rock") != null) {
-                    holder.bind(event.getName("rock"), event.getDates1(), event.getUrlImages());
-                } else { //setto a 0 la visibilità, l'altezza e la larghezza dell'item ignorandolo
-                    holder.itemView.setVisibility(View.GONE);
-                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-                    params.height = 0;
-                    params.width = 0;
-                    holder.itemView.setLayoutParams(params);
-                }
+        Event event = filteredList.get(position);
+        //eventuale selezione per far stampare certe cose solo in una recycler o in entrambe
+        if (viewType == 0) {
+            holder.bind(event.getName1(), event.getDates1(),event.getUrlImages());
+        } else {
+            holder.bind(event.getName1(), event.getDates1(),event.getUrlImages());
             }
         }
 
-
-
-    }
-
     @Override
     public int getItemCount() {
-        if (eventsList != null) {
-            return eventsList.size();
+        if (filteredList != null) {
+            return filteredList.size();
         }
         return 0;
     }
