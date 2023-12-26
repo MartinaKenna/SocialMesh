@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,13 +22,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.Arrays;
+import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,11 +49,19 @@ public class LoginTabFragment extends Fragment {
     ImageButton fb, google, twitter;
     Button login, register;
     Intent intent;
+    private FirebaseAuth mAuth;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         ViewGroup root= (ViewGroup) inflater.inflate(R.layout.login_fragment, container, false);
-
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            if (getActivity() != null) {
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        }
         Context context = requireContext();
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(context,gso);
@@ -77,21 +90,9 @@ public class LoginTabFragment extends Fragment {
         twitter.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1100).start();
         login.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(800).start();
 
-        login.setOnClickListener(item -> {
-            String email = emailTextInput.getEditText().getText().toString();
-            String password = passTextInput.getEditText().getText().toString();
-
-            //TODO rimuovere sto coso quando non serve piu'
-            navigateToSecondActivity();
-
-
-            if(isEmailOk(email) && isPasswordOk(password)) {
-                emailTextInput.setError(null);
-                passTextInput.setError(null);
-            }
-            else{
-                Snackbar.make(requireActivity().findViewById(android.R.id.content), "E-mail o Password errate", Snackbar.LENGTH_SHORT).show();
-            }
+        login.setOnClickListener(v -> {
+            // Esegui azioni quando il pulsante di registrazione viene cliccato
+            authenticateUser();
         });
         //Facebook
         fb.setOnClickListener(item -> {
@@ -118,6 +119,25 @@ public class LoginTabFragment extends Fragment {
 
         return root;
     }
+
+    private void authenticateUser() {
+        String email = emailTextInput.getEditText().getText().toString();
+        String password = passTextInput.getEditText().getText().toString();
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(requireContext(), "Perfavore completa tutti i campi", Toast.LENGTH_LONG).show();
+            return;
+        }
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        navigateToSecondActivity();
+                    } else {
+                        Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);

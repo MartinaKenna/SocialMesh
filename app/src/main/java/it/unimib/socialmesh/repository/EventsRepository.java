@@ -41,11 +41,11 @@ public class EventsRepository {
 
 
     /*
-     * Metodo scritto secondo le indicazioni del prof, al momento non funziona
-     *
-     * Dovrebbe recuperare i dati da TicketMaster e parsarli con una classe
-     * GSON gestita da Retrofit
-     * */
+    * Metodo scritto secondo le indicazioni del prof, al momento non funziona
+    *
+    * Dovrebbe recuperare i dati da TicketMaster e parsarli con una classe
+    * GSON gestita da Retrofit
+    * */
     public void fetchEvents(String type, String city, String startDateTime, String time, long lastUpdate) {
 
         long currentTime = System.currentTimeMillis();
@@ -56,7 +56,7 @@ public class EventsRepository {
         //if (currentTime - lastUpdate > FRESH_TIMEOUT) {
         if (true) {
             Call<EventApiResponse> eventsResponseCall = eventsApiService.getEvents(type, city, startDateTime, time,
-                    "ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j");
+                                                                                    "ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j");
 
             eventsResponseCall.enqueue(new Callback<EventApiResponse>() {
                 @Override
@@ -85,7 +85,7 @@ public class EventsRepository {
             });
         } else {
             //TODO
-            //  Log.d(TAG, application.getString(R.string.data_read_from_local_database));
+          //  Log.d(TAG, application.getString(R.string.data_read_from_local_database));
             readDataFromDatabase(lastUpdate);
         }
     }

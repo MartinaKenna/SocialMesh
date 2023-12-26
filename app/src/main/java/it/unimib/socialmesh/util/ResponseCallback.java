@@ -11,4 +11,3 @@ public interface ResponseCallback {
     void onFailure(String errorMessage);
 }
 
-

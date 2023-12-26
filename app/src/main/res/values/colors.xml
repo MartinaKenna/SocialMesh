@@ -11,4 +11,20 @@
     <color name="socialmesh_icon_color2">#E65100</color>
     <color name="facebook_login_button">#3B5998</color>
     <color name="text_input_background">#D8FFFFFF</color>
+
+    <color name="colorPrimary">#49BEFF</color>
+    <color name="colorPrimaryDark">#65DCE5</color>
+    <color name="colorAccent">#0D5D98</color>
+
+    <color name="address">#2F7092</color>
+    <color name="followers">#0D5D98</color>
+    <color name="headings">#3797CF</color>
+    <color name="solidCircle">#AAFFFFFF</color>
+    <color name="circleBorder">#50FFFFFF</color>
+    <color name="gradEnd">#b1f4cf</color>
+    <color name="gradStart">#9890e3</color>
+    <color name="followersBg">#65DCE5</color>
+    <color name="followingBg">#49BEFF</color>
+    <color name="grey">#E5E5E5</color>
+
 </resources>

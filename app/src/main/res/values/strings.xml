@@ -33,4 +33,19 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="chat">Chat</string>
     <string name="error_retrieving_events">Si è verificato un problema nel recuperare gli eventi</string>
+    <string name="logout">Logout</string>
+    <string name="nome">Nome:</string>
+    <string name="cognome">Cognome:</string>
+    <string name="nome_e_cognome">Nome e Cognome :</string>
+    <string name="email_1">Email:</string>
+    <string name="lorem_ipsum_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                                            deserunt mollit anim id est laborum.</string>
+    <string name="data_di_nascita">data_di_nascita</string>
+    <string name="nome_cognome">Nome Cognome</string>
+    <string name="paese_nazione">Paese,Nazione</string>
 </resources>
