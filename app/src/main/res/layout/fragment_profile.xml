@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Immagine Utente -->
 
@@ -61,6 +63,7 @@
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/button_settings"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -203,8 +206,10 @@
 
 
     </RelativeLayout>
-
-
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <!-- Altri elementi UI -->
     <!-- TextViews, Buttons, etc. -->
 
