@@ -7,53 +7,71 @@
     android:background="@color/white"
     android:descendantFocusability="blocksDescendants">
 
-        <Button
-            android:id="@+id/HipHopRap"
-            android:layout_width="102dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
 
-            android:backgroundTint="#94FF6503"
-            android:text="Hip-HopRap"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textColorLink="#30FFFFFF" />
+        <HorizontalScrollView
 
-        <Button
-            android:id="@+id/Latin"
-            android:layout_width="101dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"
-            android:layout_toEndOf="@id/HipHopRap"
-            android:backgroundTint="#94FF6503"
-            android:text="Latin"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textColorLink="#30FFFFFF" />
+            android:id="@id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
 
-        <Button
-            android:id="@+id/Rock"
-            android:layout_width="101dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_toEndOf="@id/Latin"
-            android:backgroundTint="#94FF6503"
-            android:text="Rock"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textColorLink="#30FFFFFF" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/buttonAll"
+                            android:layout_width="130dp"
+                            android:layout_height="40dp"
+                            android:backgroundTint="#94FF6503"
+                            android:text="All"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textColorLink="#30FFFFFF" />
+
+                        <Button
+                            android:id="@+id/HipHopRap"
+                            android:layout_width="130dp"
+                            android:layout_height="40dp"
+                            android:backgroundTint="#94FF6503"
+                            android:text="Hip-HopRap"
+                            android:layout_marginEnd="10dp"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textColorLink="#30FFFFFF" />
+
+                        <Button
+                            android:id="@+id/Latin"
+                            android:layout_width="130dp"
+                            android:layout_height="40dp"
+                            android:backgroundTint="#94FF6503"
+                            android:text="Latin"
+                            android:layout_marginEnd="10dp"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textColorLink="#30FFFFFF" />
+
+                        <Button
+                            android:id="@+id/Rock"
+                            android:layout_width="130dp"
+                            android:layout_height="40dp"
+                            android:backgroundTint="#94FF6503"
+                            android:text="Rock"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textColorLink="#30FFFFFF" />
+                </LinearLayout>
+        </HorizontalScrollView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
                 app:cardCornerRadius="40dp"
-            android:layout_below="@id/Latin"
+            android:layout_below="@id/scrollView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp">
 
@@ -61,10 +79,9 @@
                     android:id="@+id/searchView"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
+                    android:inputType="text"
                     android:hint="Cerca..."
-                    android:textColorLink="#30FFFFFF"
-                    android:backgroundTint="#6AFFFFFF"
-                    />
+                    android:backgroundTint="#6AFFFFFF"/>
 
         </androidx.cardview.widget.CardView>
 

@@ -95,6 +95,11 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         return 0;
     }
 
+    public void clearFilters() { filteredList.clear();
+        filteredList.addAll(eventsList);
+        notifyDataSetChanged();
+    }
+
     public class EventsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView textViewName, textViewDate;
         private final ImageView imageView;

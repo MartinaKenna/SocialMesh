@@ -26,6 +26,7 @@ public class EventApiResponse {
 
 
 
+
    /* protected EventApiResponse(Parcel in) {
         this.eventList = in.createTypedArrayList(Event.CREATOR);
     }*/

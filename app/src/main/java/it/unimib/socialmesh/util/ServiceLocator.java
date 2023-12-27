@@ -2,8 +2,13 @@ package it.unimib.socialmesh.util;
 
 import android.app.Application;
 
+import androidx.lifecycle.MutableLiveData;
+import it.unimib.socialmesh.repository.EventsRepositoryWithLiveData;
+import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.database.EventRoomDatabase;
-import it.unimib.socialmesh.repository.EventsRepository;
+import it.unimib.socialmesh.model.Event;
+import it.unimib.socialmesh.model.Result;
+import it.unimib.socialmesh.repository.IEventsRepositoryWithLiveData;
 import it.unimib.socialmesh.service.EventApiService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,11 +22,12 @@ public class ServiceLocator {
     private static volatile ServiceLocator INSTANCE = null;
     private static final String TAG = ServiceLocator.class.getSimpleName();
 
-    private ServiceLocator() {}
+    private ServiceLocator() {
+    }
 
     public static ServiceLocator getInstance() {
         if (INSTANCE == null) {
-            synchronized(ServiceLocator.class) {
+            synchronized (ServiceLocator.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new ServiceLocator();
                 }
@@ -32,6 +38,7 @@ public class ServiceLocator {
 
     /**
      * It creates an instance of EventApiService using Retrofit.
+     *
      * @return an instance of EventApiService.
      */
     public EventApiService getEventsApiService() {
@@ -45,4 +52,14 @@ public class ServiceLocator {
         return EventRoomDatabase.getDatabase(application);
     }
 
+    public IEventsRepositoryWithLiveData getEventRepository(Application application) {
+        BaseEventsLocalDataSource eventsLocalDataSource;
+        BaseEventsRemoteDataSource eventsRemoteDataSource;
+
+        eventsRemoteDataSource = new EventsRemoteDataSource(application.getString(R.string.events_api_key));
+        eventsLocalDataSource = new EventsLocalDataSource(getEventDao(application));
+
+        return new EventsRepositoryWithLiveData(eventsRemoteDataSource,eventsLocalDataSource);
+
+    }
 }

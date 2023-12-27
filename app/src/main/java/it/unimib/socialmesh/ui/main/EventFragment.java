@@ -15,6 +15,7 @@ import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +27,10 @@ import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.repository.EventsRepository;
+import it.unimib.socialmesh.repository.EventsRepositoryWithLiveData;
+import it.unimib.socialmesh.repository.IEventsRepositoryWithLiveData;
 import it.unimib.socialmesh.util.ResponseCallback;
+import it.unimib.socialmesh.util.ServiceLocator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,14 +42,15 @@ public class EventFragment extends Fragment implements ResponseCallback {
     private static final String TAG = EventFragment.class.getSimpleName();
     private TextView nearyou, lastadded;
     private List<Event> eventsList;
-    private EventsRepository eventsRepository;
 
     private RecyclerView recyclerViewEvents, recyclerViewEventsNearYou;
     private View rootView, listEvents, listNearyou, barra1, barra2, barra3;
     private SearchView searchView;
     private RecyclerViewEventsAdapter recyclerViewEventsAdapterNearYou, recyclerViewEventsAdapter;
+    private EventViewModel eventViewModel;
 
-    private Button hipHopRap, latin, rock;
+    private EventsRepository eventsRepository;
+    private Button hipHopRap, latin, rock, buttonAll;
 
     //questo serve
     public EventFragment() {}
@@ -61,13 +66,13 @@ public class EventFragment extends Fragment implements ResponseCallback {
         eventsList = new ArrayList<>();
         eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
 
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
+        buttonAll = view.findViewById(R.id.buttonAll);
         hipHopRap = view.findViewById(R.id.HipHopRap);
         latin = view.findViewById(R.id.Latin);
         rock = view.findViewById(R.id.Rock);
@@ -80,7 +85,7 @@ public class EventFragment extends Fragment implements ResponseCallback {
         nearyou = view.findViewById(R.id.nearYou);
         lastadded = view.findViewById(R.id.lastAdded);
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
-
+        buttonAll.setTranslationX((1000));
         hipHopRap.setTranslationX(-1000);
         latin.setTranslationY(screenHeight);
         rock.setTranslationX(1000);
@@ -92,19 +97,27 @@ public class EventFragment extends Fragment implements ResponseCallback {
         barra3.setTranslationX(1000);
         nearyou.setTranslationX(1500);
         lastadded.setTranslationX(1500);
+        buttonAll.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(500).start();
+        hipHopRap.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(800).start();
+        latin.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1100).start();
+        rock.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(1400).start();
+        searchView.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1700).start();
+        recyclerViewEventsNearYou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2000).start();
+        recyclerViewEvents.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2300).start();
+        barra2.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
+        barra1.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
+        barra3.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
+        nearyou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
+        lastadded.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
 
-        hipHopRap.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(500).start();
-        latin.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(800).start();
-        rock.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(1100).start();
-        searchView.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1400).start();
-        recyclerViewEventsNearYou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(1700).start();
-        recyclerViewEvents.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2000).start();
-        barra2.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
-        barra1.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
-        barra3.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
-        nearyou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
-        lastadded.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2700).start();
-
+        buttonAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Rimuovi tutti i filtri e mostra tutti gli eventi
+                recyclerViewEventsAdapter.clearFilters();
+                recyclerViewEventsAdapterNearYou.clearFilters();
+            }
+        });
         rock.setOnClickListener(item -> {
             recyclerViewEventsAdapter.filterByGenre("rock");
             recyclerViewEventsAdapterNearYou.filterByGenre("rock");
@@ -143,6 +156,12 @@ public class EventFragment extends Fragment implements ResponseCallback {
 
         return view;
 
+    }
+   @Override
+    public void onResume() {
+        super.onResume();
+        // Richiama il caricamento degli eventi ogni volta che il Fragment diventa visibile
+        eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
