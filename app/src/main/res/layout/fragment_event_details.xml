@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
@@ -11,16 +12,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageview_event"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="description"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:scaleType="fitCenter"
-            tools:src="@drawable/placeholder_event_image" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageview_event"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="description"
+                android:scaleType="fitCenter"
+                tools:src="@drawable/placeholder_event_image" />
+
+            <ImageView
+                android:id="@+id/close_button"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:backgroundTintMode="add"
+                app:srcCompat="@drawable/baseline_close_24" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/textview_event_title"
