@@ -22,6 +22,7 @@ import it.unimib.socialmesh.util.Converters;
  */
 @Database(entities = {Event.class}, version = DATABASE_VERSION,exportSchema = false)
 @TypeConverters({Converters.class})
+
 public abstract class EventRoomDatabase extends RoomDatabase {
 
     public abstract EventDao eventDao();
@@ -36,10 +37,13 @@ public abstract class EventRoomDatabase extends RoomDatabase {
             synchronized (EventRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            EventRoomDatabase.class, EVENTS_DATABASE_NAME).build();
+                                    EventRoomDatabase.class, EVENTS_DATABASE_NAME)
+                            .fallbackToDestructiveMigration() // Abilita la migrazione distruttiva
+                            .build();
                 }
             }
         }
         return INSTANCE;
     }
+
 }

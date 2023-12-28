@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class EventApiResponse {
+    private int totalResults;
     @SerializedName("_embedded")
 
     @Expose
@@ -24,6 +25,13 @@ public class EventApiResponse {
     public EventApiResponse() {
     }
 
+    public int getTotalResults() {
+        return totalResults;
+    }
+
+    public void setTotalResults(int totalResults) {
+        this.totalResults = totalResults;
+    }
 
 
 

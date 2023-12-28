@@ -49,6 +49,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userRepository = new UserRepository();
+        refreshProfileImage();
 
     }
     ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(
@@ -81,7 +82,7 @@ public class ProfileFragment extends Fragment {
             DataSnapshot dataSnapshot = task.getResult();
             if (dataSnapshot != null && dataSnapshot.exists()) {
                 String imageUrl = dataSnapshot.getValue(String.class);
-                if (imageUrl != null) {
+                if (imageUrl != null && isAdded()) {
                     Glide.with(this)
                             .load(imageUrl)
                             .apply(RequestOptions.circleCropTransform())

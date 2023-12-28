@@ -10,14 +10,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,8 @@ import it.unimib.socialmesh.R;
 
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
 import it.unimib.socialmesh.model.Event;
+import it.unimib.socialmesh.model.EventApiResponse;
+import it.unimib.socialmesh.model.Result;
 import it.unimib.socialmesh.repository.EventsRepository;
 import it.unimib.socialmesh.repository.EventsRepositoryWithLiveData;
 import it.unimib.socialmesh.repository.IEventsRepositoryWithLiveData;
@@ -37,7 +43,7 @@ import it.unimib.socialmesh.util.ServiceLocator;
  * Use the {@link EventFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EventFragment extends Fragment implements ResponseCallback {
+public class EventFragment extends Fragment {
 
     private static final String TAG = EventFragment.class.getSimpleName();
     private TextView nearyou, lastadded;
@@ -62,9 +68,20 @@ public class EventFragment extends Fragment implements ResponseCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         eventsRepository = new EventsRepository(requireActivity().getApplication(), this);
         eventsList = new ArrayList<>();
         eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
+        */
+        IEventsRepositoryWithLiveData eventsRepositoryWithLiveData =
+                ServiceLocator.getInstance().getEventRepository(
+                        requireActivity().getApplication());
+        Log.d(TAG,"repository creato");
+        eventViewModel = new ViewModelProvider(
+                requireActivity(),
+                new EventViewModelFactory(eventsRepositoryWithLiveData)).get(EventViewModel.class);
+
+        eventsList = new ArrayList<>();
 
     }
 
@@ -151,49 +168,103 @@ public class EventFragment extends Fragment implements ResponseCallback {
                 return true;
             }
         });
+        RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
+        recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
+        recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList, 1);
+        recyclerViewEvents.setLayoutManager(layoutManager);
+        recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+
+        eventViewModel.getEvents("music", "314", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
+                result -> {
+                    if (result.isSuccess()) {
+                        int initialSize = this.eventsList.size();
+                        this.eventsList.clear();
+                        this.eventsList.addAll(((Result.Success) result).getData().getEvents());
+                        //recyclerViewEventsAdapter.notifyItemRangeInserted(initialSize, this.eventsList.size());
+                        recyclerViewEventsAdapterNearYou.notifyDataSetChanged();
+                        recyclerViewEventsAdapter.notifyDataSetChanged();
+                    }
+
+                });
 
 
 
         return view;
 
     }
-   @Override
-    public void onResume() {
-        super.onResume();
-        // Richiama il caricamento degli eventi ogni volta che il Fragment diventa visibile
-        eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
+    public void forceRefreshFragment() {
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.detach(this).attach(this).commit();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
+        RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
+        recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
+        recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
 
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList, 1);
+        recyclerViewEvents.setLayoutManager(layoutManager);
+        recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
 
-    @Override
-    public void onSuccess(List<Event> eventsList, long lastUpdate) {
-        if (eventsList != null) {
-            requireActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                    recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
-                    recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
-                    recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
+        eventViewModel.getEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
+                result -> {
+                    if (result.isSuccess()) {
+                    EventApiResponse eventResponse = ((Result.Success) result).getData();
+                    List<Event> fetchedEvents = eventResponse.getEvents();
 
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                    recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList, 1);
-                    recyclerViewEvents.setLayoutManager(layoutManager);
-                    recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+                    if (!eventViewModel.isLoading()) {
+                        if (eventViewModel.isFirstLoading()) {
+                            eventViewModel.setTotalResults(((EventApiResponse) eventResponse).getTotalResults());
+                            eventViewModel.setFirstLoading(false);
+                            this.eventsList.addAll(fetchedEvents);
+                            recyclerViewEventsAdapter.notifyItemRangeInserted(0,
+                                    this.eventsList.size());
+                            recyclerViewEventsAdapterNearYou.notifyItemRangeInserted(0,
+                                    this.eventsList.size());
+                        } else {
+                            // Updates related to the favorite status of the news
+                            eventsList.clear();
+                            eventsList.addAll(fetchedEvents);
+                            recyclerViewEventsAdapter.notifyItemChanged(0, fetchedEvents.size());
+                            recyclerViewEventsAdapterNearYou.notifyItemChanged(0, fetchedEvents.size());
+                        }
+
+                    } else {
+                        eventViewModel.setLoading(false);
+                        eventViewModel.setCurrentResults(eventsList.size());
+
+                        int initialSize = eventsList.size();
+
+                        for (int i = 0; i < eventsList.size(); i++) {
+                            if (eventsList.get(i) == null) {
+                                eventsList.remove(eventsList.get(i));
+                            }
+                        }
+
+                        for (int i = 0; i < fetchedEvents.size(); i++) {
+                            eventsList.add(fetchedEvents.get(i));
+                        }
+                        recyclerViewEventsAdapter.notifyItemRangeInserted(initialSize, eventsList.size());
+                        recyclerViewEventsAdapterNearYou.notifyItemRangeInserted(initialSize, eventsList.size());
+                    }
                 }
-            });
+                 else {
+                        Log.d(TAG,"pane");
         }
 
-        // Resto del codice, se necessario
+    });
+
     }
 
 
-    @Override
-    public void onFailure(String errorMessage) {
-        Log.d(TAG, "CHIAMATA API FALLITA");
-    }
+
+
 }
