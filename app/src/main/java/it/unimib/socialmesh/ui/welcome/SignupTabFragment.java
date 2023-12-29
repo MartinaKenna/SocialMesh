@@ -49,7 +49,7 @@ public class SignupTabFragment extends Fragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.signup_fragment, container, false);
         nome = root.findViewById(R.id.fullName);
         datanasc = root.findViewById(R.id.datanasc);
-        dateInputText = root.findViewById(R.id.dateInputText);
+        dateInputText = root.findViewById(R.id.testo_datanasc);
         emailTextInput = root.findViewById(R.id.email);
         passTextInput = root.findViewById(R.id.insertPassword);
         confirmpass = root.findViewById(R.id.confirmpassword_signup);
@@ -62,6 +62,37 @@ public class SignupTabFragment extends Fragment {
                 getActivity().finish();
             }
         }
+
+        dateInputText.setOnClickListener(v -> {
+            // on below line we are getting
+            // the instance of our calendar.
+            final Calendar c = Calendar.getInstance();
+
+            // on below line we are getting
+            // our day, month and year.
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // on below line we are creating a variable for date picker dialog.
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    // on below line we are passing context.
+                    this.getContext(),
+                    R.style.ThemeOverlay_App_Dialog,
+                    (view, year1, monthOfYear, dayOfMonth) -> {
+                        // on below line we are setting date to our edit text.
+                        dateInputText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1);
+
+                    },
+                    // on below line we are passing year,
+                    // month and day for selected date in our date picker.
+                    year, month, day);
+            // at last we are calling show to
+            // display our date picker dialog.
+            datePickerDialog.show();
+        });
+
+
 
         register.setOnClickListener(v -> {
             // Esegui azioni quando il pulsante di registrazione viene cliccato
@@ -82,6 +113,8 @@ public class SignupTabFragment extends Fragment {
         register.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1300).start();
         return root;
     }
+
+
 
     private void registerUser() {
         // Ottieni i valori dalle TextInputEditText

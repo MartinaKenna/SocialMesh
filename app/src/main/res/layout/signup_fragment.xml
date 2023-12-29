@@ -49,7 +49,9 @@
             android:background="@drawable/signup2"
             android:backgroundTint="#6AFFFFFF"
             android:hint="Date of Birth"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:focusable="false"
+            android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
