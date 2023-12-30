@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,12 +26,19 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
     private final  List<Event> eventsList; // Lista originale
     private List<Event> filteredList; // Lista filtrata
     private int genre;
+    private final AdapterView.OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onEventItemClick(Event event);
+    }
 
 
-    public RecyclerViewEventsAdapter(List<Event> eventsList, int viewType) {
+    public RecyclerViewEventsAdapter(List<Event> eventsList, int viewType,
+                                     AdapterView.OnItemClickListener onItemClickListener) {
         this.eventsList = eventsList;
         this.viewType = viewType;
         this.filteredList= new ArrayList<>(eventsList);
+        this.onItemClickListener = onItemClickListener;
 
     }
 
@@ -95,8 +103,13 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         return 0;
     }
 
-    public void clearFilters() { filteredList.clear();
+    public void clearFilters() {
+        filteredList.clear();
         filteredList.addAll(eventsList);
+        notifyDataSetChanged();
+    }
+
+    public void notifyRoba() {
         notifyDataSetChanged();
     }
 

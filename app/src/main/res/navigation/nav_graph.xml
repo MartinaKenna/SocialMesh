@@ -9,7 +9,11 @@
         android:id="@+id/eventFragment"
         android:name="it.unimib.socialmesh.ui.main.EventFragment"
         android:label="fragment_event"
-        tools:layout="@layout/fragment_event" />
+        tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_eventFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/matchFragment"
         android:name="it.unimib.socialmesh.ui.main.MatchFragment"
@@ -25,4 +29,12 @@
         android:name="it.unimib.socialmesh.ui.main.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="it.unimib.socialmesh.ui.main.EventDetailsFragment"
+        android:label="EventDetailsFragment" >
+        <argument
+            android:name="event"
+            app:argType="it.unimib.socialmesh.model.Event" />
+    </fragment>
 </navigation>

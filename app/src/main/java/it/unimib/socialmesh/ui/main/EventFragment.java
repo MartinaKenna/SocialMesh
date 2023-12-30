@@ -1,41 +1,32 @@
 package it.unimib.socialmesh.ui.main;
 
-import android.content.res.Resources;
-import android.graphics.Outline;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.socialmesh.R;
-
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.model.Result;
 import it.unimib.socialmesh.repository.EventsRepository;
-import it.unimib.socialmesh.repository.EventsRepositoryWithLiveData;
 import it.unimib.socialmesh.repository.IEventsRepositoryWithLiveData;
-import it.unimib.socialmesh.util.ResponseCallback;
 import it.unimib.socialmesh.util.ServiceLocator;
 
 /**
@@ -61,9 +52,7 @@ public class EventFragment extends Fragment {
     //questo serve
     public EventFragment() {}
 
-    public static EventFragment newInstance(String param1, String param2) {
-        return new EventFragment();
-    }
+    public static EventFragment newInstance(String param1, String param2) { return new EventFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +66,7 @@ public class EventFragment extends Fragment {
                 ServiceLocator.getInstance().getEventRepository(
                         requireActivity().getApplication());
         Log.d(TAG,"repository creato");
+
         eventViewModel = new ViewModelProvider(
                 requireActivity(),
                 new EventViewModelFactory(eventsRepositoryWithLiveData)).get(EventViewModel.class);
@@ -169,7 +159,13 @@ public class EventFragment extends Fragment {
             }
         });
         RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0);
+        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0
+        new RecyclerViewEventsAdapter.OnItemClickListener() {
+            @Override
+            public void onEventItemClick(Event evemt) {
+
+            }
+        });
         recyclerViewEventsNearYou.setLayoutManager(layoutManagerNearYou);
         recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
 
@@ -177,21 +173,6 @@ public class EventFragment extends Fragment {
         recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList, 1);
         recyclerViewEvents.setLayoutManager(layoutManager);
         recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
-
-        eventViewModel.getEvents("music", "314", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
-                result -> {
-                    if (result.isSuccess()) {
-                        int initialSize = this.eventsList.size();
-                        this.eventsList.clear();
-                        this.eventsList.addAll(((Result.Success) result).getData().getEvents());
-                        //recyclerViewEventsAdapter.notifyItemRangeInserted(initialSize, this.eventsList.size());
-                        recyclerViewEventsAdapterNearYou.notifyDataSetChanged();
-                        recyclerViewEventsAdapter.notifyDataSetChanged();
-                    }
-
-                });
-
-
 
         return view;
 
@@ -210,9 +191,19 @@ public class EventFragment extends Fragment {
         recyclerViewEventsNearYou.setAdapter(recyclerViewEventsAdapterNearYou);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList, 1);
+        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(eventsList, 1,
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onEventItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                });
         recyclerViewEvents.setLayoutManager(layoutManager);
         recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
+
+
+
+
 
         eventViewModel.getEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
                 result -> {
@@ -222,7 +213,7 @@ public class EventFragment extends Fragment {
 
                     if (!eventViewModel.isLoading()) {
                         if (eventViewModel.isFirstLoading()) {
-                            eventViewModel.setTotalResults(((EventApiResponse) eventResponse).getTotalResults());
+                            //eventViewModel.setTotalResults(((EventApiResponse) eventResponse).getTotalResults());
                             eventViewModel.setFirstLoading(false);
                             this.eventsList.addAll(fetchedEvents);
                             recyclerViewEventsAdapter.notifyItemRangeInserted(0,
@@ -233,8 +224,12 @@ public class EventFragment extends Fragment {
                             // Updates related to the favorite status of the news
                             eventsList.clear();
                             eventsList.addAll(fetchedEvents);
-                            recyclerViewEventsAdapter.notifyItemChanged(0, fetchedEvents.size());
-                            recyclerViewEventsAdapterNearYou.notifyItemChanged(0, fetchedEvents.size());
+                            //recyclerViewEventsAdapter.notifyItemChanged(0, fetchedEvents.size());
+                            //recyclerViewEventsAdapterNearYou.notifyItemChanged(0, fetchedEvents.size());
+
+                            //TODO togliere sto schifo
+                            recyclerViewEventsAdapter.clearFilters();
+                            recyclerViewEventsAdapterNearYou.clearFilters();
                         }
 
                     } else {
