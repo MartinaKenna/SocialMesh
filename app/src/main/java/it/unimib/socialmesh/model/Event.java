@@ -1,10 +1,14 @@
 package it.unimib.socialmesh.model;
 import android.graphics.Paint;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -22,7 +26,7 @@ import it.unimib.socialmesh.util.Converters;
 
 
 @Entity
-public class Event {
+public class Event implements Parcelable {
 
 
     @PrimaryKey(autoGenerate = true)
@@ -39,6 +43,25 @@ public class Event {
     @SerializedName("id")
     @Expose
     private String remoteId;
+
+    protected Event(Parcel in) {
+        localId = in.readLong();
+        name = in.readString();
+        type = in.readString();
+        remoteId = in.readString();
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     public long getLocalId() {
         return localId;
@@ -201,6 +224,18 @@ public class Event {
         return images.get(0).getUrlImages();
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeLong(localId);
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeString(remoteId);
+    }
 }
 
 
