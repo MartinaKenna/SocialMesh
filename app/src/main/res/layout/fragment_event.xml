@@ -113,6 +113,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewEvents"
             android:layout_width="match_parent"
+            android:clickable="true"
             android:layout_height="wrap_content"
             android:layout_below="@id/nearYou"
             android:layout_marginStart="10dp"
@@ -170,6 +171,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_margin="10dp"
             android:id="@+id/recyclerviewNearYou"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/lastAdded"

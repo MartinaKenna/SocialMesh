@@ -40,15 +40,27 @@ public class Event implements Parcelable {
     @SerializedName("type")
     @Expose
     private String type;
+    @SerializedName("description")
+    @Expose
+    private String description;
     @SerializedName("id")
     @Expose
     private String remoteId;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     protected Event(Parcel in) {
         localId = in.readLong();
         name = in.readString();
         type = in.readString();
         remoteId = in.readString();
+        description = in.readString();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -151,10 +163,11 @@ public class Event implements Parcelable {
     }
 
     public String getDates1() {
+
         int count = 0;
         StringBuilder date = new StringBuilder();
-
-        while (count < dates.getStart().getDateTime().length()) {
+        if (dates != null && dates.getStart() != null && dates.getStart().getDateTime() != null){
+            while (count < dates.getStart().getDateTime().length()) {
                 char character = dates.getStart().getDateTime().charAt(count);
                 if (character == 'T') {
                     return date.toString();
@@ -162,6 +175,8 @@ public class Event implements Parcelable {
                 date.append(character);
                 count++;
             }
+        }
+
 
         return date.toString();
     }

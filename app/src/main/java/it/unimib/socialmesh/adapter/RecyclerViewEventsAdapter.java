@@ -26,7 +26,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
     private final  List<Event> eventsList; // Lista originale
     private List<Event> filteredList; // Lista filtrata
     private int genre;
-    private final AdapterView.OnItemClickListener onItemClickListener;
+    private final OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
         void onEventItemClick(Event event);
@@ -34,7 +34,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
 
 
     public RecyclerViewEventsAdapter(List<Event> eventsList, int viewType,
-                                     AdapterView.OnItemClickListener onItemClickListener) {
+                                     OnItemClickListener onItemClickListener) {
         this.eventsList = eventsList;
         this.viewType = viewType;
         this.filteredList= new ArrayList<>(eventsList);
@@ -102,7 +102,14 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         }
         return 0;
     }
+    public void updateData() {
+        // Aggiorna la lista degli eventi
+        eventsList.clear();
+        eventsList.addAll(eventsList);
 
+        // Notifica la RecyclerView
+        notifyDataSetChanged();
+    }
     public void clearFilters() {
         filteredList.clear();
         filteredList.addAll(eventsList);
@@ -133,7 +140,15 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View v) {
+            Log.d(TAG, "onClick called");
 
+            // Chiamare il listener solo se è stato impostato
+            if (onItemClickListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClickListener.onEventItemClick(eventsList.get(position));
+                }
+            }
         }
     }
 }
