@@ -8,80 +8,22 @@
     android:descendantFocusability="blocksDescendants">
 
 
-        <HorizontalScrollView
-
-            android:id="@id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/buttonAll"
-                            android:layout_width="130dp"
-                            android:layout_height="40dp"
-                            android:backgroundTint="#94FF6503"
-                            android:text="All"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:textAlignment="center"
-                            android:textColor="#000000"
-                            android:textColorLink="#30FFFFFF" />
-
-                        <Button
-                            android:id="@+id/HipHopRap"
-                            android:layout_width="130dp"
-                            android:layout_height="40dp"
-                            android:backgroundTint="#94FF6503"
-                            android:text="Hip-HopRap"
-                            android:layout_marginEnd="10dp"
-                            android:textAlignment="center"
-                            android:textColor="#000000"
-                            android:textColorLink="#30FFFFFF" />
-
-                        <Button
-                            android:id="@+id/Latin"
-                            android:layout_width="130dp"
-                            android:layout_height="40dp"
-                            android:backgroundTint="#94FF6503"
-                            android:text="Latin"
-                            android:layout_marginEnd="10dp"
-                            android:textAlignment="center"
-                            android:textColor="#000000"
-                            android:textColorLink="#30FFFFFF" />
-
-                        <Button
-                            android:id="@+id/Rock"
-                            android:layout_width="130dp"
-                            android:layout_height="40dp"
-                            android:backgroundTint="#94FF6503"
-                            android:text="Rock"
-                            android:textAlignment="center"
-                            android:textColor="#000000"
-                            android:textColorLink="#30FFFFFF" />
-                </LinearLayout>
-        </HorizontalScrollView>
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-                app:cardCornerRadius="40dp"
-            android:layout_below="@id/scrollView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp">
+            app:cardCornerRadius="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="40dp">
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/searchView"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
-                    android:inputType="text"
+                    android:backgroundTint="#6AFFFFFF"
                     android:hint="Cerca..."
-                    android:backgroundTint="#6AFFFFFF"/>
+                    android:inputType="text" />
 
         </androidx.cardview.widget.CardView>
 
@@ -169,6 +111,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+
             android:layout_margin="10dp"
             android:id="@+id/recyclerviewNearYou"
             android:clickable="true"
@@ -177,5 +120,23 @@
             android:layout_below="@id/lastAdded"
             android:layout_marginTop="30dp"
             />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/cardview"
+            android:layout_marginStart="40dp"
+            app:cardCornerRadius="40dp">
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#30FFFFFF"
+                    android:text="Filter"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>

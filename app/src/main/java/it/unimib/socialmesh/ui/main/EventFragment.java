@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +29,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
@@ -56,7 +61,9 @@ public class EventFragment extends Fragment {
     private EventViewModel eventViewModel;
 
     private EventsRepository eventsRepository;
-    private Button hipHopRap, latin, rock, buttonAll;
+    private Button  filter, button1, button2, button3;
+    private PopupWindow popupWindow;
+    private Integer count, count1;
 
     //questo serve
     public EventFragment() {}
@@ -81,6 +88,8 @@ public class EventFragment extends Fragment {
                 new EventViewModelFactory(eventsRepositoryWithLiveData)).get(EventViewModel.class);
 
         eventsList = new ArrayList<>();
+        count= 0;
+        count1=0;
 
     }
 
@@ -88,10 +97,7 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
-        buttonAll = view.findViewById(R.id.buttonAll);
-        hipHopRap = view.findViewById(R.id.HipHopRap);
-        latin = view.findViewById(R.id.Latin);
-        rock = view.findViewById(R.id.Rock);
+
         recyclerViewEventsNearYou = view.findViewById(R.id.recyclerviewNearYou);
         recyclerViewEvents = view.findViewById(R.id.recyclerviewEvents);
         searchView = view.findViewById(R.id.searchView);
@@ -100,11 +106,10 @@ public class EventFragment extends Fragment {
         barra3 = view.findViewById(R.id.barra3);
         nearyou = view.findViewById(R.id.nearYou);
         lastadded = view.findViewById(R.id.lastAdded);
+        filter = view.findViewById(R.id.button);
+
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
-      /*  buttonAll.setTranslationX((1000));
-        hipHopRap.setTranslationX(-1000);
-        latin.setTranslationY(screenHeight);
-        rock.setTranslationX(1000);
+        filter.setTranslationX((1000));
         recyclerViewEvents.setTranslationX(1000);
         recyclerViewEventsNearYou.setTranslationX(1000);
         searchView.setTranslationY(screenHeight);
@@ -113,10 +118,7 @@ public class EventFragment extends Fragment {
         barra3.setTranslationX(1000);
         nearyou.setTranslationX(1500);
         lastadded.setTranslationX(1500);
-        buttonAll.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(500).start();
-        hipHopRap.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(800).start();
-        latin.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1100).start();
-        rock.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(1400).start();
+        filter.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(500).start();
         searchView.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1700).start();
         recyclerViewEventsNearYou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2000).start();
         recyclerViewEvents.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2300).start();
@@ -125,29 +127,65 @@ public class EventFragment extends Fragment {
         barra3.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
         nearyou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
         lastadded.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
-*/
-        buttonAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Rimuovi tutti i filtri e mostra tutti gli eventi
-                recyclerViewEventsAdapter.clearFilters();
-                recyclerViewEventsAdapterNearYou.clearFilters();
+
+
+
+
+        filter.setOnClickListener(v -> {
+            View popupView = inflater.inflate(R.layout.popupview, container, false);
+
+            button1 = popupView.findViewById(R.id.button1);
+            button2 = popupView.findViewById(R.id.button2);
+            button3 = popupView.findViewById(R.id.button3);
+            //dichiaro la tendina
+            popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+            // Imposto il testo per i bottoni
+            switch(getMostFrequentGenres().size()){
+                case 1: button1.setText(getMostFrequentGenres().get(0));
+                        button2.setVisibility(View.GONE);
+                        button3.setVisibility(View.GONE);
+                        break;
+                case 2: button1.setText(getMostFrequentGenres().get(0));
+                        button2.setText(getMostFrequentGenres().get(1));
+                        button3.setVisibility(View.GONE);
+                        break;
+                case 3: button1.setText(getMostFrequentGenres().get(0));
+                        button2.setText(getMostFrequentGenres().get(1));
+                        button3.setText(getMostFrequentGenres().get(2));
+                        break;
+                default:button1.setVisibility(View.GONE);
+                        button2.setVisibility(View.GONE);
+                        button3.setVisibility(View.GONE);
+                        break;
             }
-        });
-        rock.setOnClickListener(item -> {
-            recyclerViewEventsAdapter.filterByGenre("rock");
-            recyclerViewEventsAdapterNearYou.filterByGenre("rock");
+
+            button1.setOnClickListener(t -> {
+                String buttonText = ((Button) t).getText().toString();
+                recyclerViewEventsAdapter.filterByGenre(buttonText);
+                recyclerViewEventsAdapterNearYou.filterByGenre(buttonText);
+                popupWindow.dismiss();
+            });
+            button2.setOnClickListener(t -> {
+                String buttonText = ((Button) t).getText().toString();
+                recyclerViewEventsAdapter.filterByGenre(buttonText);
+                recyclerViewEventsAdapterNearYou.filterByGenre(buttonText);
+                popupWindow.dismiss();
+            });
+            button3.setOnClickListener(t -> {
+                String buttonText = ((Button) t).getText().toString();
+                recyclerViewEventsAdapter.filterByGenre(buttonText);
+                recyclerViewEventsAdapterNearYou.filterByGenre(buttonText);
+                popupWindow.dismiss();
+            });
+
+            popupWindow.showAsDropDown(filter, 0, -popupWindow.getHeight());
+
         });
 
-        hipHopRap.setOnClickListener(item -> {
-            recyclerViewEventsAdapter.filterByGenre("Hip-Hop/Rap");
-            recyclerViewEventsAdapterNearYou.filterByGenre("Hip-Hop/Rap");
-        });
 
-        latin.setOnClickListener(item -> {
-            recyclerViewEventsAdapter.filterByGenre("latin");
-            recyclerViewEventsAdapterNearYou.filterByGenre("latin");
-        });
+
+
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -327,8 +365,32 @@ public class EventFragment extends Fragment {
         }
     }
 
+    public List<String> getMostFrequentGenres() {
+        Map<String, Integer> genreOccurrences = new HashMap<>();
 
+        // Conto le occorrenze di ciascun genere
+        for (Event event : eventsList) {
+            String genreName = event.getGenreName();
+            genreOccurrences.put(genreName, genreOccurrences.getOrDefault(genreName, 0) + 1);
+        }
 
+        // Trovo i tre generi piu frequenti diversi tra loro
+        List<String> mostFrequentGenres = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            int maxOccurrences = 0;
+            String mostFrequentGenre = "";
 
+            for (Map.Entry<String, Integer> entry : genreOccurrences.entrySet()) {
+                if (!mostFrequentGenres.contains(entry.getKey()) && entry.getValue() > maxOccurrences) {
+                    maxOccurrences = entry.getValue();
+                    mostFrequentGenre = entry.getKey();
+                }
+            }
 
-}
+            if (!mostFrequentGenre.isEmpty()) {
+                mostFrequentGenres.add(mostFrequentGenre);
+            }
+        }
+
+        return mostFrequentGenres;
+    }}
