@@ -1,14 +1,16 @@
-package it.unimib.socialmesh.util;
+package it.unimib.socialmesh.data.source.event;
 
 import androidx.annotation.NonNull;
 
+import it.unimib.socialmesh.data.source.event.BaseEventsRemoteDataSource;
 import it.unimib.socialmesh.model.EventApiResponse;
-import it.unimib.socialmesh.service.EventApiService;
+import it.unimib.socialmesh.data.service.EventApiService;
+import it.unimib.socialmesh.util.ServiceLocator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EventsRemoteDataSource extends BaseEventsRemoteDataSource{
+public class EventsRemoteDataSource extends BaseEventsRemoteDataSource {
     private final EventApiService eventApiService;
     private final String apiKey;
 

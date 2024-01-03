@@ -2,14 +2,21 @@ package it.unimib.socialmesh.util;
 
 import android.app.Application;
 
-import androidx.lifecycle.MutableLiveData;
-import it.unimib.socialmesh.repository.EventsRepositoryWithLiveData;
+import it.unimib.socialmesh.data.repository.event.EventsRepositoryWithLiveData;
 import it.unimib.socialmesh.R;
-import it.unimib.socialmesh.database.EventRoomDatabase;
-import it.unimib.socialmesh.model.Event;
-import it.unimib.socialmesh.model.Result;
-import it.unimib.socialmesh.repository.IEventsRepositoryWithLiveData;
-import it.unimib.socialmesh.service.EventApiService;
+import it.unimib.socialmesh.data.database.EventRoomDatabase;
+import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
+import it.unimib.socialmesh.data.repository.user.IUserRepository;
+import it.unimib.socialmesh.data.repository.user.UserRepository;
+import it.unimib.socialmesh.data.service.EventApiService;
+import it.unimib.socialmesh.data.source.event.BaseEventsLocalDataSource;
+import it.unimib.socialmesh.data.source.event.BaseEventsRemoteDataSource;
+import it.unimib.socialmesh.data.source.event.EventsLocalDataSource;
+import it.unimib.socialmesh.data.source.event.EventsRemoteDataSource;
+import it.unimib.socialmesh.data.source.user.BaseUserAuthenticationRemoteDataSource;
+import it.unimib.socialmesh.data.source.user.BaseUserDataRemoteDataSource;
+import it.unimib.socialmesh.data.source.user.UserAuthenticationRemoteDataSource;
+import it.unimib.socialmesh.data.source.user.UserDataRemoteDataSource;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -61,5 +68,26 @@ public class ServiceLocator {
 
         return new EventsRepositoryWithLiveData(eventsRemoteDataSource,eventsLocalDataSource);
 
+    }
+
+    /**
+     * Creates an instance of IUserRepository.
+     * @return An instance of IUserRepository.
+     */
+    public IUserRepository getUserRepository(Application application) {
+        //SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(application);
+
+        BaseUserAuthenticationRemoteDataSource userRemoteAuthenticationDataSource =
+                new UserAuthenticationRemoteDataSource();
+
+        BaseUserDataRemoteDataSource userDataRemoteDataSource =
+                new UserDataRemoteDataSource();
+
+
+        BaseEventsLocalDataSource eventsLocalDataSource =
+                new EventsLocalDataSource(getEventDao(application));
+
+        return new UserRepository(userRemoteAuthenticationDataSource,
+                userDataRemoteDataSource, eventsLocalDataSource);
     }
 }

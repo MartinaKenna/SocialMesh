@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,9 +32,9 @@ import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.model.Result;
-import it.unimib.socialmesh.repository.EventsRepository;
-import it.unimib.socialmesh.repository.IEventsRepositoryWithLiveData;
-import it.unimib.socialmesh.service.FirebaseEvent;
+import it.unimib.socialmesh.data.repository.event.EventsRepository;
+import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
+import it.unimib.socialmesh.data.service.FirebaseEvent;
 import it.unimib.socialmesh.util.ServiceLocator;
 
 /**
@@ -245,7 +244,7 @@ public class EventFragment extends Fragment {
         eventViewModel.getEvents("sport", "200", "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
-                    EventApiResponse eventResponse = ((Result.Success) result).getData();
+                    EventApiResponse eventResponse = ((Result.EventResponseSuccess) result).getData();
                     List<Event> fetchedEvents = eventResponse.getEvents();
 
                     if (!eventViewModel.isLoading()) {

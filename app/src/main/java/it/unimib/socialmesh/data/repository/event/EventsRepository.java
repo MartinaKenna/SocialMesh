@@ -1,12 +1,12 @@
-package it.unimib.socialmesh.repository;
+package it.unimib.socialmesh.data.repository.event;
 
 import android.app.Application;
 import android.util.Log;
 
-import it.unimib.socialmesh.database.EventDao;
-import it.unimib.socialmesh.database.EventRoomDatabase;
+import it.unimib.socialmesh.data.database.EventDao;
+import it.unimib.socialmesh.data.database.EventRoomDatabase;
 import it.unimib.socialmesh.model.Event;
-import it.unimib.socialmesh.service.EventApiService;
+import it.unimib.socialmesh.data.service.EventApiService;
 
 import androidx.annotation.NonNull;
 
@@ -27,25 +27,16 @@ public class EventsRepository {
     private final EventApiService eventsApiService;
     private final ResponseCallback responseCallback;
 
-    //TODO aggiungere database
-
     public EventsRepository(Application application, ResponseCallback responseCallback) {
         this.application = application;
         this.eventsApiService = ServiceLocator.getInstance().getEventsApiService();
         this.responseCallback = responseCallback;
 
-        //TODO da sistemare sta roba
         EventRoomDatabase eventRoomDatabase = ServiceLocator.getInstance().getEventDao(application);
         this.eventDao = eventRoomDatabase.eventDao();
     }
 
 
-    /*
-     * Metodo scritto secondo le indicazioni del prof, al momento non funziona
-     *
-     * Dovrebbe recuperare i dati da TicketMaster e parsarli con una classe
-     * GSON gestita da Retrofit
-     * */
     public void fetchEvents(String type, String city, String startDateTime, String time, long lastUpdate) {
 
         long currentTime = System.currentTimeMillis();

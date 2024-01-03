@@ -12,15 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,8 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.User;
-import it.unimib.socialmesh.repository.UserRepository;
-import it.unimib.socialmesh.ui.welcome.LoginActivity;
+import it.unimib.socialmesh.data.repository.user.UserRepository;
+import it.unimib.socialmesh.ui.welcome.WelcomeActivity;
 
 public class ProfileFragment extends Fragment {
     int REQUEST_CODE;
@@ -48,7 +45,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userRepository = new UserRepository();
+        //userRepository = new UserRepository();
         refreshProfileImage();
 
     }
@@ -111,7 +108,7 @@ public class ProfileFragment extends Fragment {
         FirebaseUser currentUser = auth.getCurrentUser();
 
         if (currentUser == null && getActivity() != null) {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            Intent intent = new Intent(getActivity(), WelcomeActivity.class);
             startActivity(intent);
             getActivity().finish();
         }
@@ -125,8 +122,8 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
-                    fullName.setText(user.fullName);
-                    userEmail.setText(user.email);
+ //                   fullName.setText(user.fullName);
+ //                   userEmail.setText(user.email);
                 }
             }
 
@@ -146,7 +143,7 @@ public class ProfileFragment extends Fragment {
 
     private void logoutUser() {
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        Intent intent = new Intent(getActivity(), WelcomeActivity.class);
         startActivity(intent);
         if (getActivity() != null) {
             getActivity().finish();

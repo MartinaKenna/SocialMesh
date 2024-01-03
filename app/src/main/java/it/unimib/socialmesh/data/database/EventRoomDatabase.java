@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.database;
+package it.unimib.socialmesh.data.database;
 
 import static it.unimib.socialmesh.util.Constants.DATABASE_VERSION;
 import static it.unimib.socialmesh.util.Constants.EVENTS_DATABASE_NAME;

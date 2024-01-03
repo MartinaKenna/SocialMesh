@@ -1,5 +1,5 @@
 
-package it.unimib.socialmesh.service;
+package it.unimib.socialmesh.data.service;
 
 import static it.unimib.socialmesh.util.Constants.EVENTS_CITY_PARAMETER;
 import static it.unimib.socialmesh.util.Constants.EVENTS_ENDPOINT;

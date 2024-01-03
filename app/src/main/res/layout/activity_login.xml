@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     app:layout_constraintEnd_toStartOf="parent"
-    tools:context=".ui.welcome.LoginActivity"
+    tools:context=".ui.welcome.WelcomeActivity"
     tools:layout_editor_absoluteY="0dp">
 
     <androidx.fragment.app.FragmentContainerView

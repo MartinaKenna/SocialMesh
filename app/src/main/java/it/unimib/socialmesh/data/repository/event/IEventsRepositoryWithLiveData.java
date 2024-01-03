@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.repository;
+package it.unimib.socialmesh.data.repository.event;
 import androidx.lifecycle.MutableLiveData;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.Result;

@@ -128,51 +128,6 @@
             android:textColor="@color/black"/>
 
 
-        <ImageButton
-            android:id="@+id/Facebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/SignInWhit"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentBottom="false"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="65dp"
-            android:backgroundTint="#00FFFFFF"
-            android:contentDescription="@string/Icona_Facebook"
-            android:onClick="onFacebookLoginClick"
-            app:srcCompat="@drawable/facebook"
-            tools:ignore="MissingConstraints" />
-
-        <ImageButton
-            android:id="@+id/Google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/SignInWhit"
-            android:layout_alignRight="@id/Facebook"
-            android:layout_marginTop="19dp"
-            android:layout_marginRight="-61dp"
-            android:backgroundTint="#00FFFFFF"
-            android:contentDescription="@string/Icona_Google"
-            android:hapticFeedbackEnabled="false"
-            app:srcCompat="@drawable/google"
-            tools:ignore="MissingConstraints" />
-
-        <ImageButton
-            android:id="@+id/Twitter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/SignInWhit"
-            android:layout_alignRight="@id/Google"
-            android:layout_marginTop="19dp"
-            android:layout_marginRight="-50dp"
-            android:backgroundTint="#00FFFFFF"
-            android:contentDescription="@string/Icona_Twitter"
-            app:srcCompat="@drawable/twitter"
-            tools:ignore="MissingConstraints" />
-
-
         <Button
             android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
@@ -182,6 +137,12 @@
             android:background="#00FFFFFF"
             android:text="@string/register"
             android:textColor="#94FFFFFF" />
+
+        <Button
+            android:id="@+id/buttonGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
 
 
     </RelativeLayout>

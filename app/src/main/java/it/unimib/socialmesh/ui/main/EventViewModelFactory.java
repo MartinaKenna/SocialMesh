@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import it.unimib.socialmesh.repository.IEventsRepositoryWithLiveData;
+import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
 
 public class EventViewModelFactory implements ViewModelProvider.Factory{
     private final IEventsRepositoryWithLiveData iEventsRepositoryWithLiveData;
