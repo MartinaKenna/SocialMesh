@@ -109,7 +109,7 @@ public class EventFragment extends Fragment {
         filter = view.findViewById(R.id.button);
 
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
-        filter.setTranslationX((1000));
+     /*   filter.setTranslationX((1000));
         recyclerViewEvents.setTranslationX(1000);
         recyclerViewEventsNearYou.setTranslationX(1000);
         searchView.setTranslationY(screenHeight);
@@ -127,7 +127,7 @@ public class EventFragment extends Fragment {
         barra3.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
         nearyou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
         lastadded.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
-
+*/
 
 
 
@@ -280,7 +280,7 @@ public class EventFragment extends Fragment {
 
 
 
-        eventViewModel.getEvents("sport", "200", "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
+        eventViewModel.getEvents("sport", "200",50, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
                     EventApiResponse eventResponse = ((Result.Success) result).getData();

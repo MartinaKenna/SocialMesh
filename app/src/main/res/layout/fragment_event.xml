@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/md_theme_light_background"
     android:descendantFocusability="blocksDescendants">
 
 
@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<TextView
+        <TextView
             android:id="@+id/nearYou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,16 +126,18 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/cardview"
             android:layout_marginStart="40dp"
+            android:backgroundTint="@color/md_theme_light_background"
             app:cardCornerRadius="40dp">
 
                 <Button
                     android:id="@+id/button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#30FFFFFF"
+                    android:backgroundTint="@color/md_theme_light_background"
                     android:text="Filter"
                     android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    />
         </androidx.cardview.widget.CardView>
 
 

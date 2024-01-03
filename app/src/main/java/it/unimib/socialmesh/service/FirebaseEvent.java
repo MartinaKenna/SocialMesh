@@ -7,6 +7,7 @@ public class FirebaseEvent {
     private String name;
     private String remoteId;
     private Long localId;
+
     private List<String> participants;
 
     public List<String> getParticipants() {

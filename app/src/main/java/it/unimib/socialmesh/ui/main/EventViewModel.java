@@ -11,6 +11,7 @@ public class EventViewModel extends ViewModel {
     private final IEventsRepositoryWithLiveData eventsRepositoryWithLiveData;
     private MutableLiveData<Result> eventsListLiveData;
     private int page;
+    private int size;
     private int currentResults;
     private int totalResults;
     private boolean isLoading;
@@ -20,18 +21,18 @@ public class EventViewModel extends ViewModel {
         this.eventsRepositoryWithLiveData = iEventsRepositoryWithLiveData;
     }
 
-    public MutableLiveData<Result> getEvents(String type, String city, String startDateTime, String time, long lastUpdate){
+    public MutableLiveData<Result> getEvents(String type, String city,int size ,String startDateTime, String time, long lastUpdate){
         if( eventsListLiveData == null){
-            fetchEvents(type,city,startDateTime,time, lastUpdate);
+            fetchEvents(type,city,size,startDateTime,time, lastUpdate);
         }
         return eventsListLiveData;
     }
 
-    private void fetchEvents(String type, String city, String startDateTime, String time){
-        eventsListLiveData = eventsRepositoryWithLiveData.fetchEvents(type,city,startDateTime,time,10);
+    private void fetchEvents(String type, String city, int size,String startDateTime, String time){
+        eventsListLiveData = eventsRepositoryWithLiveData.fetchEvents(type,city,size,startDateTime,time,10);
     }
-    private void fetchEvents(String type, String city, String startDateTime, String time, long lastUpdate){
-        eventsListLiveData = eventsRepositoryWithLiveData.fetchEvents(type,city,startDateTime,time,lastUpdate);
+    private void fetchEvents(String type, String city, int size,String startDateTime, String time, long lastUpdate){
+        eventsListLiveData = eventsRepositoryWithLiveData.fetchEvents(type,city,size,startDateTime,time,lastUpdate);
     }
     public int getPage() {
         return page;

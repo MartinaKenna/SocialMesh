@@ -1,4 +1,6 @@
 package it.unimib.socialmesh.ui.main;
+import static it.unimib.socialmesh.util.Constants.FIREBASE_REALTIME_DATABASE;
+
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
@@ -26,8 +28,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Arrays;
+import java.util.List;
+
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
+import it.unimib.socialmesh.service.FirebaseEvent;
 
 public class EventDetailsFragment extends Fragment {
 
@@ -37,7 +43,7 @@ public class EventDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event_details, container, false);
-        //Log.d("DETAILSFRAGMENT",  currentEvent.getRemoteId());
+
         // Recupera l'evento dalla navigazione
         if (getArguments() != null) {
             currentEvent = EventDetailsFragmentArgs.fromBundle(getArguments()).getEvent();
@@ -83,15 +89,46 @@ public class EventDetailsFragment extends Fragment {
                             // Assicurati che l'ID dell'evento non sia nullo o vuoto
                             if (eventId != null && !eventId.isEmpty()) {
                                 // Ottieni il riferimento all'evento nel database
-                                DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference().child("events").child(eventId);
+                                FirebaseDatabase firebaseDatabase =FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
+                                DatabaseReference eventRef = firebaseDatabase.getInstance().getReference().child("events").child(eventId);
 
-                                // Aggiungi l'ID dell'utente tra i partecipanti solo se non è già presente
+                                String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+// Ottieni il riferimento al nodo "users" dell'utente corrente
+                                DatabaseReference userRef = firebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
+
+// Aggiungi l'evento all'elenco degli eventi a cui partecipa (senza duplicati)
+                                DatabaseReference userEventsRef = userRef.child("events");
+
+                              
+// Controlla se l'evento è già presente nell'elenco
+                                userEventsRef.child(eventId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (!snapshot.exists()) {
+                                            // L'evento non è ancora presente, aggiungilo all'elenco
+                                            userEventsRef.child(eventId).setValue(true);
+                                        } else {
+                                            // L'evento è già presente, gestisci di conseguenza (puoi ignorare o mostrare un messaggio, a seconda dei requisiti)
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // Gestisci eventuali errori di lettura dal database
+                                    }
+                                });
                                 eventRef.child("participants").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         if (!snapshot.exists()) {
+
                                             // L'utente non è ancora tra i partecipanti, aggiungi l'ID
-                                            eventRef.child("participants").child(userId).setValue(true);
+                                            uploadEventsToFirebase(currentEvent, userId);
+
+
+
                                         }
                                     }
 
@@ -115,6 +152,39 @@ public class EventDetailsFragment extends Fragment {
         }
         return view;
     }
+    private void uploadEventsToFirebase(Event apiEvent, String userId) {
+
+        DatabaseReference eventsRef = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE).getReference().child("events");
+
+        Log.d("detailsfragment", "sto caricando");
+        // Controlla se l'evento è già presente nel database
+        DatabaseReference eventRef = eventsRef.child(String.valueOf(apiEvent.getRemoteId()));
+        eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    // Se l'evento non esiste già, aggiungilo
+                    FirebaseEvent firebaseEvent = new FirebaseEvent(
+                            apiEvent.getRemoteId(),
+                            apiEvent.getName(),
+                            apiEvent.getLocalId(),
+                            Arrays.asList()
+                    );
+                    eventRef.setValue(firebaseEvent);
+                }
+
+                // Aggiungi l'utente alla lista dei partecipanti
+                eventRef.child("participants").child(userId).setValue(true);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Gestisci eventuali errori di lettura dal database
+                Log.e("detailsfragment", "uploadEventsToFirebase onCancelled", error.toException());
+            }
+        });
+    }
+
     private String getCurrentUserId() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();

@@ -7,5 +7,5 @@ public abstract class BaseEventsRemoteDataSource{
     public void setEventCallback(EventCallback eventCallback){
         this.eventCallback = eventCallback;
     }
-    public abstract void getEvents(String type, String city, String startDateTime, String time);
+    public abstract void getEvents(String type, String city, int size,String startDateTime, String time);
 }

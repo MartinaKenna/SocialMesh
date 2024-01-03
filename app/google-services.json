@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "458617322565",
-    "project_id": "socialmesh-8dbc4",
-    "storage_bucket": "socialmesh-8dbc4.appspot.com"
+    "project_number": "972096125045",
+    "project_id": "socialmeshunimib",
+    "storage_bucket": "socialmeshunimib.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:458617322565:android:4f2f4527dcadb1c202f72c",
+        "mobilesdk_app_id": "1:972096125045:android:269b5a4259e7270a02203c",
         "android_client_info": {
           "package_name": "it.unimib.socialmesh"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB3WFIwU3fCEYmeuX0APxNQibeo6G4Kuww"
+          "current_key": "AIzaSyCxx3lrvA-vJDkAzQ7--5VSrEXGauC7uqY"
         }
       ],
       "services": {

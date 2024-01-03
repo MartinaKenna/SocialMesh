@@ -22,7 +22,9 @@ EventApiService {
     Call<EventApiResponse> getEvents(
             @Query(EVENTS_TYPE_PARAMETER) String type,
             @Query(EVENTS_CITY_PARAMETER) String city,
+            @Query("size") int size,
             @Query(EVENTS_START_DATE_PARAMETER) String startDateTime,
             @Query(EVENTS_END_DATE_PARAMETER) String endDateTime,
             @Query(API_KEY_PARAMETER) String apiKey);
+
 }
