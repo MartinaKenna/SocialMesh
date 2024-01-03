@@ -12,18 +12,13 @@
         android:label="@string/app_name"
         tools:layout="@layout/login_fragment" >
         <action
-            android:id="@+id/navigate_to_mainActivityWithBottomNavigationView"
-            app:destination="@id/mainActivityWithBottomNavigationView"
+            android:id="@+id/navigate_to_homeActivity"
+            app:destination="@id/homeActivity"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-        <action
-            android:id="@+id/navigate_to_newsPreferencesActivity"
-            app:destination="@id/newsPreferencesActivity" />
-        <action
-            android:id="@+id/navigate_to_mainActivityWithNavigationDrawer"
-            app:destination="@id/mainActivityWithNavigationDrawer" />
+
         <action
             android:id="@+id/navigate_to_registrationFragment"
             app:destination="@id/registrationFragment"
@@ -33,27 +28,22 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <activity
-        android:id="@+id/mainActivityWithBottomNavigationView"
-        android:name="it.unimib.worldnews.ui.main.MainActivityWithBottomNavigationView"
+        android:id="@+id/homeActivity"
+        android:name="it.unimib.socialmesh.ui.main.HomeActivity"
         android:label="activity_main_with_bottom_navigation_view"
-        tools:layout="@layout/activity_main_with_bottom_navigation_view" >
+        tools:layout="@layout/activity_home" >
     </activity>
-    <activity
-        android:id="@+id/newsPreferencesActivity"
-        android:name="it.unimib.worldnews.ui.preferences.NewsPreferencesActivity"
-        android:label="activity_news_preferences_linear_layout"
-        tools:layout="@layout/activity_news_preferences_constraint_layout" />
-    <activity
-        android:id="@+id/mainActivityWithNavigationDrawer"
-        android:name="it.unimib.worldnews.ui.main.MainActivityWithNavigationDrawer"
-        android:label="MainActivityWithNavigationDrawer" />
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="it.unimib.worldnews.ui.welcome.RegistrationFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_registration" >
+        android:name="it.unimib.socialmesh.ui.welcome.SignupFragment"
+        android:label="socialmesh"
+        tools:layout="@layout/signup_fragment" >
         <action
-            android:id="@+id/navigation_to_newsPreferencesActivity"
-            app:destination="@id/newsPreferencesActivity" />
+            android:id="@+id/navigate_to_homeActivity"
+            app:destination="@id/homeActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 </navigation>

@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -29,24 +30,34 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import it.unimib.socialmesh.R;
+import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.model.User;
 import it.unimib.socialmesh.data.repository.user.UserRepository;
+import it.unimib.socialmesh.ui.welcome.UserViewModel;
+import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.ui.welcome.WelcomeActivity;
+import it.unimib.socialmesh.util.ServiceLocator;
 
 public class ProfileFragment extends Fragment {
-    int REQUEST_CODE;
+   int REQUEST_CODE;
     TextView fullName, userEmail;
     ActivityResultLauncher<Intent> imagePickLauncher;
     Uri selectedImageUri;
     ImageView profile_image_view;
-    UserRepository userRepository;
+    private UserViewModel userViewModel;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //userRepository = new UserRepository();
-        refreshProfileImage();
+
+
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+       // refreshProfileImage(userRepository);
 
     }
     ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(
@@ -68,13 +79,14 @@ public class ProfileFragment extends Fragment {
                 }
             }
     );
-    @Override
+   /* @Override
     public void onResume() {
         super.onResume();
         refreshProfileImage();
-    }
-
-    private void refreshProfileImage() { userRepository.getUserProfileImageUrl().addOnCompleteListener(task -> {
+    }*/
+/*
+    private void refreshProfileImage(IUserRepository userRepository) {
+        userRepository.getUserProfileImageUrl().addOnCompleteListener(task -> {
         if (task.isSuccessful()) {
             DataSnapshot dataSnapshot = task.getResult();
             if (dataSnapshot != null && dataSnapshot.exists()) {
@@ -93,7 +105,7 @@ public class ProfileFragment extends Fragment {
         }
     });
     }
-
+*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -122,8 +134,8 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
- //                   fullName.setText(user.fullName);
- //                   userEmail.setText(user.email);
+                  fullName.setText(user.getName());
+                    userEmail.setText(user.getEmail());
                 }
             }
 

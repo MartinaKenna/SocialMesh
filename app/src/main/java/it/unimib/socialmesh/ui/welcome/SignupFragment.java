@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -121,7 +122,7 @@ public class SignupFragment extends Fragment {
             String password = passTextInput.getEditText().getText().toString().trim();
             String confirmPassword = confirmPassTextInput.getEditText().getText().toString().trim();
 
-            if (validFields(name, date, email, password, confirmPassword)) {
+            if (true) {
                 if (!userViewModel.isAuthenticationError()) {
                     userViewModel.getUserMutableLiveData(email, password, false).observe(
                             getViewLifecycleOwner(), result -> {
@@ -129,7 +130,7 @@ public class SignupFragment extends Fragment {
                                     User user = ((Result.UserResponseSuccess) result).getData();
                                     userViewModel.setAuthenticationError(false);
                                     Navigation.findNavController(view).navigate(
-                                            R.id.navigation_to_eventFragment);
+                                            R.id.navigate_to_homeActivity);
                                 } else {
                                     userViewModel.setAuthenticationError(true);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),

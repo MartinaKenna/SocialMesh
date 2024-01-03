@@ -114,7 +114,7 @@ public class LoginFragment extends Fragment {
                             if (authenticationResult.isSuccess()) {
                                 User user = ((Result.UserResponseSuccess) authenticationResult).getData();
                                 userViewModel.setAuthenticationError(false);
-                                startActivityBasedOnCondition(HomeActivity.class, R.id.navigation_to_eventFragment);
+                                startActivityBasedOnCondition(HomeActivity.class, R.id.navigate_to_homeActivity);
                             } else {
                                 userViewModel.setAuthenticationError(true);
                                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
@@ -142,7 +142,6 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         emailTextInput = view.findViewById(R.id.email);
         passTextInput = view.findViewById(R.id.insertPassword);
 
@@ -156,14 +155,14 @@ public class LoginFragment extends Fragment {
             String password  = passTextInput.getEditText().getText().toString().trim();
 
             // Start login if email and password are ok
-            if (isEmailOk(email) & isPasswordOk(password)) {
+            if (true) {
                 if (!userViewModel.isAuthenticationError()) {
                     userViewModel.getUserMutableLiveData(email, password, true).observe(
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
                                     User user = ((Result.UserResponseSuccess) result).getData();
                                     userViewModel.setAuthenticationError(false);
-                                    Navigation.findNavController(requireView()).navigate(R.id.navigation_to_signupFragment);
+                                    Navigation.findNavController(requireView()).navigate(R.id.navigate_to_homeActivity);
                                 } else {
                                     userViewModel.setAuthenticationError(true);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
@@ -206,7 +205,7 @@ public class LoginFragment extends Fragment {
                 }));
 
         buttonSignUp.setOnClickListener(item -> {
-            Navigation.findNavController(requireView()).navigate(R.id.navigation_to_signupFragment);
+            Navigation.findNavController(requireView()).navigate(R.id.navigate_to_registrationFragment);
         });
 
 

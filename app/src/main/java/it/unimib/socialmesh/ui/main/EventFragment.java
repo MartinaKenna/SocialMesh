@@ -17,6 +17,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,6 +76,7 @@ public class EventFragment extends Fragment {
                 ServiceLocator.getInstance().getEventRepository(
                         requireActivity().getApplication());
         Log.d(TAG,"repository creato");
+
 
         eventViewModel = new ViewModelProvider(
                 requireActivity(),
@@ -207,6 +210,16 @@ public class EventFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+
+        if (currentUser != null) {
+            Log.d("FirebaseUser", "User ID: " + currentUser.getUid());
+            Log.d("FirebaseUser", "User Email: " + currentUser.getEmail());
+            // Aggiungi altri dati utente se necessario
+        } else {
+            Log.d("FirebaseUser", "User is not logged in");
+        }
         RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0,
                 new RecyclerViewEventsAdapter.OnItemClickListener() {

@@ -23,10 +23,6 @@
             android:name=".ui.main.HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.welcome.SignUpActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true" />
         <activity

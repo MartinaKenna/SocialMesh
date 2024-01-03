@@ -10,10 +10,21 @@ public class User implements Parcelable {
     private String email;
     private String idToken;
 
+    public String profilePicUrl;
+
+    public String getProfilePicUrl() {
+        return profilePicUrl;
+    }
+
+    public void setProfilePicUrl(String profilePicUrl) {
+        this.profilePicUrl = profilePicUrl;
+    }
+
     public User(String name, String email, String idToken) {
         this.name = name;
         this.email = email;
         this.idToken = idToken;
+        this.profilePicUrl = null;
     }
 
     public String getName() {
@@ -48,6 +59,9 @@ public class User implements Parcelable {
                 ", email='" + email + '\'' +
                 ", idToken='" + idToken + '\'' +
                 '}';
+    }
+
+    public User() {
     }
 
     @Override
