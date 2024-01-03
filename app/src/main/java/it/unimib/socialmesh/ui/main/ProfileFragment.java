@@ -18,9 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -109,41 +111,13 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-         ImageView profileImageView;
+        ImageView profileImageView;
         fullName = root.findViewById(R.id.userName); // Aggiunto il riferimento alla TextView del nome
         userEmail = root.findViewById(R.id.userEmail); // Aggiunto il riferimento alla TextView dell'email
         profile_image_view = root.findViewById(R.id.profile_image_view);
-        Button buttonLogout = root.findViewById(R.id.buttonLogout);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
 
-        if (currentUser == null && getActivity() != null) {
-            Intent intent = new Intent(getActivity(), WelcomeActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-        }
 
-        buttonLogout.setOnClickListener(view -> logoutUser());
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference("users").child(currentUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                if (user != null) {
-                  fullName.setText(user.getName());
-                    userEmail.setText(user.getEmail());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Gestione dell'errore
-            }
-        });
         AppCompatImageView buttonSettings = root.findViewById(R.id.button_settings); // Assumi che l'ID corrisponda a un AppCompatImageView
 
         buttonSettings.setOnClickListener(view -> {
@@ -153,12 +127,21 @@ public class ProfileFragment extends Fragment {
         return root;
     }
 
-    private void logoutUser() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getActivity(), WelcomeActivity.class);
-        startActivity(intent);
-        if (getActivity() != null) {
-            getActivity().finish();
-        }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button buttonLogout = view.findViewById(R.id.buttonLogout);
+        buttonLogout.setOnClickListener(v -> {
+            userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
+                if (result.isSuccess()) {
+                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_loginFragment);
+                } else {
+                    Snackbar.make(view,
+                            requireActivity().getString(R.string.unexpected_error),
+                            Snackbar.LENGTH_SHORT).show();
+                }
+            });
+        });
     }
 }

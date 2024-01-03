@@ -28,7 +28,11 @@
         android:id="@+id/profileFragment"
         android:name="it.unimib.socialmesh.ui.main.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/eventDetailsFragment"
         android:name="it.unimib.socialmesh.ui.main.EventDetailsFragment"
@@ -37,4 +41,8 @@
             android:name="event"
             app:argType="it.unimib.socialmesh.model.Event" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="it.unimib.socialmesh.ui.welcome.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>
