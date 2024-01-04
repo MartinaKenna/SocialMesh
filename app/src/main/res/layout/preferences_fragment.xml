@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="Preferences"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_culture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Culture"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_sport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Sport"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_music"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Music"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/button_cinema"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cinema"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_aperitivo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Aperitivo"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_party"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Party"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_smoker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Smoker"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_traveler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Traveler"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_lgbt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:hapticFeedbackEnabled="false"
+                android:text="LGBT"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_karaoke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Karaoke"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_nft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="NFT"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_boxe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Boxe"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_festival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Festival"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="29dp"
+                tools:layout_editor_absoluteY="57dp" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_crossfit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Crossfit"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="29dp"
+                tools:layout_editor_absoluteY="120dp" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_nature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Nature"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp"
+            >
+
+
+            <Button
+                android:id="@+id/button_beach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Beach"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_motosport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="MotoSport"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_instagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Instagram"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Twitter"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_socialmedia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="SocialMedia"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_horror"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Horror"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Action"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <Button
+                android:id="@+id/button_love"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Love"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="40dp">
+
+
+            <Button
+                android:id="@+id/button_cooking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Cooking"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_photography"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Photography"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+
+        <Button
+            android:id="@+id/button_painting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Painting"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_hiking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Hiking"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+
+        <Button
+            android:id="@+id/button_streaming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Streaming"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_gardening"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Gardening"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+
+        <Button
+            android:id="@+id/button_writing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Writing"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_modeling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Modeling"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_programming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Programming"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_vegetarian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Vegetarian"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_vegan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Vegan"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+
+        <Button
+            android:id="@+id/button_carnivore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Carnivore"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Parent"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+
+        <Button
+            android:id="@+id/button_single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Single"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_engaged"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Engaged"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+
+        <Button
+            android:id="@+id/button_married"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Married"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_navigate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Navigate ->"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp" >
+
+
+        <Button
+            android:id="@+id/button_blogging"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="Blogging"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="40dp">
+
+        <Button
+            android:id="@+id/button_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:text="City"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    </TableRow>
+
+</TableLayout>

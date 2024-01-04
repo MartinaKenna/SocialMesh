@@ -63,7 +63,6 @@ public class EventFragment extends Fragment {
     private EventsRepository eventsRepository;
     private Button  filter, button1, button2, button3;
     private PopupWindow popupWindow;
-    private Integer count, count1;
 
     //questo serve
     public EventFragment() {}
@@ -88,8 +87,6 @@ public class EventFragment extends Fragment {
                 new EventViewModelFactory(eventsRepositoryWithLiveData)).get(EventViewModel.class);
 
         eventsList = new ArrayList<>();
-        count= 0;
-        count1=0;
 
     }
 
