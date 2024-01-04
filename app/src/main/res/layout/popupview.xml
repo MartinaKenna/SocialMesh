@@ -11,21 +11,25 @@
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#DB5502" />
+            android:backgroundTint="@color/md_theme_light_secondary"
+            android:textColor="@color/md_theme_light_onSecondary"/>
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/button1"
-            android:backgroundTint="#DB5502" />
+            android:backgroundTint="@color/md_theme_light_secondary"
+            android:textColor="@color/md_theme_light_onSecondary"/>
 
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/button2"
-            android:backgroundTint="#DB5502" />
+            android:backgroundTint="@color/md_theme_light_secondary"
+            android:textColor="@color/md_theme_light_onSecondary"
+            />
 
     </RelativeLayout>
 

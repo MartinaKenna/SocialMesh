@@ -17,8 +17,8 @@ public class EventsRemoteDataSource extends BaseEventsRemoteDataSource{
         this.eventApiService = ServiceLocator.getInstance().getEventsApiService();
     }
     @Override
-    public void getEvents(String type, String city, String startDateTime, String time){
-        Call<EventApiResponse> eventResponseCall = eventApiService.getEvents(type,city,startDateTime,time,apiKey);
+    public void getEvents(String type, String city,int size, String startDateTime, String time){
+        Call<EventApiResponse> eventResponseCall = eventApiService.getEvents(type,city,size,startDateTime,time,apiKey);
         eventResponseCall.enqueue(new Callback<EventApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<EventApiResponse> call, @NonNull Response<EventApiResponse> response) {

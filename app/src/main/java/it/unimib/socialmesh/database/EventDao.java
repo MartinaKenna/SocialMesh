@@ -18,9 +18,8 @@ import it.unimib.socialmesh.model.Event;
  */
 @Dao
 public interface EventDao {
-    @Query("SELECT * FROM event ORDER BY name DESC")
+    @Query("SELECT * FROM event ORDER BY CAST((ABS(CAST((localId || 'salt') AS INTEGER)) % 100000) AS INTEGER)")
     List<Event> getAll();
-
     @Query("SELECT * FROM event WHERE remoteId = :id")
     Event getEvent(long id);
 

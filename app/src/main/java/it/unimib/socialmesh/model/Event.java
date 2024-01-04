@@ -116,9 +116,8 @@ public class Event implements Parcelable {
  */
     public Event(){}
 
-    //getName con il filtro del max 20 parole
     public String getName1() {
-        if (name.length() > 20) {
+        if (name != null && name.length() > 20) {
             int count = 0;
             StringBuilder word = new StringBuilder();
 
@@ -130,9 +129,12 @@ public class Event implements Parcelable {
                 word.append(character);
                 count++;
             }
+            return word.toString();
+        } else {
+            return name;
         }
-        return name;
     }
+
 
     public String getName(){
         return name;
@@ -236,7 +238,12 @@ public class Event implements Parcelable {
     }*/
 
     public String getUrlImages() {
-        return images.get(0).getUrlImages();
+        if (images != null && !images.isEmpty()) {
+            return images.get(0).getUrlImages();
+        } else {
+            // Se la lista è vuota o nulla, restituisci un URL di fallback o una stringa vuota
+            return "URL di fallback o stringa vuota";
+        }
     }
 
     @Override
