@@ -43,10 +43,13 @@ import it.unimib.socialmesh.util.ServiceLocator;
 public class ProfileFragment extends Fragment {
    int REQUEST_CODE;
     TextView fullName, userEmail;
+    Button buttonLogout;
     ActivityResultLauncher<Intent> imagePickLauncher;
     Uri selectedImageUri;
     ImageView profile_image_view;
     private UserViewModel userViewModel;
+
+    public ProfileFragment() {}
 
 
     @Override
@@ -81,33 +84,7 @@ public class ProfileFragment extends Fragment {
                 }
             }
     );
-   /* @Override
-    public void onResume() {
-        super.onResume();
-        refreshProfileImage();
-    }*/
-/*
-    private void refreshProfileImage(IUserRepository userRepository) {
-        userRepository.getUserProfileImageUrl().addOnCompleteListener(task -> {
-        if (task.isSuccessful()) {
-            DataSnapshot dataSnapshot = task.getResult();
-            if (dataSnapshot != null && dataSnapshot.exists()) {
-                String imageUrl = dataSnapshot.getValue(String.class);
-                if (imageUrl != null && isAdded()) {
-                    Glide.with(this)
-                            .load(imageUrl)
-                            .apply(RequestOptions.circleCropTransform())
-                            .placeholder(R.drawable.baseline_lock_clock_black_24dp)
-                            .error(R.drawable.baseline_error_black_24dp)
-                            .into(profile_image_view);
-                }
-            }
-        } else {
-            // Gestisci eventuali errori durante il recupero dell'URL dell'immagine
-        }
-    });
-    }
-*/
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -116,7 +93,7 @@ public class ProfileFragment extends Fragment {
         fullName = root.findViewById(R.id.userName); // Aggiunto il riferimento alla TextView del nome
         userEmail = root.findViewById(R.id.userEmail); // Aggiunto il riferimento alla TextView dell'email
         profile_image_view = root.findViewById(R.id.profile_image_view);
-
+        buttonLogout = root.findViewById(R.id.buttonLogout);
 
         AppCompatImageView buttonSettings = root.findViewById(R.id.button_settings); // Assumi che l'ID corrisponda a un AppCompatImageView
 
@@ -130,11 +107,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Button buttonLogout = view.findViewById(R.id.buttonLogout);
         buttonLogout.setOnClickListener(v -> {
             userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
-                if (result.isSuccess()) {
+                if (true) {
                     Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_loginFragment);
                 } else {
                     Snackbar.make(view,
