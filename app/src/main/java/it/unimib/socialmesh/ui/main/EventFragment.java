@@ -5,13 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,31 +17,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
+import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.model.Result;
-import it.unimib.socialmesh.data.repository.event.EventsRepository;
-import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
-import it.unimib.socialmesh.data.service.FirebaseEvent;
 import it.unimib.socialmesh.util.ServiceLocator;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EventFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EventFragment extends Fragment {
 
     private static final String TAG = EventFragment.class.getSimpleName();
@@ -56,8 +41,6 @@ public class EventFragment extends Fragment {
     private RecyclerViewEventsAdapter recyclerViewEventsAdapterNearYou, recyclerViewEventsAdapter;
     private EventViewModel eventViewModel;
 
-    private EventsRepository eventsRepository;
-    private Button hipHopRap, latin, rock, buttonAll;
 
     //questo serve
     public EventFragment() {}
@@ -67,11 +50,7 @@ public class EventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-        eventsRepository = new EventsRepository(requireActivity().getApplication(), this);
-        eventsList = new ArrayList<>();
-        eventsRepository.fetchEvents("music", "324", "2024-06-01T08:00:00Z", "2024-06-30T08:00:00Z", 10);
-        */
+
         IEventsRepositoryWithLiveData eventsRepositoryWithLiveData =
                 ServiceLocator.getInstance().getEventRepository(
                         requireActivity().getApplication());
@@ -224,7 +203,7 @@ public class EventFragment extends Fragment {
 
 
 
-        eventViewModel.getEvents("sport", "200", "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
+        eventViewModel.getEvents("sport", "200", 20, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
                     EventApiResponse eventResponse = ((Result.EventResponseSuccess) result).getData();
