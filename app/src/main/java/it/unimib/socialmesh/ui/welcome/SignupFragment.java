@@ -37,13 +37,12 @@ import it.unimib.socialmesh.model.User;
 import it.unimib.socialmesh.ui.main.HomeActivity;
 
 public class SignupFragment extends Fragment {
-    TextInputLayout nameTextInput, dateTextInput, emailTextInput, passTextInput, confirmPassTextInput;
+    TextInputLayout emailTextInput, passTextInput, confirmPassTextInput;
 
     private UserViewModel userViewModel;
 
     Button register;
     Intent intent;
-    private TextInputEditText dateInputEditText;
 
     protected static final int LIMIT_AGE = 16;
 
@@ -58,52 +57,18 @@ public class SignupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.signup_fragment, container, false);
-        nameTextInput = root.findViewById(R.id.fullName);
-        dateTextInput = root.findViewById(R.id.datanasc);
-        dateInputEditText = root.findViewById(R.id.testo_datanasc);
         emailTextInput = root.findViewById(R.id.email);
         passTextInput = root.findViewById(R.id.insertPassword);
         confirmPassTextInput = root.findViewById(R.id.confirmpassword_signup);
         register = root.findViewById(R.id.buttonRegister);
 
-        dateInputEditText.setOnClickListener(v -> {
-            // on below line we are getting
-            // the instance of our calendar.
-            final Calendar c = Calendar.getInstance();
 
-            // on below line we are getting
-            // our day, month and year.
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // on below line we are creating a variable for date picker dialog.
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    // on below line we are passing context.
-                    this.getContext(),
-                    R.style.ThemeOverlay_App_Dialog,
-                    (view, year1, monthOfYear, dayOfMonth) -> {
-                        // on below line we are setting date to our edit text.
-                        dateInputEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1);
-
-                    },
-                    // on below line we are passing year,
-                    // month and day for selected date in our date picker.
-                    year, month, day);
-            // at last we are calling show to
-            // display our date picker dialog.
-            datePickerDialog.show();
-        });
-
-        nameTextInput.setTranslationX(1000);
-        dateTextInput.setTranslationX(1000);
         emailTextInput.setTranslationX(1000);
         passTextInput.setTranslationX(1000);
         confirmPassTextInput.setTranslationX(1000);
         register.setTranslationX(1000);
 
-        nameTextInput.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        dateTextInput.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
+
         emailTextInput.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
         passTextInput.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
         confirmPassTextInput.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1100).start();
@@ -116,8 +81,6 @@ public class SignupFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         register.setOnClickListener(v -> {
-            String name = nameTextInput.getEditText().getText().toString().trim();
-            String date = dateTextInput.getEditText().getText().toString().trim();
             String email = emailTextInput.getEditText().getText().toString().trim();
             String password = passTextInput.getEditText().getText().toString().trim();
             String confirmPassword = confirmPassTextInput.getEditText().getText().toString().trim();
@@ -130,7 +93,7 @@ public class SignupFragment extends Fragment {
                                     User user = ((Result.UserResponseSuccess) result).getData();
                                     userViewModel.setAuthenticationError(false);
                                     Navigation.findNavController(view).navigate(
-                                            R.id.navigate_to_homeActivity);
+                                            R.id.navigate_to_detailsFragment);
                                 } else {
                                     userViewModel.setAuthenticationError(true);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
@@ -163,13 +126,6 @@ public class SignupFragment extends Fragment {
 
 
     private boolean validFields(String fullName, String date, String email, String password, String password2) {
-
-            if (fullName == null || !fullName.matches("^[a-zA-Z]+(\\s[a-zA-Z]+)?$")) {
-                nameTextInput.setError(getString(R.string.fullname_error));
-                return false;
-            } else {
-                nameTextInput.setError(null);
-            }
         if (!EmailValidator.getInstance().isValid((email))) {
             emailTextInput.setError(getString(R.string.error_email));
             return false;

@@ -9,8 +9,16 @@ public class User implements Parcelable {
     private String name;
     private String email;
     private String idToken;
-
+    private String birthDate;
     public String profilePicUrl;
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
 
     public String getProfilePicUrl() {
         return profilePicUrl;

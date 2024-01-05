@@ -42,7 +42,7 @@ import it.unimib.socialmesh.util.ServiceLocator;
 
 public class ProfileFragment extends Fragment {
    int REQUEST_CODE;
-    TextView fullName, userEmail;
+    TextView fullName, userEmail,userDate;
     Button buttonLogout;
     ActivityResultLauncher<Intent> imagePickLauncher;
     Uri selectedImageUri;
@@ -91,15 +91,45 @@ public class ProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         ImageView profileImageView;
         fullName = root.findViewById(R.id.userName); // Aggiunto il riferimento alla TextView del nome
+        userDate = root.findViewById(R.id.userDate);
         userEmail = root.findViewById(R.id.userEmail); // Aggiunto il riferimento alla TextView dell'email
         profile_image_view = root.findViewById(R.id.profile_image_view);
         buttonLogout = root.findViewById(R.id.buttonLogout);
-
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
         AppCompatImageView buttonSettings = root.findViewById(R.id.button_settings); // Assumi che l'ID corrisponda a un AppCompatImageView
 
         buttonSettings.setOnClickListener(view -> {
             Intent intent = new Intent(requireActivity(), SettingsActivity.class);
             settingsLauncher.launch(intent);
+        });
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("users").child(currentUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    DataSnapshot nameSnapshot = snapshot.child("name");
+                    DataSnapshot emailSnapshot = snapshot.child("email");
+                    DataSnapshot dateSnapshot = snapshot.child("data_di_nascita");
+
+                    if (nameSnapshot.exists() && emailSnapshot.exists()) {
+                        String name = nameSnapshot.getValue(String.class);
+                        String email = emailSnapshot.getValue(String.class);
+                        String data_di_nascita = dateSnapshot.getValue(String.class);
+
+                        // Aggiorna le viste con il nome e l'email ottenuti
+                        fullName.setText(name);
+                        userEmail.setText(email);
+                        userDate.setText(data_di_nascita);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Gestisci eventuali errori di lettura dal database
+            }
         });
         return root;
     }
