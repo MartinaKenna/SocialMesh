@@ -1,5 +1,4 @@
 package it.unimib.socialmesh.model;
-import android.graphics.Paint;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -15,13 +14,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import it.unimib.socialmesh.model.jsonFields.AgeRestrictions;
 import it.unimib.socialmesh.model.jsonFields.Classification;
 import it.unimib.socialmesh.model.jsonFields.Dates;
-import it.unimib.socialmesh.model.jsonFields.Embedded_1;
 import it.unimib.socialmesh.model.jsonFields.Genre;
 import it.unimib.socialmesh.model.jsonFields.Image;
-import it.unimib.socialmesh.repository.EventsRepository;
 import it.unimib.socialmesh.util.Converters;
 
 

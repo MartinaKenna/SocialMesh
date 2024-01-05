@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import it.unimib.socialmesh.model.Result;
-import it.unimib.socialmesh.repository.IEventsRepositoryWithLiveData;
+import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
 
 public class EventViewModel extends ViewModel {
     private static final String TAG = EventViewModel.class.getSimpleName();

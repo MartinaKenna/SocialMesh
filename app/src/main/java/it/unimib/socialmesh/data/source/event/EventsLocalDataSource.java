@@ -1,11 +1,12 @@
-package it.unimib.socialmesh.util;
+package it.unimib.socialmesh.data.source.event;
 
 import android.util.Log;
 
 import java.util.List;
 
-import it.unimib.socialmesh.database.EventDao;
-import it.unimib.socialmesh.database.EventRoomDatabase;
+import it.unimib.socialmesh.data.database.EventDao;
+import it.unimib.socialmesh.data.database.EventRoomDatabase;
+import it.unimib.socialmesh.data.source.event.BaseEventsLocalDataSource;
 import it.unimib.socialmesh.model.Event;
 
 public class EventsLocalDataSource extends BaseEventsLocalDataSource {

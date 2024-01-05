@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -21,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,11 +27,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.Date;
-import java.util.HashMap;
 
 import it.unimib.socialmesh.R;
-import it.unimib.socialmesh.repository.UserRepository;
-import it.unimib.socialmesh.util.FireBaseUtil;
+import it.unimib.socialmesh.data.repository.user.UserRepository;
+import it.unimib.socialmesh.util.ServiceLocator;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -51,6 +48,8 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        /*
         loadProfileImage();
         profilePic = findViewById(R.id.settings_profile_image);
         imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -82,6 +81,9 @@ public class SettingsActivity extends AppCompatActivity {
             setResult(Activity.RESULT_CANCELED);
             finish();
         });
+
+
+
         // Quando l'utente preme il pulsante "Update" nell'Activity Settings
         Button updateSettingsButton = findViewById(R.id.update_account_settings_btn);
         updateSettingsButton.setOnClickListener(view -> {
@@ -103,7 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
                                             String filePath = downloadUri.toString();
 
                                             // Aggiornamento del repository con il nuovo URL dell'immagine del profilo
-                                            UserRepository.getInstance().setUserProfileImageUrl(filePath)
+                                            ServiceLocator.getInstance().getUserRepository(getApplication()).
                                                     .addOnSuccessListener(aVoid -> {
                                                         // Invia l'URL dell'immagine come risultato all'Activity chiamante
                                                         Intent resultIntent = new Intent();
@@ -158,8 +160,11 @@ public class SettingsActivity extends AppCompatActivity {
                 });
     }
 
+
     public static void setProfilePic (Context context, Uri imageUri, ImageView imageView){
             Glide.with(context).load(imageUri).apply(RequestOptions.circleCropTransform()).into(imageView);
         }
 
-    }
+         */
+
+    }}

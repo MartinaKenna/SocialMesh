@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.database;
+package it.unimib.socialmesh.data.database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

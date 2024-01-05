@@ -33,7 +33,7 @@ import java.util.List;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
-import it.unimib.socialmesh.service.FirebaseEvent;
+import it.unimib.socialmesh.data.service.FirebaseEvent;
 
 public class EventDetailsFragment extends Fragment {
 
@@ -101,7 +101,7 @@ public class EventDetailsFragment extends Fragment {
 // Aggiungi l'evento all'elenco degli eventi a cui partecipa (senza duplicati)
                                 DatabaseReference userEventsRef = userRef.child("events");
 
-                              
+
 // Controlla se l'evento è già presente nell'elenco
                                 userEventsRef.child(eventId).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override

@@ -1,12 +1,12 @@
-package it.unimib.socialmesh.repository;
+package it.unimib.socialmesh.data.repository.event;
 
 import android.app.Application;
 import android.util.Log;
 
-import it.unimib.socialmesh.database.EventDao;
-import it.unimib.socialmesh.database.EventRoomDatabase;
+import it.unimib.socialmesh.data.database.EventDao;
+import it.unimib.socialmesh.data.database.EventRoomDatabase;
 import it.unimib.socialmesh.model.Event;
-import it.unimib.socialmesh.service.EventApiService;
+import it.unimib.socialmesh.data.service.EventApiService;
 
 import androidx.annotation.NonNull;
 
@@ -24,30 +24,20 @@ public class EventsRepository {
     private static final String TAG = EventsRepository.class.getSimpleName();
     private final Application application;
     private final EventDao eventDao;
-
     private final EventApiService eventsApiService;
     private final ResponseCallback responseCallback;
-
-    //TODO aggiungere database
 
     public EventsRepository(Application application, ResponseCallback responseCallback) {
         this.application = application;
         this.eventsApiService = ServiceLocator.getInstance().getEventsApiService();
         this.responseCallback = responseCallback;
 
-        //TODO da sistemare sta roba
         EventRoomDatabase eventRoomDatabase = ServiceLocator.getInstance().getEventDao(application);
         this.eventDao = eventRoomDatabase.eventDao();
     }
 
 
-    /*
-     * Metodo scritto secondo le indicazioni del prof, al momento non funziona
-     *
-     * Dovrebbe recuperare i dati da TicketMaster e parsarli con una classe
-     * GSON gestita da Retrofit
-     * */
-    public void fetchEvents(String type, String city, int size, String startDateTime, String time, long lastUpdate) {
+    public void fetchEvents(String type, String city, String startDateTime, String time, long lastUpdate) {
 
         long currentTime = System.currentTimeMillis();
 
@@ -56,7 +46,7 @@ public class EventsRepository {
         //TODO sistemare la condizione per l'aggiornamento
         //if (currentTime - lastUpdate > FRESH_TIMEOUT) {
         if (true) {
-            Call<EventApiResponse> eventsResponseCall = eventsApiService.getEvents(type, city,size, startDateTime, time,
+            Call<EventApiResponse> eventsResponseCall = eventsApiService.getEvents(type, city, startDateTime, time,
                     "ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j");
 
             eventsResponseCall.enqueue(new Callback<EventApiResponse>() {

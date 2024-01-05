@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.service;
+package it.unimib.socialmesh.data.service;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,4 @@
-package it.unimib.socialmesh.repository;
-
-import static it.unimib.socialmesh.util.Constants.FRESH_TIMEOUT;
+package it.unimib.socialmesh.data.repository.event;
 
 import android.util.Log;
 
@@ -13,8 +11,8 @@ import it.unimib.socialmesh.model.Embedded;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.model.Result;
-import it.unimib.socialmesh.util.BaseEventsLocalDataSource;
-import it.unimib.socialmesh.util.BaseEventsRemoteDataSource;
+import it.unimib.socialmesh.data.source.event.BaseEventsLocalDataSource;
+import it.unimib.socialmesh.data.source.event.BaseEventsRemoteDataSource;
 import it.unimib.socialmesh.util.EventCallback;
 
 public class EventsRepositoryWithLiveData implements IEventsRepositoryWithLiveData, EventCallback{
@@ -62,7 +60,7 @@ public class EventsRepositoryWithLiveData implements IEventsRepositoryWithLiveDa
         EventApiResponse eventApiResponse = new EventApiResponse();
         eventApiResponse.setEmbedded(embedded);
 
-        Result.Success result = new Result.Success(eventApiResponse);
+        Result.EventResponseSuccess result = new Result.EventResponseSuccess(eventApiResponse);
         allEventsMutableLiveData.postValue(result);
     }
     @Override

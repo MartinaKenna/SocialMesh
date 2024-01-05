@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -21,6 +20,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,9 +39,9 @@ import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.model.Result;
-import it.unimib.socialmesh.repository.EventsRepository;
-import it.unimib.socialmesh.repository.IEventsRepositoryWithLiveData;
-import it.unimib.socialmesh.service.FirebaseEvent;
+import it.unimib.socialmesh.data.repository.event.EventsRepository;
+import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
+import it.unimib.socialmesh.data.service.FirebaseEvent;
 import it.unimib.socialmesh.util.ServiceLocator;
 
 /**
@@ -81,6 +82,7 @@ public class EventFragment extends Fragment {
                 ServiceLocator.getInstance().getEventRepository(
                         requireActivity().getApplication());
         Log.d(TAG,"repository creato");
+
 
         eventViewModel = new ViewModelProvider(
                 requireActivity(),
@@ -233,16 +235,21 @@ public class EventFragment extends Fragment {
         recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
 
         return view;
-
-    }
-    public void forceRefreshFragment() {
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.detach(this).attach(this).commit();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+
+        if (currentUser != null) {
+            Log.d("FirebaseUser", "User ID: " + currentUser.getUid());
+            Log.d("FirebaseUser", "User Email: " + currentUser.getEmail());
+            // Aggiungi altri dati utente se necessario
+        } else {
+            Log.d("FirebaseUser", "User is not logged in");
+        }
         RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(eventsList, 0,
                 new RecyclerViewEventsAdapter.OnItemClickListener() {
@@ -280,7 +287,7 @@ public class EventFragment extends Fragment {
         eventViewModel.getEvents("sport", "200",50, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
-                    EventApiResponse eventResponse = ((Result.Success) result).getData();
+                    EventApiResponse eventResponse = ((Result.EventResponseSuccess) result).getData();
                     List<Event> fetchedEvents = eventResponse.getEvents();
 
                     if (!eventViewModel.isLoading()) {
@@ -304,7 +311,6 @@ public class EventFragment extends Fragment {
                             //TODO togliere sto schifo
                             recyclerViewEventsAdapter.clearFilters();
                             recyclerViewEventsAdapterNearYou.clearFilters();
-                            uploadEventsToFirebase(eventsList);
                         }
 
                     } else {
@@ -333,34 +339,7 @@ public class EventFragment extends Fragment {
     });
 
     }
-    private void uploadEventsToFirebase(List<Event> apiEvents) {
-        DatabaseReference eventsRef = FirebaseDatabase.getInstance().getReference().child("events");
 
-        for (Event apiEvent : apiEvents) {
-            // Controlla se l'evento è già presente nel database
-            eventsRef.child(String.valueOf(apiEvent.getRemoteId())).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (!snapshot.exists()) {
-                        // Se l'evento non esiste già, aggiungilo
-                        FirebaseEvent firebaseEvent = new FirebaseEvent(
-                                apiEvent.getRemoteId(),
-                                apiEvent.getName(),
-                                apiEvent.getLocalId(),
-                                Arrays.asList()
-
-                        );
-                        eventsRef.child(String.valueOf(apiEvent.getRemoteId())).setValue(firebaseEvent);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-    }
 
     public List<String> getMostFrequentGenres() {
         Map<String, Integer> genreOccurrences = new HashMap<>();

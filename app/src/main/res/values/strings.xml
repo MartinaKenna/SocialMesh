@@ -48,4 +48,10 @@
     <string name="data_di_nascita">data_di_nascita</string>
     <string name="nome_cognome">Nome Cognome</string>
     <string name="paese_nazione">Paese,Nazione</string>
+    <string name="error_login_password_message">Password non corretta</string>
+    <string name="error_login_user_message">Mail non corretta</string>
+    <string name="unexpected_error">Errore di login inatteso</string>
+    <string name="error_no_google_account_found_message">Nessun account Google trovato</string>
+    <string name="error_password">Password non valida</string>
+    <string name="error_user_collision_message">User collision error</string>
 </resources>

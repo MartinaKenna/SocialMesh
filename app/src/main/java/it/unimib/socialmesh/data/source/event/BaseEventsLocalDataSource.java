@@ -1,8 +1,9 @@
-package it.unimib.socialmesh.util;
+package it.unimib.socialmesh.data.source.event;
 
 import java.util.List;
 
 import it.unimib.socialmesh.model.Event;
+import it.unimib.socialmesh.util.EventCallback;
 
 public abstract class BaseEventsLocalDataSource {
 
@@ -14,4 +15,5 @@ public abstract class BaseEventsLocalDataSource {
 
     public abstract void getEvents();
     public abstract void insertEvents(List<Event> eventsList);
+    
 }

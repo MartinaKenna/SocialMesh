@@ -1,6 +1,7 @@
-package it.unimib.socialmesh.util;
+package it.unimib.socialmesh.data.source.event;
 
 
+import it.unimib.socialmesh.util.EventCallback;
 
 public abstract class BaseEventsRemoteDataSource{
     protected EventCallback eventCallback;

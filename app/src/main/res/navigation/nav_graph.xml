@@ -18,7 +18,13 @@
         android:id="@+id/matchFragment"
         android:name="it.unimib.socialmesh.ui.main.MatchFragment"
         android:label="fragment_match"
-        tools:layout="@layout/fragment_match" />
+        tools:layout="@layout/fragment_match" >
+        <action
+            android:id="@+id/action_matchFragment_to_eventPartecipantsFragment"
+            app:destination="@id/eventPartecipantsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="it.unimib.socialmesh.ui.main.ChatFragment"
@@ -28,13 +34,30 @@
         android:id="@+id/profileFragment"
         android:name="it.unimib.socialmesh.ui.main.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/eventDetailsFragment"
         android:name="it.unimib.socialmesh.ui.main.EventDetailsFragment"
         android:label="EventDetailsFragment" >
         <argument
             android:name="event"
+            app:argType="it.unimib.socialmesh.model.Event" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="it.unimib.socialmesh.ui.welcome.LoginFragment"
+        android:label="LoginFragment" />
+    <fragment
+        android:id="@+id/eventPartecipantsFragment"
+        android:name="it.unimib.socialmesh.ui.main.EventPartecipantsFragment"
+        android:label="fragment_event_partecipants"
+        tools:layout="@layout/fragment_event_partecipants" >
+        <argument
+            android:name="commonEvent"
             app:argType="it.unimib.socialmesh.model.Event" />
     </fragment>
 </navigation>
