@@ -170,11 +170,11 @@
                     android:textSize="13sp" />
 
                 <TextView
-                    android:id="@+id/userDate"
                     android:layout_width="wrap_content"
+                    android:id="@+id/userDate"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="@string/email"
+                    android:text="@string/data_di_nascita"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
