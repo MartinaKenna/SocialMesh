@@ -90,10 +90,7 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
-        buttonAll = view.findViewById(R.id.buttonAll);
-        hipHopRap = view.findViewById(R.id.HipHopRap);
-        latin = view.findViewById(R.id.Latin);
-        rock = view.findViewById(R.id.Rock);
+
         recyclerViewEventsNearYou = view.findViewById(R.id.recyclerviewNearYou);
         recyclerViewEvents = view.findViewById(R.id.recyclerviewEvents);
         searchView = view.findViewById(R.id.searchView);
@@ -128,28 +125,6 @@ public class EventFragment extends Fragment {
         nearyou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
         lastadded.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
 */
-        buttonAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Rimuovi tutti i filtri e mostra tutti gli eventi
-                recyclerViewEventsAdapter.clearFilters();
-                recyclerViewEventsAdapterNearYou.clearFilters();
-            }
-        });
-        rock.setOnClickListener(item -> {
-            recyclerViewEventsAdapter.filterByGenre("rock");
-            recyclerViewEventsAdapterNearYou.filterByGenre("rock");
-        });
-
-        hipHopRap.setOnClickListener(item -> {
-            recyclerViewEventsAdapter.filterByGenre("Hip-Hop/Rap");
-            recyclerViewEventsAdapterNearYou.filterByGenre("Hip-Hop/Rap");
-        });
-
-        latin.setOnClickListener(item -> {
-            recyclerViewEventsAdapter.filterByGenre("latin");
-            recyclerViewEventsAdapterNearYou.filterByGenre("latin");
-        });
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

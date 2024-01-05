@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="@color/md_theme_light_background"
     android:clickable="true"
     android:focusable="true"
     android:elevation="4dp"
