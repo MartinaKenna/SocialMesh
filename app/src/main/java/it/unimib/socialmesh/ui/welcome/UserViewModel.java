@@ -12,6 +12,8 @@ public class UserViewModel extends ViewModel {
 
     private final IUserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
+    private MutableLiveData<String> profileFullName = new MutableLiveData<>();
+    private MutableLiveData<String> profileBirthDate = new MutableLiveData<>();
     private boolean authenticationError;
 
     public UserViewModel(IUserRepository userRepository) {
@@ -34,7 +36,24 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
+    public MutableLiveData<String> getProfileFullName() {
+        return profileFullName;
+    }
 
+    // Getter per il LiveData della data di nascita
+    public MutableLiveData<String> getProfileBirthDate() {
+        return profileBirthDate;
+    }
+
+    // Metodo per salvare il nome e la data di nascita
+    public void saveProfileDetails(String fullName, String birthDate) {
+        // Effettua il salvataggio dei dati in Firebase
+        // ...
+
+        // Aggiorna i LiveData per l'aggiornamento dell'interfaccia utente
+        profileFullName.setValue(fullName);
+        profileBirthDate.setValue(birthDate);
+    }
 
     public User getLoggedUser() {
         return userRepository.getLoggedUser();

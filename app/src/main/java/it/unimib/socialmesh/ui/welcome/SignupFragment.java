@@ -92,8 +92,10 @@ public class SignupFragment extends Fragment {
                                 if (result.isSuccess()) {
                                     User user = ((Result.UserResponseSuccess) result).getData();
                                     userViewModel.setAuthenticationError(false);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("user", user);
                                     Navigation.findNavController(view).navigate(
-                                            R.id.navigate_to_detailsFragment);
+                                            R.id.navigate_to_detailsFragment, bundle);
                                 } else {
                                     userViewModel.setAuthenticationError(true);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
