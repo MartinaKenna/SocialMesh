@@ -26,7 +26,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Arrays;
+import java.util.List;
+
 import it.unimib.socialmesh.R;
+import it.unimib.socialmesh.data.service.FirebaseEvent;
 import it.unimib.socialmesh.model.Event;
 
 public class EventDetailsFragment extends Fragment {
@@ -84,7 +88,7 @@ public class EventDetailsFragment extends Fragment {
                             if (eventId != null && !eventId.isEmpty()) {
                                 // Ottieni il riferimento all'evento nel database
                                 DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference().child("events").child(eventId);
-
+                                uploadEventsToFirebase(currentEvent);
                                 // Aggiungi l'ID dell'utente tra i partecipanti solo se non è già presente
                                 eventRef.child("participants").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -128,4 +132,32 @@ public class EventDetailsFragment extends Fragment {
         FirebaseUser user = auth.getCurrentUser();
         return user != null;
     }
-}
+    private void uploadEventsToFirebase(Event event) {
+        DatabaseReference eventsRef = FirebaseDatabase.getInstance().getReference().child("events");
+
+
+            // Controlla se l'evento è già presente nel database
+            eventsRef.child(String.valueOf(event.getRemoteId())).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (!snapshot.exists()) {
+                        // Se l'evento non esiste già, aggiungilo
+                        FirebaseEvent firebaseEvent = new FirebaseEvent(
+                                event.getRemoteId(),
+                                event.getName(),
+                                event.getLocalId(),
+                                Arrays.asList()
+
+                        );
+                        eventsRef.child(String.valueOf(event.getRemoteId())).setValue(firebaseEvent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    }
+

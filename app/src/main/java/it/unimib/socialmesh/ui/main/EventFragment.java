@@ -202,10 +202,6 @@ public class EventFragment extends Fragment {
         return view;
 
     }
-    public void forceRefreshFragment() {
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.detach(this).attach(this).commit();
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -281,7 +277,6 @@ public class EventFragment extends Fragment {
                             //TODO togliere sto schifo
                             recyclerViewEventsAdapter.clearFilters();
                             recyclerViewEventsAdapterNearYou.clearFilters();
-                            uploadEventsToFirebase(eventsList);
                         }
 
                     } else {
@@ -310,34 +305,7 @@ public class EventFragment extends Fragment {
     });
 
     }
-    private void uploadEventsToFirebase(List<Event> apiEvents) {
-        DatabaseReference eventsRef = FirebaseDatabase.getInstance().getReference().child("events");
 
-        for (Event apiEvent : apiEvents) {
-            // Controlla se l'evento è già presente nel database
-            eventsRef.child(String.valueOf(apiEvent.getRemoteId())).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (!snapshot.exists()) {
-                        // Se l'evento non esiste già, aggiungilo
-                        FirebaseEvent firebaseEvent = new FirebaseEvent(
-                                apiEvent.getRemoteId(),
-                                apiEvent.getName(),
-                                apiEvent.getLocalId(),
-                                Arrays.asList()
-
-                        );
-                        eventsRef.child(String.valueOf(apiEvent.getRemoteId())).setValue(firebaseEvent);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-    }
 
 
 
