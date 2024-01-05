@@ -232,7 +232,12 @@ public class Event implements Parcelable {
     }*/
 
     public String getUrlImages() {
-        return images.get(0).getUrlImages();
+        if (images != null && !images.isEmpty()) {
+            return images.get(0).getUrlImages();
+        } else {
+            // Se la lista è vuota o nulla, restituisci un URL di fallback o una stringa vuota
+            return "URL di fallback o stringa vuota";
+        }
     }
 
     @Override
