@@ -1,27 +1,18 @@
 package it.unimib.socialmesh.ui.welcome;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,14 +29,17 @@ import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.User;
 import it.unimib.socialmesh.ui.main.HomeActivity;
 
-public class SignupTabFragment extends Fragment {
+public class NON_USARLOSignupTabFragment extends Fragment {
     TextInputLayout nome, datanasc, emailTextInput, passTextInput, confirmpass;
-    private Button register, culture, sport, cinema, aperitivo, party, smoker, traveler, lgbt, karaoke, nft, boxe, festival, crossfit, nature, beach, motosport, instagram, twitter, socialmedia, horror, action, love, cooking, photography, painting, hiking, streaming, gardening, writing, modelling, programming, vegetarian, vegan, carnivore, parent, single, engaged, married, navigate, blogging, city;
+    private Button register, culture, sport, cinema, aperitivo, party, smoker, traveler, lgbt,
+                    karaoke, nft, boxe, festival, crossfit, nature, beach, motosport, instagram,
+                    twitter, socialmedia, horror, action, love, cooking, photography, painting,
+                    hiking, streaming, gardening, writing, modelling, programming, vegetarian, vegan,
+                    carnivore, parent, single, engaged, married, navigate, blogging, city;
     Intent intent;
     private TextInputEditText dateInputText;
 
     protected static final int LIMIT_AGE = 16;
-    private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -246,13 +240,6 @@ public class SignupTabFragment extends Fragment {
         });
 
 
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser() != null) {
-            if (getActivity() != null) {
-                getActivity().finish();
-            }
-        }
 
         dateInputText.setOnClickListener(v -> {
             // on below line we are getting
@@ -319,21 +306,6 @@ public class SignupTabFragment extends Fragment {
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity(), task -> {
-            if (task.isSuccessful() && validFields(fullName, email, password, password2, datanasc)) {
-                User user = new User(fullName, email);
-                FirebaseDatabase.getInstance().getReference("users")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .setValue(user).addOnCompleteListener(task1 -> {
-                            navigateToSecondActivity();
-                            if (getActivity() != null) {
-                                getActivity().finishAffinity(); // Chiude l'activity corrente e le attività correlate
-                            }
-                        });
-            } else {
-                Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
 

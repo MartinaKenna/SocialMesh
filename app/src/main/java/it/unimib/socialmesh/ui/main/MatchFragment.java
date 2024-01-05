@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import it.unimib.socialmesh.adapter.SimpleEventsAdapter;
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +48,9 @@ public class MatchFragment extends Fragment {
         myEventsAdapter = new SimpleEventsAdapter(myEventsList, new SimpleEventsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Event event) {
-                //aprire i dettagli dell'evento
+                MatchFragmentDirections.ActionMatchFragmentToEventPartecipantsFragment action =
+                        MatchFragmentDirections.actionMatchFragmentToEventPartecipantsFragment(event);
+                Navigation.findNavController(view).navigate(action);
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
