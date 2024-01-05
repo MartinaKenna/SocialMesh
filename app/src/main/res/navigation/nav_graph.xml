@@ -55,5 +55,9 @@
         android:id="@+id/eventPartecipantsFragment"
         android:name="it.unimib.socialmesh.ui.main.EventPartecipantsFragment"
         android:label="fragment_event_partecipants"
-        tools:layout="@layout/fragment_event_partecipants" />
+        tools:layout="@layout/fragment_event_partecipants" >
+        <argument
+            android:name="commonEvent"
+            app:argType="it.unimib.socialmesh.model.Event" />
+    </fragment>
 </navigation>

@@ -4,14 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.EventPartecipantsFragment">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerviewPartecipants"
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
-        android:clickable="true"
-        android:clipToPadding="false"
-        android:background="@color/white"
-        android:scrollbars="vertical" />
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

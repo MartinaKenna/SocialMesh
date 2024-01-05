@@ -119,6 +119,7 @@ public class EventDetailsFragment extends Fragment {
         }
         return view;
     }
+
     private String getCurrentUserId() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();

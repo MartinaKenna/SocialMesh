@@ -48,9 +48,9 @@ public class MatchFragment extends Fragment {
         myEventsAdapter = new SimpleEventsAdapter(myEventsList, new SimpleEventsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Event event) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("event", event);
-                Navigation.findNavController(requireView()).navigate(R.id.action_matchFragment_to_eventPartecipantsFragment, bundle);
+                MatchFragmentDirections.ActionMatchFragmentToEventPartecipantsFragment action =
+                        MatchFragmentDirections.actionMatchFragmentToEventPartecipantsFragment(event);
+                Navigation.findNavController(view).navigate(action);
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());

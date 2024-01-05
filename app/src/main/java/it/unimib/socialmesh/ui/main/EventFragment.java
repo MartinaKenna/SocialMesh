@@ -200,7 +200,6 @@ public class EventFragment extends Fragment {
         recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
 
         return view;
-
     }
 
     @Override
