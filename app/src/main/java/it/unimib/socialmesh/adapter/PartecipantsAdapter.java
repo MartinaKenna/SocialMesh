@@ -14,42 +14,60 @@ import java.util.List;
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.User;
 
-public class PartecipantsAdapter extends RecyclerView.Adapter<PartecipantsAdapter.UserViewHolder> {
 
-    private List<User> userList;
 
-    public PartecipantsAdapter(List<User> userList) {
-        this.userList = userList;
-    }
+    public class PartecipantsAdapter extends RecyclerView.Adapter<PartecipantsAdapter.UserViewHolder> {
 
-    @NonNull
-    @Override
-    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
-        return new UserViewHolder(view);
-    }
+        private List<String> userIdList;
+        private List<String> userNameList;
+        private OnItemClickListener clickListener;
 
-    @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        User user = userList.get(position);
-        holder.bind(user);
-    }
-
-    @Override
-    public int getItemCount() {
-        return userList.size();
-    }
-
-    static class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView userNameTextView;
-
-        UserViewHolder(@NonNull View itemView) {
-            super(itemView);
-            userNameTextView = itemView.findViewById(R.id.textview_username);
+        public interface OnItemClickListener {
+            void onUserClick(String userId);
         }
 
-        void bind(User user) {
-            userNameTextView.setText(user.getName()); // Supponendo che la classe User abbia un metodo getName()
+        public PartecipantsAdapter(List<String> userIdList, List<String> userNameList, OnItemClickListener clickListener) {
+            this.userIdList = userIdList;
+            this.userNameList = userNameList;
+            this.clickListener = clickListener;
+        }
+
+        @NonNull
+        @Override
+        public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
+            return new UserViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+            String userName = userNameList.get(position);
+            holder.bind(userName, clickListener, userIdList.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return userIdList.size();
+        }
+
+        static class UserViewHolder extends RecyclerView.ViewHolder {
+            TextView userNameTextView;
+
+            UserViewHolder(@NonNull View itemView) {
+                super(itemView);
+                userNameTextView = itemView.findViewById(R.id.textview_username);
+            }
+
+            void bind(String userName, OnItemClickListener clickListener, String userId) {
+                userNameTextView.setText(userName);
+
+                itemView.setOnClickListener(v -> {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        clickListener.onUserClick(userId);
+                    }
+                });
+            }
         }
     }
-}
+

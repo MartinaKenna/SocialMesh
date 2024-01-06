@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
@@ -40,6 +44,8 @@ public class EventFragment extends Fragment {
     private SearchView searchView;
     private RecyclerViewEventsAdapter recyclerViewEventsAdapterNearYou, recyclerViewEventsAdapter;
     private EventViewModel eventViewModel;
+    private Button filter, button1, button2,button3;
+    private PopupWindow popupWindow;
 
 
     //questo serve
@@ -104,8 +110,59 @@ public class EventFragment extends Fragment {
         nearyou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
         lastadded.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
 */
+        filter = view.findViewById(R.id.button);
 
+        filter.setOnClickListener(v -> {
+            View popupView = inflater.inflate(R.layout.popupview, container, false);
 
+            button1 = popupView.findViewById(R.id.button1);
+            button2 = popupView.findViewById(R.id.button2);
+            button3 = popupView.findViewById(R.id.button3);
+            //dichiaro la tendina
+            popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+            // Imposto il testo per i bottoni
+            switch(getMostFrequentGenres().size()){
+                case 1: button1.setText(getMostFrequentGenres().get(0));
+                    button2.setVisibility(View.GONE);
+                    button3.setVisibility(View.GONE);
+                    break;
+                case 2: button1.setText(getMostFrequentGenres().get(0));
+                    button2.setText(getMostFrequentGenres().get(1));
+                    button3.setVisibility(View.GONE);
+                    break;
+                case 3: button1.setText(getMostFrequentGenres().get(0));
+                    button2.setText(getMostFrequentGenres().get(1));
+                    button3.setText(getMostFrequentGenres().get(2));
+                    break;
+                default:button1.setVisibility(View.GONE);
+                    button2.setVisibility(View.GONE);
+                    button3.setVisibility(View.GONE);
+                    break;
+            }
+
+            button1.setOnClickListener(t -> {
+                String buttonText = ((Button) t).getText().toString();
+                recyclerViewEventsAdapter.filterByGenre(buttonText);
+                recyclerViewEventsAdapterNearYou.filterByGenre(buttonText);
+                popupWindow.dismiss();
+            });
+            button2.setOnClickListener(t -> {
+                String buttonText = ((Button) t).getText().toString();
+                recyclerViewEventsAdapter.filterByGenre(buttonText);
+                recyclerViewEventsAdapterNearYou.filterByGenre(buttonText);
+                popupWindow.dismiss();
+            });
+            button3.setOnClickListener(t -> {
+                String buttonText = ((Button) t).getText().toString();
+                recyclerViewEventsAdapter.filterByGenre(buttonText);
+                recyclerViewEventsAdapterNearYou.filterByGenre(buttonText);
+                popupWindow.dismiss();
+            });
+
+            popupWindow.showAsDropDown(filter, 0, -popupWindow.getHeight());
+
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             //TODO raga funziona il filtro ma la searchview non permette di scriverci sopra, solo di incollare  del testo. Da questo problema solo dentro il fragment_event.
             @Override
@@ -162,6 +219,8 @@ public class EventFragment extends Fragment {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
+
+
         if (currentUser != null) {
             Log.d("FirebaseUser", "User ID: " + currentUser.getUid());
             Log.d("FirebaseUser", "User Email: " + currentUser.getEmail());
@@ -203,7 +262,7 @@ public class EventFragment extends Fragment {
 
 
 
-        eventViewModel.getEvents("sport", "200", 20, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
+        eventViewModel.getEvents("", "214", 50, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
                     EventApiResponse eventResponse = ((Result.EventResponseSuccess) result).getData();
@@ -261,7 +320,35 @@ public class EventFragment extends Fragment {
 
 
 
+    public List<String> getMostFrequentGenres() {
+        Map<String, Integer> genreOccurrences = new HashMap<>();
 
+        // Conto le occorrenze di ciascun genere
+        for (Event event : eventsList) {
+            String genreName = event.getGenreName();
+            genreOccurrences.put(genreName, genreOccurrences.getOrDefault(genreName, 0) + 1);
+        }
+
+        // Trovo i tre generi piu frequenti diversi tra loro
+        List<String> mostFrequentGenres = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            int maxOccurrences = 0;
+            String mostFrequentGenre = "";
+
+            for (Map.Entry<String, Integer> entry : genreOccurrences.entrySet()) {
+                if (!mostFrequentGenres.contains(entry.getKey()) && entry.getValue() > maxOccurrences) {
+                    maxOccurrences = entry.getValue();
+                    mostFrequentGenre = entry.getKey();
+                }
+            }
+
+            if (!mostFrequentGenre.isEmpty()) {
+                mostFrequentGenres.add(mostFrequentGenre);
+            }
+        }
+
+        return mostFrequentGenres;
+    }
 
 
 }

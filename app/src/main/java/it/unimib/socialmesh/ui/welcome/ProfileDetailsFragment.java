@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicReference;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.data.repository.user.UserResponseCallback;
@@ -44,9 +46,10 @@ public class ProfileDetailsFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             User user = bundle.getParcelable("user");
+            Log.d("Profilo",user.toString());
             if(user !=null) {
+                int nameOk, dateOk;
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
                 Button saveButton = view.findViewById(R.id.buttonRegister);
                 TextInputLayout fullNameEditText = view.findViewById(R.id.fullName);
                 TextInputLayout dateTextInput = view.findViewById(R.id.datanasc);
@@ -76,20 +79,24 @@ public class ProfileDetailsFragment extends Fragment {
 
                     usersRef.child(firebaseUser.getUid()).child("name").setValue(fullName).addOnCompleteListener(setValueTask -> {
                         if (setValueTask.isSuccessful()) {
-                            userResponseCallback.onSuccessFromAuthentication(user);
+                            Log.d("OK","PESO");
                         } else {
-                            userResponseCallback.onFailureFromAuthentication("Errore nel salvataggio del nome dell'utente.");
+                            Log.d("NO","NONPESO");
                         }
                     });
                     usersRef.child(firebaseUser.getUid()).child("data_di_nascita").setValue(birthDate).addOnCompleteListener(setValueTask -> {
                         if (setValueTask.isSuccessful()) {
-                            userResponseCallback.onSuccessFromAuthentication(user);
+                                Log.d("OK","PESO");
                         } else {
-                            userResponseCallback.onFailureFromAuthentication("Errore nel salvataggio del nome dell'utente.");
+                            Log.d("NO","NONPESO");
                         }
                     });
-                    Navigation.findNavController(requireView()).navigate(R.id.navigate_to_homeActivity);
+
+                        Navigation.findNavController(requireView()).navigate(R.id.action_profileDetailsFragment_to_preferencesFragment);
+
                 });
+
+
 
                 userViewModel.getProfileFullName().observe(getViewLifecycleOwner(), fullName -> {
                     fullNameEditText.getEditText().setText(fullName);
@@ -99,8 +106,8 @@ public class ProfileDetailsFragment extends Fragment {
                     dateTextInput.getEditText().setText(birthDate);
                 });
 
-                }
             }
+        }
 
 
         return view;

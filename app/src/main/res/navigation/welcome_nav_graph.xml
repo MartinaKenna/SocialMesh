@@ -51,6 +51,17 @@
         android:id="@+id/profileDetailsFragment"
         android:name="it.unimib.socialmesh.ui.welcome.ProfileDetailsFragment"
         android:label="ProfileDetailsFragment">
+        <action
+            android:id="@+id/action_profileDetailsFragment_to_preferencesFragment"
+            app:destination="@id/preferencesFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/preferencesFragment"
+        android:name="it.unimib.socialmesh.ui.welcome.PreferencesFragment"
+        android:label="ags"
+        tools:layout="@layout/preferences_fragment" >
     <action
         android:id="@+id/navigate_to_homeActivity"
         app:destination="@id/homeActivity"
@@ -58,6 +69,6 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-</fragment>
+    </fragment>
 
 </navigation>
