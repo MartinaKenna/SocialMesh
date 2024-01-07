@@ -5,19 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="170dp"
-        android:layout_marginEnd="30dp"
-        app:boxStrokeColor="#000000"
-        app:startIconDrawable="@drawable/baseline_person_outline_24"
-        tools:ignore="MissingConstraints"/>
-
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -27,9 +14,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="250dp"
         android:layout_marginEnd="30dp"
         app:boxStrokeColor="#000000"
+        android:layout_centerHorizontal="true"
         app:startIconDrawable="@drawable/baseline_person_outline_24"
         tools:ignore="MissingConstraints">
 
