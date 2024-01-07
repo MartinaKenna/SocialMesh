@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.match;
 
 import android.os.Bundle;
 
@@ -9,15 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,31 +50,11 @@ public class EventPartecipantsFragment extends Fragment {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String currentUser = auth.getCurrentUser().getUid();
         usersAdapter = new PartecipantsAdapter(idList, participantsList, userId -> {
-            DatabaseReference currentUserMatchRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser)
-                    .child("likes");
-
-            currentUserMatchRef.child(userId).setValue(true);
-            DatabaseReference clickedUserLikesRef = FirebaseDatabase.getInstance().getReference()
-                    .child("users").child(userId).child("likes");
-
-            clickedUserLikesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.hasChild(currentUser)) {
-                        addMatch(currentUser,userId);
-                        Toast.makeText(requireContext(), "MATCH", Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Gestisci eventuali errori durante la lettura dei dati
-                }
-            });
-
+            EventPartecipantsFragmentDirections.ActionEventPartecipantsFragmentToUserDetailsFragment action =
+                    EventPartecipantsFragmentDirections.actionEventPartecipantsFragmentToUserDetailsFragment(userId);
+            Navigation.findNavController(requireView()).navigate(action);
         });
-        Button closeSettingsButton = view.findViewById(R.id.back_button);
+        ImageButton closeSettingsButton = view.findViewById(R.id.back_button);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(usersAdapter);
@@ -158,31 +139,6 @@ public class EventPartecipantsFragment extends Fragment {
                 Toast.makeText(requireContext(), "Errore nel recupero dei dettagli utente", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-    private void addMatch(String currentUserUid, String matchedUserId) {
-        DatabaseReference currentUserMatchRef = FirebaseDatabase.getInstance()
-                .getReference().child("users").child(currentUserUid).child("matches");
-        DatabaseReference matchedUserMatchRef = FirebaseDatabase.getInstance()
-                .getReference().child("users").child(matchedUserId).child("matches");
-
-        currentUserMatchRef.child(matchedUserId).setValue(true)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "Match aggiunto");
-                        Toast.makeText(requireContext(), "Match aggiunto", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.e(TAG, "Errore nell'aggiunta del match");
-                    }
-                });
-
-        matchedUserMatchRef.child(currentUserUid).setValue(true)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "Match aggiunto");
-                    } else {
-                        Log.e(TAG, "Errore nell'aggiunta del match");
-                    }
-                });
     }
 
 }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,92 +58,59 @@ public class EventDetailsFragment extends Fragment {
             TextView textViewEventDate = view.findViewById(R.id.textview_event_date);
             TextView textViewEventDetails = view.findViewById(R.id.textview_event_details);
             Button joinButton = view.findViewById(R.id.join_button);
-            Button closeSettingsButton = view.findViewById(R.id.back_btn);
-            joinButton.setText("JOIN");
+            ImageButton backButton = view.findViewById(R.id.back_btn);
+            joinButton.setText("JOIN EVENT");
             joinButton.requestLayout();
 
-            // Imposta i dati dell'evento
             Glide.with(requireContext()).load(currentEvent.getUrlImages()).into(imageViewEvent);
             textViewEventTitle.setText(currentEvent.getName1());
             textViewEventDate.setText(currentEvent.getDates1());
             textViewEventDetails.setText(currentEvent.getDescription());
 
 
-            // Aggiungi un listener per il pulsante di partecipazione
-            closeSettingsButton.setOnClickListener(CloseView -> {
+            backButton.setOnClickListener(CloseView -> {
                 getParentFragmentManager().popBackStack();
             });
-            joinButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Aggiungi qui la logica per partecipare all'evento
+            joinButton.setOnClickListener(v -> {
 
-                    // Verifica se l'utente è autenticato (puoi utilizzare il tuo sistema di autenticazione)
-                    if (userIsAuthenticated()) {
-                        // Ottieni l'ID dell'utente corrente (sostituisci con il metodo appropriato per ottenere l'ID dell'utente)
-                        String userId = getCurrentUserId();
-
-                        // Verifica che l'ID dell'utente non sia nullo o vuoto
-                        if (userId != null && !userId.isEmpty()) {
-                            // Ottieni l'ID dell'evento corrente
-                            String eventId = currentEvent.getRemoteId(); // Assumi che l'ID dell'evento sia il localId
-
-                            // Assicurati che l'ID dell'evento non sia nullo o vuoto
-                            if (eventId != null && !eventId.isEmpty()) {
-                                // Ottieni il riferimento all'evento nel database
-                                FirebaseDatabase firebaseDatabase =FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
-                                DatabaseReference eventRef = firebaseDatabase.getInstance().getReference().child("events").child(eventId);
-
-                                String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-// Ottieni il riferimento al nodo "users" dell'utente corrente
-                                DatabaseReference userRef = firebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
-
-// Aggiungi l'evento all'elenco degli eventi a cui partecipa (senza duplicati)
-                                DatabaseReference userEventsRef = userRef.child("events");
-
-
-// Controlla se l'evento è già presente nell'elenco
-                                userEventsRef.child(eventId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if (!snapshot.exists()) {
-                                            // L'evento non è ancora presente, aggiungilo all'elenco
-                                            userEventsRef.child(eventId).setValue(true);
-                                        } else {
-                                            // L'evento è già presente, gestisci di conseguenza (puoi ignorare o mostrare un messaggio, a seconda dei requisiti)
-                                        }
+                if (userIsAuthenticated()) {
+                    String userId = getCurrentUserId();
+                    if (userId != null && !userId.isEmpty()) {
+                        String eventId = currentEvent.getRemoteId();
+                        if (eventId != null && !eventId.isEmpty()) {
+                            FirebaseDatabase firebaseDatabase =FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
+                            DatabaseReference eventRef = firebaseDatabase.getInstance().getReference().child("events").child(eventId);
+                            String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference userRef = firebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
+                            DatabaseReference userEventsRef = userRef.child("events");
+                            userEventsRef.child(eventId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (!snapshot.exists()) {
+                                        userEventsRef.child(eventId).setValue(true);
+                                    } else {
                                     }
+                                }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        // Gestisci eventuali errori di lettura dal database
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            eventRef.child("participants").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (!snapshot.exists()) {
+                                     uploadEventsToFirebase(currentEvent, userId);
+                                        //Snackbar.make(view, "Iscrizione effettuata correttamente", Snackbar.LENGTH_SHORT).show();
                                     }
-                                });
-                                eventRef.child("participants").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if (!snapshot.exists()) {
+                                }
 
-                                            // L'utente non è ancora tra i partecipanti, aggiungi l'ID
-                                            uploadEventsToFirebase(currentEvent, userId);
-
-
-
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        // Gestisci eventuali errori di lettura dal database
-                                    }
-                                });
-
-                                // Ora puoi eseguire altre azioni dopo che l'utente è stato aggiunto come partecipante
-                                // Ad esempio, puoi navigare a un'altra schermata o mostrare un messaggio di conferma
-                                Navigation.findNavController(v).popBackStack(); // Naviga all'indietro
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                }
+                            });
+                            Navigation.findNavController(v).popBackStack();
                         }
                     }
                 }
@@ -157,29 +126,25 @@ public class EventDetailsFragment extends Fragment {
         DatabaseReference eventsRef = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE).getReference().child("events");
 
         Log.d("detailsfragment", "sto caricando");
-        // Controlla se l'evento è già presente nel database
         DatabaseReference eventRef = eventsRef.child(String.valueOf(apiEvent.getRemoteId()));
         eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
-                    // Se l'evento non esiste già, aggiungilo
                     FirebaseEvent firebaseEvent = new FirebaseEvent(
                             apiEvent.getRemoteId(),
                             apiEvent.getName(),
                             apiEvent.getLocalId(),
-                            Arrays.asList()
+                            Arrays.asList(),
+                            apiEvent.getUrlImages()
                     );
                     eventRef.setValue(firebaseEvent);
                 }
-
-                // Aggiungi l'utente alla lista dei partecipanti
                 eventRef.child("participants").child(userId).setValue(true);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Gestisci eventuali errori di lettura dal database
                 Log.e("detailsfragment", "uploadEventsToFirebase onCancelled", error.toException());
             }
         });

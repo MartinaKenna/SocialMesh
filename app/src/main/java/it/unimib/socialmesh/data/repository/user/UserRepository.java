@@ -47,14 +47,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ev
 
 
 
-    public Task<Void> setUserProfileImageUrl(String imageUrl) {
-        return databaseReference.child("profileImageUrl").setValue(imageUrl);
-    }
-
-    public Task<DataSnapshot> getUserProfileImageUrl() {
-        return databaseReference.child("profileImageUrl").get();
-    }
-
     @Override
     public MutableLiveData<Result> getUser(String email, String password, boolean isUserRegistered) {
         if (isUserRegistered) {

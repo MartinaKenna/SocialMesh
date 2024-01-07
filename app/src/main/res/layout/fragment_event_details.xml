@@ -9,16 +9,16 @@
     android:paddingEnd="16dp"
     android:paddingBottom="16dp">
 
-    <!-- Pulsante "Back" -->
-    <Button
+    <ImageButton
         android:id="@+id/back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:text="Back"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:backgroundTint="@color/md_theme_light_secondary"
-        android:textColor="@color/md_theme_light_onSecondary"
+        android:src="@drawable/baseline_arrow_back_ios_24"
+
         android:elevation="2dp"/>
 
     <LinearLayout

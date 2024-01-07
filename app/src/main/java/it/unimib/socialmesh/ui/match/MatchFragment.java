@@ -1,5 +1,5 @@
 
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.match;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -37,6 +37,7 @@ import it.unimib.socialmesh.model.Event;
 public class MatchFragment extends Fragment {
 
     private RecyclerView recyclerView;
+
     private SimpleEventsAdapter myEventsAdapter;
     private List<Event> myEventsList;
 

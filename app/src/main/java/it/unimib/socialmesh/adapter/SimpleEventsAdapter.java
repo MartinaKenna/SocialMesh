@@ -12,6 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -43,7 +48,21 @@ public class SimpleEventsAdapter extends RecyclerView.Adapter<SimpleEventsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Event event = eventsList.get(position);
-        holder.bind(event, event.getUrlImages(), listener);
+        DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference().child("events").child(event.getRemoteId()).child("url");
+        eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String eventImageUrl = snapshot.getValue(String.class);
+                    holder.bind(event, eventImageUrl, listener);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Gestione degli errori durante il recupero dei dati
+            }
+        });
 
 
     }
@@ -67,7 +86,11 @@ public class SimpleEventsAdapter extends RecyclerView.Adapter<SimpleEventsAdapte
         public void bind(final Event event, String image, final OnItemClickListener listener) {
             eventNameTextView.setText(event.getName1());
 
-          //  Glide.with(itemView.getContext()).load(image).into(imageViewEvent);
+            Glide.with(itemView.getContext())
+                    .load(image) // Assicurati che 'image' sia un URL valido per l'immagine dell'evento
+                    .placeholder(R.drawable.baseline_error_black_24dp) // Immagine di caricamento placeholder
+                    .error(R.drawable.baseline_error_black_24dp) // Immagine di errore nel caso di problemi di caricamento
+                    .into(imageViewEvent);
 
 
 

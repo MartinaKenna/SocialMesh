@@ -2,6 +2,9 @@ package it.unimib.socialmesh.data.repository.user;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+
 import it.unimib.socialmesh.model.Result;
 import it.unimib.socialmesh.model.User;
 
