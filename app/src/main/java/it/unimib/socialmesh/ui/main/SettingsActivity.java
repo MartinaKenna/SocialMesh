@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,13 +42,15 @@ import kotlin.jvm.functions.Function1;
 public class SettingsActivity extends AppCompatActivity {
     ImageView profilePic;
     Uri selectedImageUri;
+    EditText descriptionEditText;
     ActivityResultLauncher<Intent> imagePickLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         loadProfileImage();
-
+        descriptionEditText = findViewById(R.id.descriptionEditText);
+        descriptionEditText.requestFocus();
         profilePic = findViewById(R.id.settings_profile_image);
         imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -82,6 +85,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+
 
  private void updateProfilePic(Uri selectedImageUri) {
      if (selectedImageUri != null) {
