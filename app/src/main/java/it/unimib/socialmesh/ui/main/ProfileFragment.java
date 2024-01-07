@@ -65,7 +65,6 @@ public class ProfileFragment extends Fragment {
         userViewModel = new ViewModelProvider(
                 requireActivity(),
                 new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-       // refreshProfileImage(userRepository);
 
     }
     ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(
@@ -161,19 +160,16 @@ public class ProfileFragment extends Fragment {
         userRef.getDownloadUrl().addOnSuccessListener(uri -> {
             String imageURL = uri.toString();
 
-            if (imageURL != null && !imageURL.isEmpty()) { // Controlla se l'URL dell'immagine non è nullo o vuoto
-                // Visualizza l'immagine nell'ImageView
-                  // Assicurati che l'activity non sia distrutta
+            if (imageURL != null && !imageURL.isEmpty()) {
                     Glide.with(this)
                             .load(imageURL)
                             .apply(RequestOptions.circleCropTransform())
-                            .placeholder(R.drawable.baseline_error_black_24dp) // Immagine di caricamento placeholder
-                            .error(R.drawable.baseline_error_black_24dp) // Immagine di errore in caso di problemi di caricamento
+                            .placeholder(R.drawable.baseline_error_black_24dp)
+                            .error(R.drawable.baseline_error_black_24dp)
                             .into(profile_image_view);
 
             } else {
-                // Se l'URL dell'immagine è nullo o vuoto, visualizza un'immagine di default
-                // Assicurati che l'activity non sia distrutta
+
                     Glide.with(this)
                             .load(com.facebook.R.drawable.com_facebook_profile_picture_blank_portrait) // Immagine di default
                             .apply(RequestOptions.circleCropTransform())
@@ -184,5 +180,10 @@ public class ProfileFragment extends Fragment {
             // Gestisci eventuali errori durante il recupero dell'immagine del profilo
             Log.e("Settings", "Errore durante il caricamento dell'immagine del profilo: " + exception.getMessage());
         });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadProfileImage();
     }
 }
