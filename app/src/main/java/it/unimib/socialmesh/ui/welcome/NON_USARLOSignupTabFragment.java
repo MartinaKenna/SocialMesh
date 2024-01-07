@@ -3,6 +3,7 @@ package it.unimib.socialmesh.ui.welcome;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -31,11 +33,7 @@ import it.unimib.socialmesh.ui.main.HomeActivity;
 
 public class NON_USARLOSignupTabFragment extends Fragment {
     TextInputLayout nome, datanasc, emailTextInput, passTextInput, confirmpass;
-    private Button register, culture, sport, cinema, aperitivo, party, smoker, traveler, lgbt,
-                    karaoke, nft, boxe, festival, crossfit, nature, beach, motosport, instagram,
-                    twitter, socialmedia, horror, action, love, cooking, photography, painting,
-                    hiking, streaming, gardening, writing, modelling, programming, vegetarian, vegan,
-                    carnivore, parent, single, engaged, married, navigate, blogging, city;
+    private Button register;
     Intent intent;
     private TextInputEditText dateInputText;
 
@@ -53,7 +51,6 @@ public class NON_USARLOSignupTabFragment extends Fragment {
         confirmpass = root.findViewById(R.id.confirmpassword_signup);
         register = root.findViewById(R.id.buttonRegister);
 
-        //configuro le preferenze
 
 
 
@@ -117,7 +114,6 @@ public class NON_USARLOSignupTabFragment extends Fragment {
         String email = emailTextInput.getEditText().getText().toString();
         String password = passTextInput.getEditText().getText().toString();
         String password2 = confirmpass.getEditText().getText().toString();
-
         if (fullName.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Toast.makeText(requireContext(), "Perfavore completa tutti i campi", Toast.LENGTH_LONG).show();
             return;

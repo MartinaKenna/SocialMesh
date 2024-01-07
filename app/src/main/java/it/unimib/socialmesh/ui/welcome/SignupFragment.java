@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -81,6 +82,7 @@ public class SignupFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         register.setOnClickListener(v -> {
+
             String email = emailTextInput.getEditText().getText().toString().trim();
             String password = passTextInput.getEditText().getText().toString().trim();
             String confirmPassword = confirmPassTextInput.getEditText().getText().toString().trim();

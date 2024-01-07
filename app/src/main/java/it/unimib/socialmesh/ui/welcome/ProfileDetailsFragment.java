@@ -28,7 +28,7 @@ import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.data.repository.user.UserResponseCallback;
 import it.unimib.socialmesh.model.User;
 
-public class ProfileDetailsFragment extends Fragment {
+public class  ProfileDetailsFragment extends Fragment {
 
     protected UserResponseCallback userResponseCallback;
     private UserViewModel userViewModel;

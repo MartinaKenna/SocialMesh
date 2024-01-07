@@ -3,6 +3,7 @@ package it.unimib.socialmesh.ui.welcome;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -26,15 +27,17 @@ import it.unimib.socialmesh.R;
  * Use the {@link PreferencesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PreferencesFragment extends Fragment {
+public class PreferencesFragment extends Fragment implements View.OnClickListener{
 
-    private Button register, culture, sport, cinema, aperitivo, party, smoker, traveler, lgbt,
-            karaoke, nft, boxe, festival, crossfit, nature, beach, motosport, instagram,
-            twitter, socialmedia, horror, action, love, cooking, photography, painting,
-            hiking, streaming, gardening, writing, modelling, programming, vegetarian, vegan,
-            carnivore, parent, single, engaged, married, navigate, blogging, city;
-
-
+    DatabaseReference userPreferencesRef;
+    private Button cinema, party, fumatore, viaggiLowCost, lgbt,
+            karaoke, nft, boxe, festival, crossfit, nature, beach, motorsport, instagram,
+            twitter, photography, painting, escursioni, gardening, writing, moda, programming,
+            vegetarian, vegan, carnivore, single, engaged, married, blogger, cucinaItaliana,
+            basket, facebook, navigate, freelance, imprenditoria, tecnologia, tennis, calcio,
+            destEsotiche, serieTV, libri, rock, classica, pop, ricette, dolce, yoga, palestra,
+            elettricista;
+    List<String> preferences = new ArrayList<>();
     public PreferencesFragment() {
         // Required empty public constructor
     }
@@ -67,191 +70,237 @@ public class PreferencesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View vieww = inflater.inflate(R.layout.preferences_fragment, container, false);
-        culture = vieww.findViewById(R.id.button_culture);
-        sport = vieww.findViewById(R.id.button_sport);
-        cinema = vieww.findViewById(R.id.button_cinema);
-        aperitivo = vieww.findViewById(R.id.button_aperitivo);
-        party = vieww.findViewById(R.id.button_party);
-        smoker = vieww.findViewById(R.id.button_smoker);
-        traveler = vieww.findViewById(R.id.button_traveler);
-        lgbt = vieww.findViewById(R.id.button_lgbt);
-        karaoke = vieww.findViewById(R.id.button_karaoke);
-        nft = vieww.findViewById(R.id.button_nft);
-        boxe = vieww.findViewById(R.id.button_boxe);
-        festival = vieww.findViewById(R.id.button_festival);
-        crossfit = vieww.findViewById(R.id.button_crossfit);
-        nature = vieww.findViewById(R.id.button_nature);
-        beach = vieww.findViewById(R.id.button_beach);
-        motosport = vieww.findViewById(R.id.button_motosport);
-        instagram = vieww.findViewById(R.id.button_instagram);
-        twitter = vieww.findViewById(R.id.button_twitter);
-        socialmedia = vieww.findViewById(R.id.button_socialmedia);
-        horror = vieww.findViewById(R.id.button_horror);
-        action = vieww.findViewById(R.id.button_action);
-        love = vieww.findViewById(R.id.button_love);
-        cooking = vieww.findViewById(R.id.button_cooking);
-        photography = vieww.findViewById(R.id.button_photography);
-        painting = vieww.findViewById(R.id.button_painting);
-        hiking = vieww.findViewById(R.id.button_hiking);
-        streaming = vieww.findViewById(R.id.button_streaming);
-        gardening = vieww.findViewById(R.id.button_gardening);
-        programming = vieww.findViewById(R.id.button_programming);
-        writing = vieww.findViewById(R.id.button_writing);
-        modelling = vieww.findViewById(R.id.button_modeling);
-        vegetarian = vieww.findViewById(R.id.button_vegetarian);
-        vegan = vieww.findViewById(R.id.button_vegan);
-        carnivore = vieww.findViewById(R.id.button_carnivore);
-        parent = vieww.findViewById(R.id.button_parent);
-        single = vieww.findViewById(R.id.button_single);
-        married = vieww.findViewById(R.id.button_married);
-        engaged = vieww.findViewById(R.id.button_engaged);
-        city = vieww.findViewById(R.id.button_city);
-        navigate = vieww.findViewById(R.id.button_navigate);
-        blogging = vieww.findViewById(R.id.button_blogging);
+        View view = inflater.inflate(R.layout.preferences_fragment, container, false);
+        cinema = view.findViewById(R.id.button_cinema);
+        party = view.findViewById(R.id.button_party);
+        viaggiLowCost = view.findViewById(R.id.button_viaggi_lowCost);
+        lgbt = view.findViewById(R.id.button_lgbt);
+        karaoke = view.findViewById(R.id.button_karaoke);
+        nft = view.findViewById(R.id.button_nft);
+        boxe = view.findViewById(R.id.button_boxe);
+        festival = view.findViewById(R.id.button_festival);
+        crossfit = view.findViewById(R.id.button_crossfit);
+        nature = view.findViewById(R.id.button_nature);
+        beach = view.findViewById(R.id.button_beach);
+        motorsport = view.findViewById(R.id.button_motorsport);
+        instagram = view.findViewById(R.id.button_instagram);
+        twitter = view.findViewById(R.id.button_twitter);
+        photography = view.findViewById(R.id.button_fotografia);
+        painting = view.findViewById(R.id.button_pittura);
+        escursioni = view.findViewById(R.id.button_escursioni);
+        gardening = view.findViewById(R.id.button_giardinaggio);
+        programming = view.findViewById(R.id.button_programmatore);
+        writing = view.findViewById(R.id.button_scrittura);
+        moda = view.findViewById(R.id.button_moda);
+        vegetarian = view.findViewById(R.id.button_vegetariano);
+        vegan = view.findViewById(R.id.button_vegan);
+        carnivore = view.findViewById(R.id.button_carnivoro);
+        single = view.findViewById(R.id.button_single);
+        married = view.findViewById(R.id.button_married);
+        engaged = view.findViewById(R.id.button_impegnato);
+        cucinaItaliana = view.findViewById(R.id.button_cucina_italiana);
+        blogger = view.findViewById(R.id.button_blogger);
+        basket = view.findViewById(R.id.button_basket);
+        fumatore = view.findViewById(R.id.button_fumatore);
+        facebook = view.findViewById(R.id.button_facebook);
+        navigate = view.findViewById(R.id.button_navigate);
+        freelance = view.findViewById(R.id.button_freelance);
+        imprenditoria = view.findViewById(R.id.button_imprenditoria);
+        elettricista = view.findViewById(R.id.button_elettricista);
+        serieTV = view.findViewById(R.id.button_serieTV);
+        libri = view.findViewById(R.id.button_libri);
+        tecnologia = view.findViewById(R.id.button_tecnologia);
+        destEsotiche = view.findViewById(R.id.button_destinazioni_esotiche);
+        rock = view.findViewById(R.id.button_rock);
+        classica = view.findViewById(R.id.button_classica);
+        pop = view.findViewById(R.id.button_pop);
+        ricette = view.findViewById(R.id.button_ricette);
+        dolce = view.findViewById(R.id.button_dolce);
+        calcio = view.findViewById(R.id.button_calcio);
+        tennis = view.findViewById(R.id.button_tennis);
+        yoga = view.findViewById(R.id.button_yoga);
+        palestra = view.findViewById(R.id.button_palestra);
+
+        //definisco i setOnClickListener(this) in modo tale che utilizzi il metodo OnClick(v) quando vengono premuti
+        cinema.setOnClickListener(this);
+        party.setOnClickListener(this);
+        viaggiLowCost.setOnClickListener(this);
+        lgbt.setOnClickListener(this);
+        karaoke.setOnClickListener(this);
+        nft.setOnClickListener(this);
+        boxe.setOnClickListener(this);
+        festival.setOnClickListener(this);
+        crossfit.setOnClickListener(this);
+        nature.setOnClickListener(this);
+        beach.setOnClickListener(this);
+        motorsport.setOnClickListener(this);
+        instagram.setOnClickListener(this);
+        twitter.setOnClickListener(this);
+        photography.setOnClickListener(this);
+        painting.setOnClickListener(this);
+        escursioni.setOnClickListener(this);
+        gardening.setOnClickListener(this);
+        programming.setOnClickListener(this);
+        writing.setOnClickListener(this);
+        moda.setOnClickListener(this);
+        vegetarian.setOnClickListener(this);
+        vegan.setOnClickListener(this);
+        carnivore.setOnClickListener(this);
+        single.setOnClickListener(this);
+        married.setOnClickListener(this);
+        engaged.setOnClickListener(this);
+        cucinaItaliana.setOnClickListener(this);
+        blogger.setOnClickListener(this);
+        basket.setOnClickListener(this);
+        fumatore.setOnClickListener(this);
+        facebook.setOnClickListener(this);
+        navigate.setOnClickListener(this);
+        freelance.setOnClickListener(this);
+        imprenditoria.setOnClickListener(this);
+        elettricista.setOnClickListener(this);
+        serieTV.setOnClickListener(this);
+        libri.setOnClickListener(this);
+        tecnologia.setOnClickListener(this);
+        destEsotiche.setOnClickListener(this);
+        rock.setOnClickListener(this);
+        classica.setOnClickListener(this);
+        pop.setOnClickListener(this);
+        ricette.setOnClickListener(this);
+        dolce.setOnClickListener(this);
+        calcio.setOnClickListener(this);
+        tennis.setOnClickListener(this);
+        yoga.setOnClickListener(this);
+        palestra.setOnClickListener(this);
 
 
-        navigate.setOnClickListener(v -> {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-            List<String> preferences = new ArrayList<>();
+        //prendo l'id dell'utente
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //definisco il campo "preferences" in firebase
+        userPreferencesRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("preferences");
 
-            if (culture.isSelected()) {
-                preferences.add("Culture");
-            }
-            if (sport.isSelected()) {
-                preferences.add("Sport");
-            }
-            if (cinema.isSelected()) {
-                preferences.add("Cinema");
-            }
-            if (aperitivo.isSelected()) {
-                preferences.add("Aperitivo");
-            }
-            if (party.isSelected()) {
-                preferences.add("Party");
-            }
-            if (smoker.isSelected()) {
-                preferences.add("Smoker");
-            }
-            if (true) {
-                preferences.add("Traveler");
-            }
-            if (lgbt.isSelected()) {
-                preferences.add("LGBTQIA+");
-            }
-            if (karaoke.isSelected()) {
-                preferences.add("Karaoke");
-            }
-            if (nft.isSelected()) {
-                preferences.add("NFT");
-            }
-            if (boxe.isSelected()) {
-                preferences.add("Boxe");
-            }
-            if (festival.isSelected()) {
-                preferences.add("Festival");
-            }
-            if (crossfit.isSelected()) {
-                preferences.add("Crossfit");
-            }
-            if (nature.isSelected()) {
-                preferences.add("Nature");
-            }
-            if (beach.isSelected()) {
-                preferences.add("Beach");
-            }
-            if (motosport.isSelected()) {
-                preferences.add("Motorsport");
-            }
-            if (instagram.isSelected()) {
-                preferences.add("Instagram");
-            }
-            if (twitter.isSelected()) {
-                preferences.add("Twitter");
-            }
-            if (socialmedia.isSelected()) {
-                preferences.add("Social Media");
-            }
-            if (horror.isSelected()) {
-                preferences.add("Horror");
-            }
-            if (action.isSelected()) {
-                preferences.add("Action");
-            }
-            if (love.isSelected()) {
-                preferences.add("Love");
-            }
-            if (cooking.isSelected()) {
-                preferences.add("Cooking");
-            }
-            if (photography.isSelected()) {
-                preferences.add("Photography");
-            }
-            if (painting.isSelected()) {
-                preferences.add("Painting");
-            }
-            if (hiking.isSelected()) {
-                preferences.add("Hiking");
-            }
-            if (streaming.isSelected()) {
-                preferences.add("Streaming");
-            }
-            if (gardening.isSelected()) {
-                preferences.add("Gardening");
-            }
-            if (programming.isSelected()) {
-                preferences.add("Programming");
-            }
-            if (writing.isSelected()) {
-                preferences.add("Writing");
-            }
-            if (modelling.isSelected()) {
-                preferences.add("Modelling");
-            }
-            if (vegetarian.isSelected()) {
-                preferences.add("Vegetarian");
-            }
-            if (vegan.isSelected()) {
-                preferences.add("Vegan");
-            }
-            if (carnivore.isSelected()) {
-                preferences.add("Carnivore");
-            }
-            if (parent.isSelected()) {
-                preferences.add("Parent");
-            }
-            if (single.isSelected()) {
-                preferences.add("Single");
-            }
-            if (married.isSelected()) {
-                preferences.add("Married");
-            }
-            if (engaged.isSelected()) {
-                preferences.add("Engaged");
-            }
-            if (city.isSelected()) {
-                preferences.add("City");
-            }
-            if (navigate.isSelected()) {
-                preferences.add("Navigate");
-            }
-            if (blogging.isSelected()) {
-                preferences.add("Blogging");
-            }
-
-
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("preferences");
-            userRef.setValue(preferences)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Preferenze salvate con successo!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Errore nel salvataggio delle preferenze", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+        //change schermata
+        navigate.setOnClickListener(v ->{
             Navigation.findNavController(requireView()).navigate(R.id.navigate_to_homeActivity);
         });
-        return inflater.inflate(R.layout.preferences_fragment, container, false);
+
+
+        return view;
+    }
+    @Override
+    public void onClick(View v) {
+        //salvo il nome del button cliccato in una lista
+        if (v == cinema) {
+            savePreference("Cinema");
+        } else if (v == party) {
+            savePreference("Party");
+        } else if (v == viaggiLowCost) {
+            savePreference("ViaggiLowCost");
+        } else if (v == lgbt) {
+            savePreference("LGBT");
+        } else if (v == karaoke) {
+            savePreference("Karaoke");
+        } else if (v == nft) {
+            savePreference("NFT");
+        } else if (v == boxe) {
+            savePreference("Boxe");
+        } else if (v == festival) {
+            savePreference("Festival");
+        } else if (v == crossfit) {
+            savePreference("Crossfit");
+        } else if (v == nature) {
+            savePreference("Nature");
+        } else if (v == beach) {
+            savePreference("Spiaggia");
+        } else if (v == motorsport) {
+            savePreference("Motorsport");
+        } else if (v == instagram) {
+            savePreference("Instagram");
+        } else if (v == twitter) {
+            savePreference("Twitter");
+        } else if (v == photography) {
+            savePreference("Fotografia");
+        } else if (v == painting) {
+            savePreference("Pittura");
+        } else if (v == escursioni) {
+            savePreference("Escursioni");
+        } else if (v == gardening) {
+            savePreference("Giardinaggio");
+        } else if (v == programming) {
+            savePreference("Programmatore");
+        } else if (v == writing) {
+            savePreference("Scrittura");
+        } else if (v == moda) {
+            savePreference("Moda");
+        } else if (v == vegetarian) {
+            savePreference("Vegetariano");
+        } else if (v == vegan) {
+            savePreference("Vegan");
+        } else if (v == carnivore) {
+            savePreference("Carnivoro");
+        } else if (v == single) {
+            savePreference("Single");
+        } else if (v == married) {
+            savePreference("Sposato");
+        } else if (v == engaged) {
+            savePreference("Impegnato");
+        } else if (v == cucinaItaliana) {
+            savePreference("Cucina Italiana");
+        } else if (v == blogger) {
+            savePreference("Blogger");
+        } else if (v == basket) {
+            savePreference("Basket");
+        } else if (v == fumatore) {
+            savePreference("Fumatore");
+        } else if (v == facebook) {
+            savePreference("Facebook");
+        } else if (v == freelance) {
+            savePreference("Freelance");
+        } else if (v == imprenditoria) {
+            savePreference("Imprenditoria");
+        } else if (v == elettricista) {
+            savePreference("Elettricista");
+        } else if (v == serieTV) {
+            savePreference("Serie TV");
+        } else if (v == libri) {
+            savePreference("Libri");
+        } else if (v == tecnologia) {
+            savePreference("Tecnologia");
+        } else if (v == destEsotiche) {
+            savePreference("Destinazioni Esotiche");
+        } else if (v == rock) {
+            savePreference("Rock");
+        } else if (v == classica) {
+            savePreference("Classica");
+        } else if (v == pop) {
+            savePreference("Pop");
+        } else if (v == ricette) {
+            savePreference("Ricette");
+        } else if (v == dolce) {
+            savePreference("Dolce");
+        } else if (v == calcio) {
+            savePreference("Calcio");
+        } else if (v == tennis) {
+            savePreference("Tennis");
+        } else if (v == yoga) {
+            savePreference("Yoga");
+        } else if (v == palestra) {
+            savePreference("Palestra");
+        }
+    }
+
+
+    private void savePreference(String preference) {
+        preferences.add(preference);
+
+        //salvo tutto su firebase
+        userPreferencesRef.setValue(preferences)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getContext(), "Preferenza salvata con successo!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Errore nel salvataggio della preferenza", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
