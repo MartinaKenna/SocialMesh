@@ -42,7 +42,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Controlla se l'utente è già autenticato
         FirebaseUser currentUser = auth.getCurrentUser();
-        if (false) { //TODO cambiare la condizione con (currentUser != null)
+        if (currentUser!=null) {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();

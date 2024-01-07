@@ -147,7 +147,7 @@ public class LoginFragment extends Fragment {
 
         final Button buttonLogin = view.findViewById(R.id.buttonLogin);
         final Button buttonSignUp = view.findViewById(R.id.buttonRegister);
-        final Button buttonGoogle = view.findViewById(R.id.buttonGoogle);
+        final ImageButton buttonGoogle = view.findViewById(R.id.buttonGoogle);
 
         buttonLogin.setOnClickListener(v -> {
 
