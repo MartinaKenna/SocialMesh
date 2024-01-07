@@ -44,7 +44,7 @@ public class EventFragment extends Fragment {
     private SearchView searchView;
     private RecyclerViewEventsAdapter recyclerViewEventsAdapterNearYou, recyclerViewEventsAdapter;
     private EventViewModel eventViewModel;
-    private Button filter, button1, button2,button3;
+    private Button filter, button1, button2,button3, viewAll;
     private PopupWindow popupWindow;
 
 
@@ -84,6 +84,7 @@ public class EventFragment extends Fragment {
         barra3 = view.findViewById(R.id.barra3);
         nearyou = view.findViewById(R.id.nearYou);
         lastadded = view.findViewById(R.id.lastAdded);
+        viewAll = view.findViewById(R.id.viewAll);
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
       /*  buttonAll.setTranslationX((1000));
         hipHopRap.setTranslationX(-1000);
@@ -163,6 +164,13 @@ public class EventFragment extends Fragment {
             popupWindow.showAsDropDown(filter, 0, -popupWindow.getHeight());
 
         });
+
+        viewAll.setOnClickListener(v -> {
+            recyclerViewEventsAdapter.setItems(eventsList);
+            recyclerViewEventsAdapterNearYou.setItems(eventsList);
+        });
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             //TODO raga funziona il filtro ma la searchview non permette di scriverci sopra, solo di incollare  del testo. Da questo problema solo dentro il fragment_event.
             @Override

@@ -71,6 +71,12 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         notifyDataSetChanged();
     }
 
+    public void setItems(List<Event> eventsList){
+        filteredList.clear();
+        filteredList.addAll(eventsList);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemViewType(int position) {
         return viewType;
