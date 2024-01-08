@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
                                 .load(imageUrl)
                                 .apply(RequestOptions.circleCropTransform())
                                 .placeholder(drawable)
-                                .error(R.drawable.baseline_error_outline_orange_24dp)
+                                .error(drawable)
                                 .into(profile_image_view);
                     }
                 }
@@ -161,11 +161,16 @@ public class ProfileFragment extends Fragment {
             String imageURL = uri.toString();
 
             if (imageURL != null && !imageURL.isEmpty()) {
+                CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
+                drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                drawable.setCenterRadius(30f);
+                drawable.setStrokeWidth(5f);
+                drawable.start();
                     Glide.with(this)
                             .load(imageURL)
                             .apply(RequestOptions.circleCropTransform())
-                            .placeholder(R.drawable.baseline_error_black_24dp)
-                            .error(R.drawable.baseline_error_black_24dp)
+                            .placeholder(drawable)
+                            .error(drawable)
                             .into(profile_image_view);
 
             } else {

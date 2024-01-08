@@ -52,7 +52,6 @@ public class DescriptionActivity extends AppCompatActivity {
         Button confirmButton = findViewById(R.id.button_confirm_description);
         confirmButton.setOnClickListener(v -> {
             saveDescription();
-            finish();
         });
 
         ImageButton backButton = findViewById(R.id.back_btn);
@@ -68,6 +67,7 @@ public class DescriptionActivity extends AppCompatActivity {
         if (!description.isEmpty()) {
             userDescriptionRef.setValue(description)
                     .addOnSuccessListener(aVoid -> {
+                        finish();
                         Toast.makeText(getApplicationContext(), "Descrizione salvata", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {

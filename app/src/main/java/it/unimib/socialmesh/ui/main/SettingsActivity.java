@@ -4,9 +4,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
@@ -16,15 +13,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -125,7 +119,7 @@ public class SettingsActivity extends AppCompatActivity {
                  .load(selectedImageUri)
                  .apply(RequestOptions.circleCropTransform())
                  .placeholder(drawable)
-                 .error(R.drawable.baseline_error_outline_orange_24dp)
+                 .error(drawable)
                  .into(profilePic);
      }
  }
@@ -152,7 +146,7 @@ public class SettingsActivity extends AppCompatActivity {
                             .load(imageURL)
                             .apply(RequestOptions.circleCropTransform())
                             .placeholder(drawable)
-                            .error(R.drawable.baseline_error_outline_orange_24dp)
+                            .error(drawable)
                             .into(profilePic);
                 });
             }).addOnFailureListener(exception -> {
@@ -182,14 +176,21 @@ public class SettingsActivity extends AppCompatActivity {
                             .load(imageURL)
                             .apply(RequestOptions.circleCropTransform())
                             .placeholder(drawable)
-                            .error(R.drawable.baseline_error_outline_orange_24dp)
+                            .error(drawable)
                             .into(profilePic);
                 }
             } else {
 
-                if (!isDestroyed()) { // Assicurati che l'activity non sia distrutta
+                if (!isDestroyed()) {
+                    CircularProgressDrawable drawable = new CircularProgressDrawable(this);
+                    drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                    drawable.setCenterRadius(30f);
+                    drawable.setStrokeWidth(5f);
+                    drawable.start();
                     Glide.with(this)
-                            .load(com.facebook.R.drawable.com_facebook_profile_picture_blank_portrait)
+                            .load(imageURL)
+                            .placeholder(drawable)
+                            .error(drawable)
                             .apply(RequestOptions.circleCropTransform())
                             .into(profilePic);
                 }

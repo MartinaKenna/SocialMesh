@@ -241,7 +241,7 @@ public class UserDetailsFragment extends Fragment {
                     Glide.with(this)
                             .load(imageURL)
                             .placeholder(drawable)
-                            .error(R.drawable.baseline_error_outline_orange_24dp)
+                            .error(R.drawable.drawable)
                             .into(profile_pic);
 
             } else {

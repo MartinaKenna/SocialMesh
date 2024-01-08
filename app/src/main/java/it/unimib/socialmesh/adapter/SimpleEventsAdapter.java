@@ -94,7 +94,7 @@ public class SimpleEventsAdapter extends RecyclerView.Adapter<SimpleEventsAdapte
             Glide.with(itemView.getContext())
                     .load(image)
                     .placeholder(drawable)
-                    .error(R.drawable.baseline_error_outline_orange_24dp)
+                    .error(drawable)
                     .into(imageViewEvent);
 
 

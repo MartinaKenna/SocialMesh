@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -72,15 +73,18 @@ import it.unimib.socialmesh.model.User;
                 userNameTextView.setText(userName);
                 StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child("pictures").child(userId).child("profilePic.jpg");
                 userImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    // Carica l'immagine nell'ImageView utilizzando Glide o un'altra libreria di caricamento delle immagini
+                    CircularProgressDrawable drawable = new CircularProgressDrawable(itemView.getContext());
+                    drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                    drawable.setCenterRadius(30f);
+                    drawable.setStrokeWidth(5f);
+                    drawable.start();
                     Glide.with(itemView.getContext())
                             .load(uri)
-                            .placeholder(R.drawable.baseline_error_black_24dp) // Immagine di caricamento placeholder
-                            .error(R.drawable.baseline_error_black_24dp) // Immagine di errore nel caso di problemi di caricamento
+                            .placeholder(drawable)
+                            .error(drawable)
                             .apply(RequestOptions.circleCropTransform())
-                            .into(profile_pic); // Sostituisci 'profileImageView' con il tuo ImageView
+                            .into(profile_pic);
                 }).addOnFailureListener(exception -> {
-                    // Gestisci eventuali errori durante il recupero dell'URL dell'immagine o il caricamento dell'immagine
                     Log.e("PartecipantsAdapter", "Errore durante il caricamento dell'immagine: " + exception.getMessage());
                 });
                 itemView.setOnClickListener(v -> {

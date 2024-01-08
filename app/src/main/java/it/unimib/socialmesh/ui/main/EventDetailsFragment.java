@@ -3,7 +3,6 @@ import static it.unimib.socialmesh.util.Constants.FIREBASE_REALTIME_DATABASE;
 
 import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,18 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +28,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
-import java.util.List;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
@@ -71,7 +65,7 @@ public class EventDetailsFragment extends Fragment {
             Glide.with(this)
                     .load(currentEvent.getUrlImages())
                     .placeholder(drawable)
-                    .error(R.drawable.baseline_error_outline_orange_24dp)
+                    .error(drawable)
                     .into(imageViewEvent);
             textViewEventTitle.setText(currentEvent.getName1());
             textViewEventDate.setText(currentEvent.getDates1());

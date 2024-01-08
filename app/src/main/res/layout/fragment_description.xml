@@ -47,13 +47,13 @@
             android:lines="3"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- ImageButton con icona di un check -->
     <Button
         android:id="@+id/button_confirm_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
         android:textColor="@color/socialmesh_orange"
         android:textSize="16dp"
         android:background="?android:attr/selectableItemBackground"

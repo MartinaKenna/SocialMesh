@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +18,6 @@ import java.util.List;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
-import it.unimib.socialmesh.ui.main.EventFragment;
 
 public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerViewEventsAdapter.EventsViewHolder> {
     private static final String TAG = RecyclerViewEventsAdapter.class.getSimpleName();
@@ -150,7 +148,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
             Glide.with(itemView.getContext())
                     .load(image)
                     .placeholder(drawable)
-                    .error(R.drawable.baseline_error_outline_orange_24dp)
+                    .error(drawable)
                     .into(imageView);
         }
 
