@@ -4,7 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/md_theme_light_background">
-
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@+id/lastAdded"
+        android:layout_centerHorizontal="true"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerviewMyevents"
         android:layout_width="match_parent"

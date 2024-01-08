@@ -50,8 +50,13 @@ import it.unimib.socialmesh.model.User;
 
         @Override
         public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-            String userName = userNameList.get(position);
-            holder.bind(userName, clickListener, userIdList.get(position));
+            if (userIdList != null && userNameList != null && position < userIdList.size() && position < userNameList.size()) {
+                String userName = userNameList.get(position);
+                Log.d("ADAPTERPART", userIdList.get(0));
+                holder.bind(userName, clickListener, userIdList.get(position));
+            } else {
+                Log.e("PartecipantsAdapter", "userIdList or userNameList is null or position is out of bounds");
+            }
         }
 
         @Override

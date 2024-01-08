@@ -1,10 +1,12 @@
 package it.unimib.socialmesh.ui.match;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.View;
 import android.util.Log;
@@ -32,6 +34,8 @@ import java.util.List;
 import java.util.Locale;
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.InterestsAdapter;
+import it.unimib.socialmesh.adapter.PhotosAdapter;
+import it.unimib.socialmesh.adapter.PhotosViewPagerAdapter;
 
 public class UserDetailsFragment extends Fragment {
 
@@ -43,6 +47,9 @@ public class UserDetailsFragment extends Fragment {
     private InterestsAdapter interestsAdapter;
     private DatabaseReference databaseReference;
     private List<String> interestsList = new ArrayList<>();
+    private ViewPager2 viewPager;
+    private PhotosAdapter photosAdapter;
+    private List<Uri> photoUrls = new ArrayList<>();
     int age;
     public UserDetailsFragment() {
     }
@@ -51,12 +58,11 @@ public class UserDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_details_fragment, container, false);
-        profile_pic = view.findViewById(R.id.imageview_profile);
         textview_description = view.findViewById(R.id.textview_description);
         if (getArguments() != null) {
             otherUserId = UserDetailsFragmentArgs.fromBundle(getArguments()).getUserId();
         }
-        loadProfileImage(otherUserId);
+        //loadProfileImage(otherUserId);
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         TextView nameTextView = view.findViewById(R.id.textview_name);
         TextView ageTextView = view.findViewById(R.id.textview_age);
@@ -116,6 +122,7 @@ public class UserDetailsFragment extends Fragment {
                     nameTextView.setText(userName);
                     updateDescription(otherUserId);
                     updateInterests(otherUserId,view);
+                    retrieveImagesFromStorage(otherUserId,view);
                 }
             }
 
@@ -237,7 +244,6 @@ public class UserDetailsFragment extends Fragment {
     }
 
     private void loadProfileImage(String otherUserID) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference userRef = storageRef.child("pictures").child(otherUserID).child("profilePic.jpg");
 
@@ -321,4 +327,47 @@ public class UserDetailsFragment extends Fragment {
             }
         });
     }
+    private void retrieveImagesFromStorage(String currentUserId, View view) {
+        viewPager = view.findViewById(R.id.imageview_profile); // Sostituisci con l'ID reale del ViewPager2 nel layout XML
+        List<Uri> photoUrls = new ArrayList<>();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child("pictures").child(currentUserId);
+
+        storageRef.listAll().addOnSuccessListener(listResult -> {
+            for (StorageReference item : listResult.getItems()) {
+                item.getDownloadUrl().addOnSuccessListener(uri -> {
+                    photoUrls.add(uri);
+
+                    if (photoUrls.size() == listResult.getItems().size()) {
+                        // Se abbiamo raccolto tutti gli URI, procediamo con l'ordinamento
+                        Uri profilePicUri = null;
+
+                        for (int i = 0; i < photoUrls.size(); i++) {
+                            if (photoUrls.get(i).toString().contains("profilePic.jpg")) {
+                                profilePicUri = photoUrls.remove(i);
+                                break;
+                            }
+                        }
+
+                        if (profilePicUri != null) {
+                            photoUrls.add(0, profilePicUri); // Metti profilePic.jpg all'inizio della lista
+                        }
+
+                        // Crea e setta l'adapter solo dopo aver completato l'ordinamento degli URI
+                        PhotosViewPagerAdapter adapter = new PhotosViewPagerAdapter(getContext(), photoUrls);
+                        viewPager.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
+                }).addOnFailureListener(exception -> {
+                    // Gestisci eventuali errori nel recupero delle URL
+                });
+            }
+        }).addOnFailureListener(e -> {
+            // Gestisci eventuali errori nel recupero delle immagini dallo storage
+        });
+    }
+
 }
+
+

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import it.unimib.socialmesh.adapter.SimpleEventsAdapter;
 import androidx.annotation.NonNull;
@@ -37,7 +38,7 @@ import it.unimib.socialmesh.model.Event;
 public class MatchFragment extends Fragment {
 
     private RecyclerView recyclerView;
-
+    private ProgressBar progressBar;
     private SimpleEventsAdapter myEventsAdapter;
     private List<Event> myEventsList;
 
@@ -45,6 +46,8 @@ public class MatchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_match, container, false);
         recyclerView = view.findViewById(R.id.RecyclerviewMyevents);
+        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
         myEventsList = new ArrayList<>();
         myEventsAdapter = new SimpleEventsAdapter(myEventsList, new SimpleEventsAdapter.OnItemClickListener() {
             @Override
@@ -76,6 +79,7 @@ public class MatchFragment extends Fragment {
                     String eventId = eventSnapshot.getKey();
                     Log.d("MatchFragment", "Event ID: " + eventId);
                     retrieveEventDetailsFromFirebase(eventId);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 

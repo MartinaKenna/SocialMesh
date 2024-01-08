@@ -125,24 +125,32 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void retrieveImagesFromStorage(String currentUserId) {
-        recyclerView2 = findViewById(R.id.recyclerPhotos);
-        recyclerView2.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        photosAdapter = new PhotosAdapter(this, photoUrls);
-        recyclerView2.setAdapter(photosAdapter);
+        List<Uri> photoUrls = new ArrayList<>();
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference().child("pictures").child(currentUserId);
 
         storageRef.listAll().addOnSuccessListener(listResult -> {
             for (StorageReference item : listResult.getItems()) {
                 item.getDownloadUrl().addOnSuccessListener(uri -> {
-                    photoUrls.add(uri);
-                    photosAdapter.notifyDataSetChanged();
+                    if (!uri.toString().contains("profilePic.jpg")) {
+                        photoUrls.add(uri);
+                        photosAdapter.notifyDataSetChanged();
+                    }
                 }).addOnFailureListener(exception -> {
+                    // Handle any errors while fetching URLs
                 });
             }
         }).addOnFailureListener(e -> {
+            // Handle any errors while fetching images from storage
         });
+
+        recyclerView2 = findViewById(R.id.recyclerPhotos);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        photosAdapter = new PhotosAdapter(this, photoUrls);
+        recyclerView2.setAdapter(photosAdapter);
     }
+
 
     private void uploadPhoto(Uri imageUri) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -313,6 +321,8 @@ public class SettingsActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String currentUserId = auth.getCurrentUser().getUid();
         updateDescription(currentUserId);
+        updateInterests(currentUserId);
+        retrieveImagesFromStorage(currentUserId);
 
     }
 }
