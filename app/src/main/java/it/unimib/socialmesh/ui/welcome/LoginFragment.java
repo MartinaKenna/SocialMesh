@@ -285,7 +285,6 @@ public class LoginFragment extends Fragment {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 task.getResult(ApiException.class);
-                navigateToSecondActivity();
             } catch (ApiException e) {
                 Toast.makeText(gsc.getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
@@ -297,10 +296,4 @@ public class LoginFragment extends Fragment {
         startActivityForResult(signInIntent, 1000);
     }
 
-    void navigateToSecondActivity(){
-        if (getActivity() != null) {
-            intent = new Intent(getActivity(), HomeActivity.class);
-            startActivity(intent);
-        }
-    }
 }
