@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/md_theme_light_background">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -42,6 +48,7 @@
         android:layout_marginLeft="16dp"/>
 
     <LinearLayout
+        android:id="@+id/linlay2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textDescription"
@@ -61,13 +68,60 @@
             android:gravity="top|start" />
 
     </LinearLayout>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textInterests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/interessi"
+        android:textStyle="bold"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:layout_below="@id/linlay2"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"/>
+    <LinearLayout
+        android:id="@+id/linlay3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textInterests"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/box_text"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerInterests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="8dp"
+            app:spanCount="3"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+    </LinearLayout>
 
     <Button
-        android:id="@+id/button_edit_decription"
+        android:id="@+id/button_edit_description"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/settings_profile_image"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="-1dp"
+        android:padding="4dp"
+        android:text="@string/modifica2"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:textAllCaps="false"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button_edit_photos"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linlay3"
         android:layout_alignParentEnd="true"
         android:text="@string/modifica2"
         android:textColor="@color/black"
@@ -76,7 +130,39 @@
         app:textAllCaps="false"
         android:padding="4dp"
         tools:ignore="MissingConstraints" />
-
-
+    <Button
+        android:id="@+id/button_edit_interests"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linlay2"
+        android:layout_alignParentEnd="true"
+        android:text="@string/modifica2"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:textAllCaps="false"
+        android:padding="4dp"
+        tools:ignore="MissingConstraints" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textPhotos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FOTO"
+        android:textStyle="bold"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:layout_below="@id/linlay3"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerPhotos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPhotos"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"/>
 
 </RelativeLayout>
+</ScrollView>

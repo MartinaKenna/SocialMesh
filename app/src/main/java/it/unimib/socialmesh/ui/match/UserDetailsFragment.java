@@ -2,6 +2,8 @@ package it.unimib.socialmesh.ui.match;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import android.view.View;
@@ -23,16 +25,24 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import it.unimib.socialmesh.R;
+import it.unimib.socialmesh.adapter.InterestsAdapter;
+
 public class UserDetailsFragment extends Fragment {
 
     private boolean isLiked = false;
     private String otherUserId;
     private ImageView profile_pic;
     private TextView textview_description;
+    private RecyclerView recyclerView;
+    private InterestsAdapter interestsAdapter;
+    private DatabaseReference databaseReference;
+    private List<String> interestsList = new ArrayList<>();
     int age;
     public UserDetailsFragment() {
     }
@@ -105,6 +115,7 @@ public class UserDetailsFragment extends Fragment {
                     ageTextView.setText(String.valueOf(age));
                     nameTextView.setText(userName);
                     updateDescription(otherUserId);
+                    updateInterests(otherUserId,view);
                 }
             }
 
@@ -112,6 +123,7 @@ public class UserDetailsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
         return view;
     }
 
@@ -244,6 +256,7 @@ public class UserDetailsFragment extends Fragment {
                             .error(R.drawable.drawable)
                             .into(profile_pic);
 
+
             } else {
                     Glide.with(this)
                             .load(com.facebook.R.drawable.com_facebook_profile_picture_blank_portrait) // Immagine di default
@@ -254,6 +267,7 @@ public class UserDetailsFragment extends Fragment {
             Log.e("Settings", "Errore durante il caricamento dell'immagine del profilo: " + exception.getMessage());
         });
     }
+
     private int calculateAge(String dateOfBirth) {
         int age = 0;
         try {
@@ -282,5 +296,29 @@ public class UserDetailsFragment extends Fragment {
         }
         return age;
     }
+    private void updateInterests(String currentUserId,View view) {
+        recyclerView = view.findViewById(R.id.recyclerInterests);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        interestsAdapter = new InterestsAdapter(interestsList);
+        recyclerView.setAdapter(interestsAdapter);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("preferences");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                interestsList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String interest = snapshot.getValue(String.class);
+                    interestsList.add(interest);
+                }
+                interestsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Gestisci eventuali errori di lettura dal database
+            }
+        });
+    }
 }
