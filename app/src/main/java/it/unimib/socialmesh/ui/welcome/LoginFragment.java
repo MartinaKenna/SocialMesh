@@ -157,7 +157,7 @@ public class LoginFragment extends Fragment {
 
             // Start login if email and password are ok
             //TODO sistemare il controllo password, dobbiamo valutare i criteri di isPasswordOk
-            if (true) {
+            if (!email.isEmpty() && !password.isEmpty()) {
                 if (!userViewModel.isAuthenticationError()) {
                     progressIndicator.setVisibility(View.VISIBLE);
                     userViewModel.getUserMutableLiveData(email, password, true).observe(
