@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -48,7 +47,6 @@ public class EventPartecipantsFragment extends Fragment {
         participantsList = new ArrayList<>();
         idList = new ArrayList<>();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        String currentUser = auth.getCurrentUser().getUid();
         usersAdapter = new PartecipantsAdapter(idList, participantsList, userId -> {
             EventPartecipantsFragmentDirections.ActionEventPartecipantsFragmentToUserDetailsFragment action =
                     EventPartecipantsFragmentDirections.actionEventPartecipantsFragmentToUserDetailsFragment(userId);
@@ -74,8 +72,7 @@ public class EventPartecipantsFragment extends Fragment {
 
             Event commonEvent = EventPartecipantsFragmentArgs.fromBundle(getArguments()).getCommonEvent();
             Log.d(TAG, "Evento ricevuto con successo");
-            //TODO aggiungere cosa fare con l'eveto ricevuto
-            retrieveParticipantsFromFirebase(commonEvent); // Recupera i partecipanti dall'evento nel database Firebase
+            retrieveParticipantsFromFirebase(commonEvent);
 
         } else {
             Log.d(TAG, "Errore, evento passato da Match a Partecipants vuoto");
@@ -87,9 +84,6 @@ public class EventPartecipantsFragment extends Fragment {
     private void retrieveParticipantsFromFirebase(Event commonEvent) {
 
         String eventId = commonEvent.getRemoteId();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String currentUser = auth.getCurrentUser().getUid();
-
         DatabaseReference eventParticipantsRef = FirebaseDatabase.getInstance().getReference()
                 .child("events").child(eventId).child("participants");
 
@@ -99,10 +93,7 @@ public class EventPartecipantsFragment extends Fragment {
                 participantsList.clear();
 
                 for (DataSnapshot participantSnapshot : snapshot.getChildren()) {
-
                     String userId = participantSnapshot.getKey();
-
-                    // Recupera i dettagli dell'utente partecipante
                     retrieveUserDetailsFromFirebase(userId);
                 }
             }
@@ -124,7 +115,7 @@ public class EventPartecipantsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     User user = snapshot.getValue(User.class);
-                    if (user != null && !userId.equals(currentUser)) { // Verifica se l'ID non è uguale all'ID dell'utente attuale
+                    if (user != null && !userId.equals(currentUser)) {
                         String currentId = snapshot.getKey();
                         participantsList.add(user.getName());
                         idList.add(currentId);

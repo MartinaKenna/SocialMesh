@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 
@@ -141,7 +142,16 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         public void bind(String name, String date, String image) {
             textViewName.setText(name);
             textViewDate.setText(date);
-            Glide.with(itemView.getContext()).load(image).into(imageView);
+            CircularProgressDrawable drawable = new CircularProgressDrawable(itemView.getContext());
+            drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+            drawable.setCenterRadius(30f);
+            drawable.setStrokeWidth(5f);
+            drawable.start();
+            Glide.with(itemView.getContext())
+                    .load(image)
+                    .placeholder(drawable)
+                    .error(R.drawable.baseline_error_outline_orange_24dp)
+                    .into(imageView);
         }
 
         @Override

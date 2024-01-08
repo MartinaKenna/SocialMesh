@@ -19,8 +19,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,8 +63,16 @@ public class EventDetailsFragment extends Fragment {
             ImageButton backButton = view.findViewById(R.id.back_btn);
             joinButton.setText("JOIN EVENT");
             joinButton.requestLayout();
-
-            Glide.with(requireContext()).load(currentEvent.getUrlImages()).into(imageViewEvent);
+            CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
+            drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+            drawable.setCenterRadius(30f);
+            drawable.setStrokeWidth(5f);
+            drawable.start();
+            Glide.with(this)
+                    .load(currentEvent.getUrlImages())
+                    .placeholder(drawable)
+                    .error(R.drawable.baseline_error_outline_orange_24dp)
+                    .into(imageViewEvent);
             textViewEventTitle.setText(currentEvent.getName1());
             textViewEventDate.setText(currentEvent.getDates1());
             textViewEventDetails.setText(currentEvent.getDescription());

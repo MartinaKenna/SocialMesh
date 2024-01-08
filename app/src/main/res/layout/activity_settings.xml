@@ -11,24 +11,12 @@
         android:id="@+id/close_settings_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Close"
-        android:backgroundTint="@color/md_theme_light_secondary"
-        android:textColor="@color/md_theme_light_onSecondary"
-        android:textSize="17sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/update_account_settings_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="16dp"
-        android:text="Update"
-        android:backgroundTint="@color/md_theme_light_secondary"
-        android:textColor="@color/md_theme_light_onSecondary"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="Fine"
+        android:textColor="@color/socialmesh_orange"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -41,7 +29,7 @@
         android:layout_marginTop="20dp"
         android:padding="5dp"
         android:background="@drawable/circle"
-        android:src="@drawable/pics" />
+         />
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textDescription"
         android:layout_width="wrap_content"
@@ -53,26 +41,41 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/descriptionInputLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textDescription"
         android:layout_marginTop="8dp"
-        android:hint="Inserisci la descrizione"
-        app:counterMaxLength="500">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/box_text"
+        android:padding="8dp"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/descriptionEditText"
+        <TextView
+            android:id="@+id/descriptionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:gravity="top|start"
             android:textSize="18sp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:lines="3"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:lines="3"
+            android:gravity="top|start" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_edit_decription"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/settings_profile_image"
+        android:layout_alignParentEnd="true"
+        android:text="@string/modifica2"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:textAllCaps="false"
+        android:padding="4dp"
+        tools:ignore="MissingConstraints" />
 
 
 

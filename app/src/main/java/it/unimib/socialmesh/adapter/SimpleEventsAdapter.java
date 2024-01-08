@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -85,11 +86,15 @@ public class SimpleEventsAdapter extends RecyclerView.Adapter<SimpleEventsAdapte
 
         public void bind(final Event event, String image, final OnItemClickListener listener) {
             eventNameTextView.setText(event.getName1());
-
+            CircularProgressDrawable drawable = new CircularProgressDrawable(itemView.getContext());
+            drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+            drawable.setCenterRadius(30f);
+            drawable.setStrokeWidth(5f);
+            drawable.start();
             Glide.with(itemView.getContext())
-                    .load(image) // Assicurati che 'image' sia un URL valido per l'immagine dell'evento
-                    .placeholder(R.drawable.baseline_error_black_24dp) // Immagine di caricamento placeholder
-                    .error(R.drawable.baseline_error_black_24dp) // Immagine di errore nel caso di problemi di caricamento
+                    .load(image)
+                    .placeholder(drawable)
+                    .error(R.drawable.baseline_error_outline_orange_24dp)
                     .into(imageViewEvent);
 
 

@@ -12,13 +12,12 @@
     android:layout_margin="4dp"
     android:layout_marginBottom="8dp"
     android:padding="4dp">
-    <!-- Immagine dell'evento -->
     <ImageView
         android:id="@+id/imageview_event"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/baseline_no_drinks_orange_a700_48dp"/>
+      />
 
     <LinearLayout
         android:layout_width="match_parent"

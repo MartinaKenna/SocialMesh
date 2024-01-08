@@ -20,6 +20,9 @@
             android:name=".ui.main.SettingsActivity"
             android:exported="true" />
         <activity
+            android:name=".ui.main.DescriptionActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.main.HomeActivity"
             android:exported="true" />
         <activity

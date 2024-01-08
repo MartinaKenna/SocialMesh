@@ -4,10 +4,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,28 +20,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.auth.User;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.Date;
-
 import it.unimib.socialmesh.R;
-import it.unimib.socialmesh.data.repository.user.UserRepository;
-import it.unimib.socialmesh.util.ServiceLocator;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 public class SettingsActivity extends AppCompatActivity {
     ImageView profilePic;
@@ -48,9 +46,14 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String currentUserId = auth.getCurrentUser().getUid();
         loadProfileImage();
-        descriptionEditText = findViewById(R.id.descriptionEditText);
-        descriptionEditText.requestFocus();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
+                .child("users")
+                .child(currentUserId);
+        updateDescription(currentUserId);
+
         profilePic = findViewById(R.id.settings_profile_image);
         imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -59,6 +62,9 @@ public class SettingsActivity extends AppCompatActivity {
                         if (data != null && data.getData() != null) {
                             selectedImageUri = data.getData();
                             updateProfilePic(selectedImageUri);
+                            if (selectedImageUri != null) {
+                                uploadProfilePic(selectedImageUri);
+                            }
                         }
                     }
                 }
@@ -75,30 +81,56 @@ public class SettingsActivity extends AppCompatActivity {
             setResult(Activity.RESULT_CANCELED);
             finish();
         });
-        Button updateSettingsButton = findViewById(R.id.update_account_settings_btn);
-        updateSettingsButton.setOnClickListener(view -> {
-            if (selectedImageUri != null) {
-                uploadProfilePic(selectedImageUri,view);
-                Snackbar.make(view, "Immagine profilo aggiornata correttamente", Snackbar.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Seleziona un'immagine prima di aggiornare", Toast.LENGTH_SHORT).show();
+
+        Button editDescriptionButton = findViewById(R.id.button_edit_decription);
+        editDescriptionButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, DescriptionActivity.class);
+            startActivity(intent);
+
+        });
+    }
+
+    private void updateDescription(String currentUserId) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
+                .child("users")
+                .child(currentUserId);
+        TextView descriptionTextView = findViewById(R.id.descriptionTextView);
+        userRef.child("descrizione").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String description = snapshot.getValue(String.class);
+                    // Imposta la descrizione nel TextView
+                    descriptionTextView.setText(description);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Gestire eventuali errori
             }
         });
     }
 
 
- private void updateProfilePic(Uri selectedImageUri) {
+    private void updateProfilePic(Uri selectedImageUri) {
      if (selectedImageUri != null) {
+         CircularProgressDrawable drawable = new CircularProgressDrawable(this);
+         drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+         drawable.setCenterRadius(30f);
+         drawable.setStrokeWidth(5f);
+         drawable.start();
+
          Glide.with(this)
                  .load(selectedImageUri)
                  .apply(RequestOptions.circleCropTransform())
-                 .placeholder(R.drawable.baseline_error_black_24dp)
-                 .error(R.drawable.baseline_error_black_24dp)
+                 .placeholder(drawable)
+                 .error(R.drawable.baseline_error_outline_orange_24dp)
                  .into(profilePic);
      }
  }
 
-    private void uploadProfilePic(Uri selectedImageUri, View view) {
+    private void uploadProfilePic(Uri selectedImageUri) {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String currentUserId = mAuth.getCurrentUser().getUid();
@@ -111,14 +143,18 @@ public class SettingsActivity extends AppCompatActivity {
             uploadTask.addOnSuccessListener(taskSnapshot -> {
                 userRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     String imageURL = uri.toString();
+                    CircularProgressDrawable drawable = new CircularProgressDrawable(this);
+                    drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                    drawable.setCenterRadius(30f);
+                    drawable.setStrokeWidth(5f);
+                    drawable.start();
                     Glide.with(this)
                             .load(imageURL)
                             .apply(RequestOptions.circleCropTransform())
-                            .placeholder(R.drawable.baseline_error_black_24dp)
-                            .error(R.drawable.baseline_error_black_24dp)
+                            .placeholder(drawable)
+                            .error(R.drawable.baseline_error_outline_orange_24dp)
                             .into(profilePic);
                 });
-                finish();
             }).addOnFailureListener(exception -> {
                 Log.e("Settings", "Errore durante il caricamento dell'immagine");
             });
@@ -137,11 +173,16 @@ public class SettingsActivity extends AppCompatActivity {
 
             if (imageURL != null && !imageURL.isEmpty()) {
                 if (!isDestroyed()) {
+                    CircularProgressDrawable drawable = new CircularProgressDrawable(this);
+                    drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                    drawable.setCenterRadius(30f);
+                    drawable.setStrokeWidth(5f);
+                    drawable.start();
                     Glide.with(this)
                             .load(imageURL)
                             .apply(RequestOptions.circleCropTransform())
-                            .placeholder(R.drawable.baseline_error_black_24dp)
-                            .error(R.drawable.baseline_error_black_24dp)
+                            .placeholder(drawable)
+                            .error(R.drawable.baseline_error_outline_orange_24dp)
                             .into(profilePic);
                 }
             } else {
@@ -157,5 +198,12 @@ public class SettingsActivity extends AppCompatActivity {
             Log.e("Settings", "Errore durante il caricamento dell'immagine del profilo: " + exception.getMessage());
         });
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String currentUserId = auth.getCurrentUser().getUid();
+        updateDescription(currentUserId);
 
+    }
 }

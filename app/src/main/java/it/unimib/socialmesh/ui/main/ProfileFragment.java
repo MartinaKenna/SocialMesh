@@ -20,6 +20,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -47,8 +48,6 @@ public class ProfileFragment extends Fragment {
    int REQUEST_CODE;
     TextView fullName, userEmail,userDate;
     Button buttonLogout;
-    ActivityResultLauncher<Intent> imagePickLauncher;
-    Uri selectedImageUri;
     ImageView profile_image_view;
     private UserViewModel userViewModel;
 
@@ -75,13 +74,17 @@ public class ProfileFragment extends Fragment {
                     Intent data = result.getData();
                     if (data != null && data.hasExtra("image_url")) {
                         String imageUrl = data.getStringExtra("image_url");
-                        // Carica l'immagine nell'ImageView del profilo utilizzando l'URL
+                        CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
+                        drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                        drawable.setCenterRadius(30f);
+                        drawable.setStrokeWidth(5f);
+                        drawable.start();
                         Glide.with(this)
                                 .load(imageUrl)
                                 .apply(RequestOptions.circleCropTransform())
-                                .placeholder(R.drawable.baseline_lock_clock_black_24dp) // Immagine di caricamento
-                                .error(R.drawable.baseline_error_black_24dp) // Immagine di errore
-                                .into(profile_image_view); // profileImageView è l'ImageView del profilo
+                                .placeholder(drawable)
+                                .error(R.drawable.baseline_error_outline_orange_24dp)
+                                .into(profile_image_view);
                     }
                 }
             }
@@ -119,8 +122,6 @@ public class ProfileFragment extends Fragment {
                         String name = nameSnapshot.getValue(String.class);
                         String email = emailSnapshot.getValue(String.class);
                         String data_di_nascita = dateSnapshot.getValue(String.class);
-
-                        // Aggiorna le viste con il nome e l'email ottenuti
                         fullName.setText(name);
                         userEmail.setText(email);
                         userDate.setText(data_di_nascita);
@@ -130,7 +131,6 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Gestisci eventuali errori di lettura dal database
             }
         });
         return root;

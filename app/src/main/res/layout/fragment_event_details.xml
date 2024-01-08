@@ -18,7 +18,6 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:src="@drawable/baseline_arrow_back_ios_24"
-
         android:elevation="2dp"/>
 
     <LinearLayout
@@ -37,7 +36,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="description"
             android:scaleType="fitCenter"
-            tools:src="@drawable/placeholder_event_image" />
+            />
 
         <TextView
             android:id="@+id/textview_event_title"

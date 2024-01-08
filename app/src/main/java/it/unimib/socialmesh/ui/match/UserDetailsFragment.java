@@ -2,6 +2,8 @@ package it.unimib.socialmesh.ui.match;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+
 import android.view.View;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +32,7 @@ public class UserDetailsFragment extends Fragment {
     private boolean isLiked = false;
     private String otherUserId;
     private ImageView profile_pic;
+    private TextView textview_description;
     int age;
     public UserDetailsFragment() {
     }
@@ -37,9 +40,9 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.user_details_fragment, container, false);
         profile_pic = view.findViewById(R.id.imageview_profile);
+        textview_description = view.findViewById(R.id.textview_description);
         if (getArguments() != null) {
             otherUserId = UserDetailsFragmentArgs.fromBundle(getArguments()).getUserId();
         }
@@ -59,7 +62,6 @@ public class UserDetailsFragment extends Fragment {
         backButton.setOnClickListener(CloseView -> {
             getParentFragmentManager().popBackStack();
         });
-
         buttonLike.setOnClickListener(v -> {
             if (isLiked) {
                 buttonLike.setImageResource(R.drawable.baseline_favorite_border_black_48dp);
@@ -76,8 +78,12 @@ public class UserDetailsFragment extends Fragment {
         currentUserLikesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+                if (snapshot.hasChild(otherUserId)) {
                     buttonLike.setImageResource(R.drawable.baseline_favorite_red_48dp);
+                    isLiked = true;
+                }else{
+                    buttonLike.setImageResource(R.drawable.baseline_favorite_border_black_48dp);
+                    isLiked = false;
                 }
             }
 
@@ -98,12 +104,12 @@ public class UserDetailsFragment extends Fragment {
                     }
                     ageTextView.setText(String.valueOf(age));
                     nameTextView.setText(userName);
+                    updateDescription(otherUserId);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Gestire eventuali errori di database
             }
         });
         return view;
@@ -196,22 +202,46 @@ public class UserDetailsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+    }
+    private void updateDescription(String currentUserId) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
+                .child("users")
+                .child(currentUserId);
+
+        userRef.child("descrizione").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String description = snapshot.getValue(String.class);
+                    textview_description.setText(description);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     private void loadProfileImage(String otherUserID) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String currentUserId = mAuth.getCurrentUser().getUid();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference userRef = storageRef.child("pictures").child(otherUserID).child("profilePic.jpg");
 
         userRef.getDownloadUrl().addOnSuccessListener(uri -> {
             String imageURL = uri.toString();
+            CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
+            drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+            drawable.setCenterRadius(30f);
+            drawable.setStrokeWidth(5f);
+            drawable.start();
 
-            if (imageURL != null && !imageURL.isEmpty()) { // Controlla se l'URL dell'immagine non è nullo o vuoto
+            if (imageURL != null && !imageURL.isEmpty()) {
                     Glide.with(this)
                             .load(imageURL)
-                            .placeholder(R.drawable.baseline_error_black_24dp) // Immagine di caricamento placeholder
-                            .error(R.drawable.baseline_error_black_24dp) // Immagine di errore in caso di problemi di caricamento
+                            .placeholder(drawable)
+                            .error(R.drawable.baseline_error_outline_orange_24dp)
                             .into(profile_pic);
 
             } else {
