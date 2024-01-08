@@ -30,7 +30,7 @@ import it.unimib.socialmesh.model.User;
 
 public class  ProfileDetailsFragment extends Fragment {
 
-    protected UserResponseCallback userResponseCallback;
+    private UserResponseCallback userResponseCallback;
     private UserViewModel userViewModel;
 
     @Override

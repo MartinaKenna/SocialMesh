@@ -27,19 +27,6 @@
 
         </androidx.cardview.widget.CardView>
 
-
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/nearYou"
             android:layout_width="wrap_content"
@@ -51,6 +38,15 @@
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_below="@+id/lastAdded"
+            android:layout_centerHorizontal="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewEvents"
@@ -141,10 +137,9 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.fragment.app.FragmentContainerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/container_fragment"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
                 <Button

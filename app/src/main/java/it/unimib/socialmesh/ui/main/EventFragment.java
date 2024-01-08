@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class EventFragment extends Fragment {
     private EventViewModel eventViewModel;
     private Button filter, button1, button2,button3, viewAll;
     private PopupWindow popupWindow;
+
+    private ProgressBar progressBar;
 
 
     //questo serve
@@ -224,10 +227,12 @@ public class EventFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
-
-
 
         if (currentUser != null) {
             Log.d("FirebaseUser", "User ID: " + currentUser.getUid());
@@ -298,6 +303,7 @@ public class EventFragment extends Fragment {
                             recyclerViewEventsAdapter.clearFilters();
                             recyclerViewEventsAdapterNearYou.clearFilters();
                         }
+                        progressBar.setVisibility(View.GONE);
 
                     } else {
                         eventViewModel.setLoading(false);
@@ -320,6 +326,7 @@ public class EventFragment extends Fragment {
                 }
                  else {
                         Log.d(TAG,"pane");
+                        progressBar.setVisibility(View.GONE);
         }
 
     });

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -58,15 +61,12 @@ public class LoginFragment extends Fragment {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
     private static final boolean USE_NAVIGATION_COMPONENT = true;
-
-    GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     private TextInputLayout passTextInput, emailTextInput;
+    private ProgressBar progressIndicator;
     CallbackManager callbackManager;
-    TextView forget_password;
-    ImageButton fb, google, twitter;
-    Button login, register;
-    Intent intent;
+
+    private Intent intent;
     private SignInClient oneTapClient;
 
     private UserViewModel userViewModel;
@@ -144,6 +144,7 @@ public class LoginFragment extends Fragment {
 
         emailTextInput = view.findViewById(R.id.email);
         passTextInput = view.findViewById(R.id.insertPassword);
+        progressIndicator = view.findViewById(R.id.progress_bar);
 
         final Button buttonLogin = view.findViewById(R.id.buttonLogin);
         final Button buttonSignUp = view.findViewById(R.id.buttonRegister);
@@ -155,8 +156,10 @@ public class LoginFragment extends Fragment {
             String password  = passTextInput.getEditText().getText().toString().trim();
 
             // Start login if email and password are ok
+            //TODO sistemare il controllo password, dobbiamo valutare i criteri di isPasswordOk
             if (true) {
                 if (!userViewModel.isAuthenticationError()) {
+                    progressIndicator.setVisibility(View.VISIBLE);
                     userViewModel.getUserMutableLiveData(email, password, true).observe(
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
@@ -165,6 +168,7 @@ public class LoginFragment extends Fragment {
                                     Navigation.findNavController(requireView()).navigate(R.id.navigate_to_homeActivity);
                                 } else {
                                     userViewModel.setAuthenticationError(true);
+                                    progressIndicator.setVisibility(View.GONE);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                             getErrorMessage(((Result.Error) result).getMessage()),
                                             Snackbar.LENGTH_SHORT).show();
@@ -177,32 +181,31 @@ public class LoginFragment extends Fragment {
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                         R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
             }
-
         });
 
         //Google
         buttonGoogle.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
-                    @Override
-                    public void onSuccess(BeginSignInResult result) {
-                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
-                        IntentSenderRequest intentSenderRequest =
-                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
-                        activityResultLauncher.launch(intentSenderRequest);
-                    }
-                })
-                .addOnFailureListener(requireActivity(), new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // No saved credentials found. Launch the One Tap sign-up flow, or
-                        // do nothing and continue presenting the signed-out UI.
-                        Log.d(TAG, e.getLocalizedMessage());
+            .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
+                @Override
+                public void onSuccess(BeginSignInResult result) {
+                    Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                    IntentSenderRequest intentSenderRequest =
+                            new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                    activityResultLauncher.launch(intentSenderRequest);
+                }
+            })
+            .addOnFailureListener(requireActivity(), new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    // No saved credentials found. Launch the One Tap sign-up flow, or
+                    // do nothing and continue presenting the signed-out UI.
+                    Log.d(TAG, e.getLocalizedMessage());
 
-                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                requireActivity().getString(R.string.error_no_google_account_found_message),
-                                Snackbar.LENGTH_SHORT).show();
-                    }
-                }));
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            requireActivity().getString(R.string.error_no_google_account_found_message),
+                            Snackbar.LENGTH_SHORT).show();
+                }
+            }));
 
         buttonSignUp.setOnClickListener(item -> {
             Navigation.findNavController(requireView()).navigate(R.id.navigate_to_registrationFragment);
@@ -230,36 +233,6 @@ public class LoginFragment extends Fragment {
                 return requireActivity().getString(R.string.unexpected_error);
         }
     }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1000){
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                task.getResult(ApiException.class);
-                navigateToSecondActivity();
-            } catch (ApiException e) {
-                Toast.makeText(gsc.getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    void signIn(){
-        Intent signInIntent=gsc.getSignInIntent();
-        startActivityForResult(signInIntent, 1000);
-    }
-
-    void navigateToSecondActivity(){
-        if (getActivity() != null) {
-            intent = new Intent(getActivity(), HomeActivity.class);
-            startActivity(intent);
-        }
-    }
-
-
     private boolean isEmailOk(String email) {
         // Check if the email is valid through the use of this library:
         // https://commons.apache.org/proper/commons-validator/
@@ -270,8 +243,6 @@ public class LoginFragment extends Fragment {
             emailTextInput.setError(null);
             return true;
         }
-
-        //TODO confrontare i dati con firebase
     }
 
     private boolean isPasswordOk(String password) {
@@ -303,7 +274,33 @@ public class LoginFragment extends Fragment {
             passTextInput.setError(null);
             return true;
         }
+    }
 
-        //TODO confrontare i dati con firebase
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1000){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                task.getResult(ApiException.class);
+                navigateToSecondActivity();
+            } catch (ApiException e) {
+                Toast.makeText(gsc.getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    void signIn(){
+        Intent signInIntent=gsc.getSignInIntent();
+        startActivityForResult(signInIntent, 1000);
+    }
+
+    void navigateToSecondActivity(){
+        if (getActivity() != null) {
+            intent = new Intent(getActivity(), HomeActivity.class);
+            startActivity(intent);
+        }
     }
 }
