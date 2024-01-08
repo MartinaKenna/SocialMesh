@@ -101,13 +101,11 @@ public class ChatFragment extends Fragment {
                 if(snapshot.exists()) {
                     for (DataSnapshot matchSnapshot : snapshot.getChildren()) {
                         String matchUserId = matchSnapshot.getKey();
-                        Log.d("Chiave", matchUserId);
                         mDbRef.child("users").child(matchUserId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                                 if (userSnapshot.exists()) {
                                     User user = userSnapshot.getValue(User.class);
-                                    Log.d("User", user.getName());
                                     matchesList.add(user);
                                     adapter.notifyDataSetChanged();
                                 }
@@ -122,7 +120,7 @@ public class ChatFragment extends Fragment {
                     }
                     adapter.notifyDataSetChanged();
                 } else {
-                    //messasggio di errore
+                    //messaggio di errore
                     Log.d("Errore", "snapshot.exists()");
                 }
             }

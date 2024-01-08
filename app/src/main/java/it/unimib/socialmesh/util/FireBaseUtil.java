@@ -22,4 +22,15 @@ public class FireBaseUtil {
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId());
     }
 
+
+    public static String adjustPath(String path) {
+        char[] pathArray;
+        pathArray = path.toCharArray();
+        for(int i = 0; i < pathArray.length; i++) {
+            if(pathArray[i] == '.')
+                pathArray[i] = ',';
+        }
+        return new String(pathArray);
+    }
+
 }

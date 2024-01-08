@@ -17,6 +17,7 @@ import java.util.Objects;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.User;
+import it.unimib.socialmesh.ui.main.ChatActivity;
 //import it.unimib.socialmesh.ui.main.ChatActivity;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.UserViewHolder> {
@@ -45,17 +46,17 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.UserView
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User currentUser = matchesList.get(position);
         holder.textName.setText(currentUser.getName());
-        /*
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("fullName", currentUser.fullName);
-                intent.putExtra("email", currentUser.email);
+                intent.putExtra("name", currentUser.getName());
+                intent.putExtra("email", currentUser.getEmail());
                 context.startActivity(intent);
             }
         });
-        */
+
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
