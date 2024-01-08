@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment {
 
     public ProfileFragment() {}
 
+    public static ProfileFragment newInstance() { return new ProfileFragment(); }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -141,15 +142,19 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         buttonLogout.setOnClickListener(v -> {
+            /*
             userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
                 if (true) {
-                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_loginFragment);
+                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_welcomeActivity);
                 } else {
                     Snackbar.make(view,
                             requireActivity().getString(R.string.unexpected_error),
                             Snackbar.LENGTH_SHORT).show();
                 }
             });
+             */
+            userViewModel.logout();
+            Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_welcomeActivity);
         });
     }
     private void loadProfileImage() {
@@ -175,7 +180,6 @@ public class ProfileFragment extends Fragment {
                             .into(profile_image_view);
 
             } else {
-
                     Glide.with(this)
                             .load(com.facebook.R.drawable.com_facebook_profile_picture_blank_portrait) // Immagine di default
                             .apply(RequestOptions.circleCropTransform())
