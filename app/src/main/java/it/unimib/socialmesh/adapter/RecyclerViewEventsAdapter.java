@@ -56,13 +56,13 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
     public void filterByPosition(double userLatitudine, double userLongitudine) {
         filteredList.clear();
         Location userPosition = new Location();
-        userPosition.setLatitude(String.valueOf(userLatitudine));
-        userPosition.setLongitude(String.valueOf(userLongitudine));
+        userPosition.setLatitude(userLatitudine);
+        userPosition.setLongitude(userLongitudine);
         for (Event event : eventsList) {
-            //double eventLatitude = event.getLatitude(); //TODO metti i metodi qui
-           // double eventLongitude = event.getLongitude();
+            double eventLatitude = event.getLatitude();
+            double eventLongitude = event.getLongitude();
 
-           // double distance = distance(userLatitudine, userLongitudine, eventLatitude, eventLongitude);
+            //double distance = distance(userLatitudine, userLongitudine, eventLatitude, eventLongitude);
 
             // Controll0 se la distanza tra l'evento e la posizione dell'utente è <= 10 km
             // possiamo aggiungere la possibilità di filtrare per 5km, 10km, 50km, illimitato

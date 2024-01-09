@@ -19,6 +19,7 @@ import it.unimib.socialmesh.model.jsonFields.Dates;
 import it.unimib.socialmesh.model.jsonFields.Embedded_1;
 import it.unimib.socialmesh.model.jsonFields.Genre;
 import it.unimib.socialmesh.model.jsonFields.Image;
+import it.unimib.socialmesh.model.jsonFields.Venue;
 import it.unimib.socialmesh.util.Converters;
 
 
@@ -242,6 +243,13 @@ public class Event implements Parcelable {
             // Se la lista è vuota o nulla, restituisci un URL di fallback o una stringa vuota
             return "URL di fallback o stringa vuota";
         }
+    }
+    public double getLatitude() {
+        return this.getEmbedded().getVenues().get(0).getLocation().getLatitude();
+    }
+
+    public double getLongitude() {
+        return this.getEmbedded().getVenues().get(0).getLocation().getLongitude();
     }
 
     @Override
