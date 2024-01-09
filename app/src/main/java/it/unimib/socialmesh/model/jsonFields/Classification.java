@@ -21,9 +21,6 @@ public class Classification {
     @Expose
     private SubGenre subGenre;
 
-
-
-
     public Segment getSegment() {
         return segment;
     }

@@ -16,6 +16,7 @@ import androidx.room.TypeConverters;
 
 import it.unimib.socialmesh.model.jsonFields.Classification;
 import it.unimib.socialmesh.model.jsonFields.Dates;
+import it.unimib.socialmesh.model.jsonFields.Embedded_1;
 import it.unimib.socialmesh.model.jsonFields.Genre;
 import it.unimib.socialmesh.model.jsonFields.Image;
 import it.unimib.socialmesh.util.Converters;
@@ -42,6 +43,30 @@ public class Event implements Parcelable {
     @SerializedName("id")
     @Expose
     private String remoteId;
+
+    @TypeConverters(Converters.class)
+    @SerializedName("images")
+    @Expose
+    private List<Image> images;
+
+    @TypeConverters(Converters.class)
+    @SerializedName("classifications")
+    @Expose
+    private List<Classification> classifications;
+    @Embedded(prefix = "dates_")
+    @SerializedName("dates")
+    @Expose
+    private Dates dates;
+
+    @Embedded(prefix = "genre_")
+    @SerializedName("genre")
+    @Expose
+    private Genre genre;
+
+    @Embedded(prefix = "_embedded_")
+    @SerializedName("_embedded")
+    @Expose
+    private Embedded_1 embedded;
 
     public String getDescription() {
         return description;
@@ -79,24 +104,7 @@ public class Event implements Parcelable {
         this.localId = localId;
     }
 
-    @TypeConverters(Converters.class)
-    @SerializedName("images")
-    @Expose
-    private List<Image> images;
 
-    @TypeConverters(Converters.class)
-    @SerializedName("classifications")
-    @Expose
-    private List<Classification> classifications;
-    @Embedded(prefix = "dates_")
-    @SerializedName("dates")
-    @Expose
-    private Dates dates;
-
-    @Embedded(prefix = "genre_")
-    @SerializedName("genre")
-    @Expose
-    private Genre genre;
 
     /* @SerializedName("info")
      @Expose
@@ -105,11 +113,8 @@ public class Event implements Parcelable {
    @SerializedName("ageRestrictions")
      @Expose
      private AgeRestrictions ageRestrictions;
-     @Embedded(prefix = "_embedded_")
-     @SerializedName("_embedded")
-     @Expose
-     private Embedded_1 embedded;
- */
+
+     */
     public Event(){}
 
     public String getName1() {
@@ -135,9 +140,6 @@ public class Event implements Parcelable {
     public String getName(){
         return name;
     }
-
-
-
 
     public void setName(String name) {
         this.name = name;
@@ -223,7 +225,7 @@ public class Event implements Parcelable {
     public void setAgeRestrictions(AgeRestrictions ageRestrictions) {
         this.ageRestrictions = ageRestrictions;
     }
-
+*/
 
     public Embedded_1 getEmbedded() {
         return embedded;
@@ -231,7 +233,7 @@ public class Event implements Parcelable {
 
     public void setEmbedded(Embedded_1 embedded) {
         this.embedded = embedded;
-    }*/
+    }
 
     public String getUrlImages() {
         if (images != null && !images.isEmpty()) {

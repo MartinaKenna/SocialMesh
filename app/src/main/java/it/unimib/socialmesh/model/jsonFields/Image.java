@@ -6,8 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class Image {
     private static final String TAG = Image.class.getSimpleName();
 
-    public Image() {
-    }
+    public Image() {}
 
     @SerializedName("ratio")
     @Expose

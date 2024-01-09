@@ -5,8 +5,11 @@ import com.google.gson.reflect.TypeToken;
 
 import it.unimib.socialmesh.model.jsonFields.Classification;
 import it.unimib.socialmesh.model.jsonFields.Image;
+import it.unimib.socialmesh.model.jsonFields.Location;
+import it.unimib.socialmesh.model.jsonFields.Venue;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Converters {
@@ -33,14 +36,26 @@ public class Converters {
         return gson.fromJson(imageListString, type);
     }
     @TypeConverter
-    public static List<Classification> fromString(String value) {
+    public static List<Classification> fromStringClassification(String value) {
         Type listType = new TypeToken<List<Classification>>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public static String fromList(List<Classification> classifications) {
+    public static String fromListClassification(List<Classification> classifications) {
         Gson gson = new Gson();
         return gson.toJson(classifications);
+    }
+
+    @TypeConverter
+    public static List<Venue> fromStringVenue(String value) {
+        Type listType = new TypeToken<List<Venue>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String fromListVenue(List<Venue> venues) {
+        Gson gson = new Gson();
+        return gson.toJson(venues);
     }
 }
