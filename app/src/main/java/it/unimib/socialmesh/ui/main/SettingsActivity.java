@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
@@ -18,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,19 +40,22 @@ import java.util.List;
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.InterestsAdapter;
 import it.unimib.socialmesh.adapter.PhotosAdapter;
+import it.unimib.socialmesh.data.repository.user.IUserRepository;
+import it.unimib.socialmesh.ui.welcome.UserViewModel;
+import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
+import it.unimib.socialmesh.util.ServiceLocator;
 
 public class SettingsActivity extends AppCompatActivity {
     ImageView profilePic;
     Uri selectedImageUri;
     ActivityResultLauncher<Intent> imagePickLauncher;
+    private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private InterestsAdapter interestsAdapter;
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView2;
     private PhotosAdapter photosAdapter;
-    private DatabaseReference userPhotosRef;
     private List<String> interestsList = new ArrayList<>();
-    private List<Uri> photoUrls = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,11 +143,9 @@ public class SettingsActivity extends AppCompatActivity {
                         photosAdapter.notifyDataSetChanged();
                     }
                 }).addOnFailureListener(exception -> {
-                    // Handle any errors while fetching URLs
                 });
             }
         }).addOnFailureListener(e -> {
-            // Handle any errors while fetching images from storage
         });
 
         recyclerView2 = findViewById(R.id.recyclerPhotos);
@@ -161,16 +164,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (imageUri != null) {
             StorageReference photoRef = userPhotosRef.child(imageUri.getLastPathSegment());
 
-            UploadTask uploadTask = photoRef.putFile(imageUri);
-
-            uploadTask.addOnSuccessListener(taskSnapshot -> {
-                photoRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                });
-            }).addOnFailureListener(exception -> {
-                Log.e("Settings", "Errore durante il caricamento dell'immagine: " + exception.getMessage());
-            });
-        } else {
-            Log.e("Settings", "URI dell'immagine selezionata è nullo");
+            userViewModel.uploadImage(imageUri, photoRef);
         }
     }
     private void updateInterests(String currentUserId) {
@@ -194,30 +188,23 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Gestisci eventuali errori di lettura dal database
             }
         });
     }
 
 
     private void updateDescription(String currentUserId) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
-                .child("users")
-                .child(currentUserId);
-        TextView descriptionTextView = findViewById(R.id.descriptionTextView);
-        userRef.child("descrizione").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String description = snapshot.getValue(String.class);
-                    // Imposta la descrizione nel TextView
-                    descriptionTextView.setText(description);
-                }
-            }
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+       TextView descriptionTextView = findViewById(R.id.descriptionTextView);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Gestire eventuali errori
+        userViewModel.fetchUserDescription(currentUserId);
+
+        userViewModel.getUserDescriptionLiveData().observe(this, description -> {
+            if (description != null) {
+                descriptionTextView.setText(description);
             }
         });
     }
@@ -241,36 +228,32 @@ public class SettingsActivity extends AppCompatActivity {
  }
 
     private void uploadProfilePic(Uri selectedImageUri) {
-
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String currentUserId = mAuth.getCurrentUser().getUid();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference userRef = storageRef.child("pictures").child(currentUserId).child("profilePic.jpg");
+        userViewModel.uploadImage(selectedImageUri, userRef);
 
-        if (selectedImageUri != null) {
-            UploadTask uploadTask = userRef.putFile(selectedImageUri);
+        userViewModel.getImageUrlLiveData().observe(this, imageUrl -> {
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                CircularProgressDrawable drawable = new CircularProgressDrawable(this);
+                drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                drawable.setCenterRadius(30f);
+                drawable.setStrokeWidth(5f);
+                drawable.start();
 
-            uploadTask.addOnSuccessListener(taskSnapshot -> {
-                userRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    String imageURL = uri.toString();
-                    CircularProgressDrawable drawable = new CircularProgressDrawable(this);
-                    drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
-                    drawable.setCenterRadius(30f);
-                    drawable.setStrokeWidth(5f);
-                    drawable.start();
-                    Glide.with(this)
-                            .load(imageURL)
-                            .apply(RequestOptions.circleCropTransform())
-                            .placeholder(drawable)
-                            .error(drawable)
-                            .into(profilePic);
-                });
-            }).addOnFailureListener(exception -> {
-                Log.e("Settings", "Errore durante il caricamento dell'immagine");
-            });
-        } else {
-            Log.e("Settings", "URI dell'immagine selezionata è nullo");
-        }
+                Glide.with(this)
+                        .load(imageUrl)
+                        .apply(RequestOptions.circleCropTransform())
+                        .placeholder(drawable)
+                        .error(drawable)
+                        .into(profilePic);
+            }
+        });
     }
     private void loadProfileImage() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();

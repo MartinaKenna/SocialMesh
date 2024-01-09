@@ -12,6 +12,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +38,8 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
@@ -55,10 +59,30 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         NavigationUI.setupWithNavController(bottomNav, navController);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String currentUserId = mAuth.getCurrentUser().getUid();
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY); //priorità della precisione della posizione
         locationRequest.setInterval(5000); //intervallo di aggiornamento
         locationRequest.setFastestInterval(2000); //altro intervallo di aggiornamento
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        String token = task.getResult();
+
+
+                        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+                        usersRef.child(currentUserId).child("token").setValue(token)
+                                .addOnSuccessListener(aVoid -> {
+                                    // Token FCM salvato con successo nel database
+                                })
+                                .addOnFailureListener(e -> {
+                                    // Gestisci errori nel salvataggio del token nel database
+                                });
+                    } else {
+                        // Gestisci eventuali errori nell'ottenere il token
+                    }
+                });
 
         //definisco la struttura per ottenere la localizzazione
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.socialmesh.R;
+import it.unimib.socialmesh.data.repository.user.IUserRepository;
+import it.unimib.socialmesh.util.ServiceLocator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +34,8 @@ import it.unimib.socialmesh.R;
 public class PreferencesFragment extends Fragment implements View.OnClickListener{
 
     DatabaseReference userPreferencesRef;
+    private UserViewModel userViewModel;
+
     private Button cinema, party, fumatore, viaggiLowCost, lgbt,
             karaoke, nft, boxe, festival, crossfit, nature, beach, motorsport, instagram,
             twitter, photography, painting, escursioni, gardening, writing, moda, programming,
@@ -62,6 +68,7 @@ public class PreferencesFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
 
         }
@@ -189,118 +196,110 @@ public class PreferencesFragment extends Fragment implements View.OnClickListene
     }
     @Override
     public void onClick(View v) {
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
         //salvo il nome del button cliccato in una lista
         if (v == cinema) {
-            savePreference("Cinema");
+            userViewModel.addPreference("Cinema");
         } else if (v == party) {
-            savePreference("Party");
+            userViewModel.addPreference("Party");
         } else if (v == viaggiLowCost) {
-            savePreference("ViaggiLowCost");
+            userViewModel.addPreference("ViaggiLowCost");
         } else if (v == lgbt) {
-            savePreference("LGBT");
+            userViewModel.addPreference("LGBT");
         } else if (v == karaoke) {
-            savePreference("Karaoke");
+            userViewModel.addPreference("Karaoke");
         } else if (v == nft) {
-            savePreference("NFT");
+            userViewModel.addPreference("NFT");
         } else if (v == boxe) {
-            savePreference("Boxe");
+            userViewModel.addPreference("Boxe");
         } else if (v == festival) {
-            savePreference("Festival");
+            userViewModel.addPreference("Festival");
         } else if (v == crossfit) {
-            savePreference("Crossfit");
+            userViewModel.addPreference("Crossfit");
         } else if (v == nature) {
-            savePreference("Nature");
+            userViewModel.addPreference("Nature");
         } else if (v == beach) {
-            savePreference("Spiaggia");
+            userViewModel.addPreference("Spiaggia");
         } else if (v == motorsport) {
-            savePreference("Motorsport");
+            userViewModel.addPreference("Motorsport");
         } else if (v == instagram) {
-            savePreference("Instagram");
+            userViewModel.addPreference("Instagram");
         } else if (v == twitter) {
-            savePreference("Twitter");
+            userViewModel.addPreference("Twitter");
         } else if (v == photography) {
-            savePreference("Fotografia");
+            userViewModel.addPreference("Fotografia");
         } else if (v == painting) {
-            savePreference("Pittura");
+            userViewModel.addPreference("Pittura");
         } else if (v == escursioni) {
-            savePreference("Escursioni");
+            userViewModel.addPreference("Escursioni");
         } else if (v == gardening) {
-            savePreference("Giardinaggio");
+            userViewModel.addPreference("Giardinaggio");
         } else if (v == programming) {
-            savePreference("Programmatore");
+            userViewModel.addPreference("Programmatore");
         } else if (v == writing) {
-            savePreference("Scrittura");
+            userViewModel.addPreference("Scrittura");
         } else if (v == moda) {
-            savePreference("Moda");
+            userViewModel.addPreference("Moda");
         } else if (v == vegetarian) {
-            savePreference("Vegetariano");
+            userViewModel.addPreference("Vegetariano");
         } else if (v == vegan) {
-            savePreference("Vegan");
+            userViewModel.addPreference("Vegan");
         } else if (v == carnivore) {
-            savePreference("Carnivoro");
+            userViewModel.addPreference("Carnivoro");
         } else if (v == single) {
-            savePreference("Single");
+            userViewModel.addPreference("Single");
         } else if (v == married) {
-            savePreference("Sposato");
+            userViewModel.addPreference("Sposato");
         } else if (v == engaged) {
-            savePreference("Impegnato");
+            userViewModel.addPreference("Impegnato");
         } else if (v == cucinaItaliana) {
-            savePreference("Cucina Italiana");
+            userViewModel.addPreference("Cucina Italiana");
         } else if (v == blogger) {
-            savePreference("Blogger");
+            userViewModel.addPreference("Blogger");
         } else if (v == basket) {
-            savePreference("Basket");
+            userViewModel.addPreference("Basket");
         } else if (v == fumatore) {
-            savePreference("Fumatore");
+            userViewModel.addPreference("Fumatore");
         } else if (v == facebook) {
-            savePreference("Facebook");
+            userViewModel.addPreference("Facebook");
         } else if (v == freelance) {
-            savePreference("Freelance");
+            userViewModel.addPreference("Freelance");
         } else if (v == imprenditoria) {
-            savePreference("Imprenditoria");
+            userViewModel.addPreference("Imprenditoria");
         } else if (v == elettricista) {
-            savePreference("Elettricista");
+            userViewModel.addPreference("Elettricista");
         } else if (v == serieTV) {
-            savePreference("Serie TV");
+            userViewModel.addPreference("Serie TV");
         } else if (v == libri) {
-            savePreference("Libri");
+            userViewModel.addPreference("Libri");
         } else if (v == tecnologia) {
-            savePreference("Tecnologia");
+            userViewModel.addPreference("Tecnologia");
         } else if (v == destEsotiche) {
-            savePreference("Destinazioni Esotiche");
+            userViewModel.addPreference("Destinazioni Esotiche");
         } else if (v == rock) {
-            savePreference("Rock");
+            userViewModel.addPreference("Rock");
         } else if (v == classica) {
-            savePreference("Classica");
+            userViewModel.addPreference("Classica");
         } else if (v == pop) {
-            savePreference("Pop");
+            userViewModel.addPreference("Pop");
         } else if (v == ricette) {
-            savePreference("Ricette");
+            userViewModel.addPreference("Ricette");
         } else if (v == dolce) {
-            savePreference("Dolce");
+            userViewModel.addPreference("Dolce");
         } else if (v == calcio) {
-            savePreference("Calcio");
+            userViewModel.addPreference("Calcio");
         } else if (v == tennis) {
-            savePreference("Tennis");
+            userViewModel.addPreference("Tennis");
         } else if (v == yoga) {
-            savePreference("Yoga");
+            userViewModel.addPreference("Yoga");
         } else if (v == palestra) {
-            savePreference("Palestra");
+            userViewModel.addPreference("Palestra");
         }
     }
 
 
-    private void savePreference(String preference) {
-        preferences.add(preference);
 
-        //salvo tutto su firebase
-        userPreferencesRef.setValue(preferences)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Preferenza salvata con successo!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Errore nel salvataggio della preferenza", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 }

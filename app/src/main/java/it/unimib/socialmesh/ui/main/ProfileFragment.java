@@ -51,15 +51,15 @@ public class ProfileFragment extends Fragment {
     ImageView profile_image_view;
     private UserViewModel userViewModel;
 
-    public ProfileFragment() {}
+    public ProfileFragment() {
 
-    public static ProfileFragment newInstance() { return new ProfileFragment(); }
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loadProfileImage();
         IUserRepository userRepository = ServiceLocator.getInstance().
                 getUserRepository(requireActivity().getApplication());
         userViewModel = new ViewModelProvider(
@@ -96,14 +96,14 @@ public class ProfileFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         ImageView profileImageView;
-        fullName = root.findViewById(R.id.userName); // Aggiunto il riferimento alla TextView del nome
+        fullName = root.findViewById(R.id.userName);
         userDate = root.findViewById(R.id.userDate);
-        userEmail = root.findViewById(R.id.userEmail); // Aggiunto il riferimento alla TextView dell'email
+        userEmail = root.findViewById(R.id.userEmail);
         profile_image_view = root.findViewById(R.id.profile_image_view);
         buttonLogout = root.findViewById(R.id.buttonLogout);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
-        AppCompatImageView buttonSettings = root.findViewById(R.id.button_settings); // Assumi che l'ID corrisponda a un AppCompatImageView
+        AppCompatImageView buttonSettings = root.findViewById(R.id.button_settings);
 
         buttonSettings.setOnClickListener(view -> {
             Intent intent = new Intent(requireActivity(), SettingsActivity.class);
@@ -141,6 +141,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        loadProfileImage();
         buttonLogout.setOnClickListener(v -> {
             /*
             userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
@@ -160,35 +161,29 @@ public class ProfileFragment extends Fragment {
     private void loadProfileImage() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String currentUserId = mAuth.getCurrentUser().getUid();
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference userRef = storageRef.child("pictures").child(currentUserId).child("profilePic.jpg");
-
-        userRef.getDownloadUrl().addOnSuccessListener(uri -> {
-            String imageURL = uri.toString();
-
-            if (imageURL != null && !imageURL.isEmpty()) {
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(getActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        userViewModel.getProfileImageUrl(currentUserId).observe(getViewLifecycleOwner(), imageUrl -> {
+            if (imageUrl != null && !imageUrl.isEmpty()) {
                 CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
                 drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
                 drawable.setCenterRadius(30f);
                 drawable.setStrokeWidth(5f);
                 drawable.start();
-                    Glide.with(this)
-                            .load(imageURL)
-                            .apply(RequestOptions.circleCropTransform())
-                            .placeholder(drawable)
-                            .error(drawable)
-                            .into(profile_image_view);
-
+                Glide.with(this)
+                        .load(imageUrl)
+                        .apply(RequestOptions.circleCropTransform())
+                        .placeholder(drawable)
+                        .error(drawable)
+                        .into(profile_image_view);
             } else {
-                    Glide.with(this)
-                            .load(com.facebook.R.drawable.com_facebook_profile_picture_blank_portrait) // Immagine di default
-                            .apply(RequestOptions.circleCropTransform())
-                            .into(profile_image_view);
-
+                Glide.with(this)
+                        .load(com.facebook.R.drawable.com_facebook_profile_picture_blank_portrait) // Immagine di default
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(profile_image_view);
             }
-        }).addOnFailureListener(exception -> {
-            // Gestisci eventuali errori durante il recupero dell'immagine del profilo
-            Log.e("Settings", "Errore durante il caricamento dell'immagine del profilo: " + exception.getMessage());
         });
     }
     @Override

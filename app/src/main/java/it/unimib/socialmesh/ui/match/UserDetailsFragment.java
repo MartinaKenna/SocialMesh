@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.text.ParseException;
@@ -30,15 +32,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.InterestsAdapter;
 import it.unimib.socialmesh.adapter.PhotosAdapter;
 import it.unimib.socialmesh.adapter.PhotosViewPagerAdapter;
 
 public class UserDetailsFragment extends Fragment {
-
+    private AtomicInteger msgId = new AtomicInteger();
     private boolean isLiked = false;
     private String otherUserId;
     private ImageView profile_pic;
@@ -154,6 +160,7 @@ public class UserDetailsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && (boolean) dataSnapshot.getValue()) {
                     createMatch(currentUserID, otherUserID);
+                    sendMatchNotificationToUsers(currentUserID, otherUserID);
                     Snackbar.make(view, "MATCH!", Snackbar.LENGTH_SHORT).show();
                 }
             }
@@ -164,6 +171,55 @@ public class UserDetailsFragment extends Fragment {
             }
         });
     }
+
+    private void sendMatchNotificationToUsers(String user1ID, String user2ID) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        // Ottieni i token FCM dei due utenti dal tuo database
+        usersRef.child(user1ID).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String tokenUser1 = dataSnapshot.getValue(String.class);
+                    sendNotification(tokenUser1, "Match!", "Hai un nuovo match!");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Gestione degli errori
+            }
+        });
+
+        usersRef.child(user2ID).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String tokenUser2 = dataSnapshot.getValue(String.class);
+                    sendNotification(tokenUser2, "Match!", "Hai un nuovo match!");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Gestione degli errori
+            }
+        });
+    }
+
+    private void sendNotification(String token, String title, String body) {
+        // Costruisci il payload della notifica
+        Map<String, String> notificationData = new HashMap<>();
+        notificationData.put("title", title);
+        notificationData.put("body", body);
+
+        // Invia la notifica utilizzando il token FCM
+        FirebaseMessaging.getInstance().send(new RemoteMessage.Builder(token)
+                .setMessageId(Integer.toString(msgId.incrementAndGet()))
+                .setData(notificationData)
+                .build());
+    }
+
 
     private void createMatch(String currentUserID, String matchedUserID) {
         DatabaseReference currentUserMatchesRef = FirebaseDatabase.getInstance().getReference()
