@@ -3,8 +3,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class Location {
 
-    public Location() {
-    }
+    public Location() {}
 
     @SerializedName("longitude")
     @Expose
