@@ -1,6 +1,11 @@
 package it.unimib.socialmesh.ui.main;
 
+import android.content.Context;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +17,26 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.location.LocationManager;
 
+
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -25,6 +44,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import android.Manifest;
+import android.widget.Toast;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
@@ -49,6 +70,9 @@ public class EventFragment extends Fragment {
     private PopupWindow popupWindow;
 
     private ProgressBar progressBar;
+    private LocationRequest locationRequest;
+    private LocationResult locationResult;
+
 
 
     //questo serve
@@ -71,7 +95,6 @@ public class EventFragment extends Fragment {
                 new EventViewModelFactory(eventsRepositoryWithLiveData)).get(EventViewModel.class);
 
         eventsList = new ArrayList<>();
-
     }
 
     @Override
@@ -114,6 +137,10 @@ public class EventFragment extends Fragment {
         nearyou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
         lastadded.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
 */
+        //ottengo la posizione
+
+
+
         filter = view.findViewById(R.id.button);
 
         filter.setOnClickListener(v -> {
@@ -331,6 +358,7 @@ public class EventFragment extends Fragment {
 
     });
 
+
     }
 
 
@@ -364,6 +392,51 @@ public class EventFragment extends Fragment {
 
         return mostFrequentGenres;
     }
+    private boolean isGPSEnabled() {
+        //controllo se il GPS è on
+        LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+    private void turnOnGPS() {
 
+        //definisco la richiesta e inserisco di richiedere sempre il permesso di attivare il GPS nel caso in cui è disattivato
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);builder.setAlwaysShow(true);
 
+        //controlliamo le impostazioni del GPS e se è attivo
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(requireActivity()).checkLocationSettings(builder.build());
+
+        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+
+                try {
+                    LocationSettingsResponse response = task.getResult(ApiException.class);
+                    Toast.makeText(requireContext(), "GPS is already tured on", Toast.LENGTH_SHORT).show();
+
+                } catch (ApiException e) {
+
+                    switch (e.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                            //se il GPS è gia attivo viene richiesto di modificare le impostazioni di esso
+
+                            try {
+                                //viene richiesto all'utente di modificare le impostazioni
+                                ResolvableApiException resolvableApiException = (ResolvableApiException)e;
+                                resolvableApiException.startResolutionForResult(requireActivity(),1);
+                            } catch (IntentSender.SendIntentException ex) {
+                                ex.printStackTrace();
+                            }
+                            break;
+
+                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                            //Il dispositivo non ha una localizzazione
+                            break;
+                    }
+                }
+            }
+        });
+
+    }
 }
+
+

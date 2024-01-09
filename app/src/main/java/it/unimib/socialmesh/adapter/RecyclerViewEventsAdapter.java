@@ -18,6 +18,7 @@ import java.util.List;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
+import it.unimib.socialmesh.model.jsonFields.Location;
 
 public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerViewEventsAdapter.EventsViewHolder> {
     private static final String TAG = RecyclerViewEventsAdapter.class.getSimpleName();
@@ -47,6 +48,27 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
             if (event.getGenreName().equalsIgnoreCase(genre)) {
                 filteredList.add(event);
             }
+        }
+        notifyDataSetChanged();
+    }
+
+
+    public void filterByPosition(double userLatitudine, double userLongitudine) {
+        filteredList.clear();
+        Location userPosition = new Location();
+        userPosition.setLatitude(String.valueOf(userLatitudine));
+        userPosition.setLongitude(String.valueOf(userLongitudine));
+        for (Event event : eventsList) {
+            //double eventLatitude = event.getLatitude(); //TODO metti i metodi qui
+           // double eventLongitude = event.getLongitude();
+
+           // double distance = distance(userLatitudine, userLongitudine, eventLatitude, eventLongitude);
+
+            // Controll0 se la distanza tra l'evento e la posizione dell'utente è <= 10 km
+            // possiamo aggiungere la possibilità di filtrare per 5km, 10km, 50km, illimitato
+            //if (distance <= 10) {
+            //    filteredList.add(event);
+            //}
         }
         notifyDataSetChanged();
     }
