@@ -28,13 +28,13 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/nearYou"
+            android:id="@+id/lastAdded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/cardview"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:text="Near You"
+            android:text="Last Added"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:layout_below="@+id/lastAdded"
+            android:layout_below="@+id/nearYou"
             android:layout_centerHorizontal="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -53,19 +53,19 @@
             android:layout_width="match_parent"
             android:clickable="true"
             android:layout_height="wrap_content"
-            android:layout_below="@id/nearYou"
+            android:layout_below="@id/lastAdded"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp" />
 
         <TextView
-            android:id="@+id/lastAdded"
+            android:id="@+id/nearYou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/barra"
-            android:layout_marginTop="15dp"
-            android:text="Last Added"
+            android:layout_marginTop="25dp"
+            android:text="Near You"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginStart="20dp"
@@ -79,7 +79,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp"
             android:background="@color/black"
             tools:ignore="MissingConstraints" />
@@ -92,7 +92,7 @@
             android:layout_marginStart="30dp"
             android:background="@color/black"
             tools:ignore="MissingConstraints"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="20dp"/>
 
         <View
             android:id="@+id/barra3"
@@ -103,18 +103,17 @@
             android:layout_marginStart="370dp"
             android:background="@color/black"
             tools:ignore="MissingConstraints"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="20dp"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
 
-            android:layout_margin="10dp"
+            android:layout_marginTop="30dp"
             android:id="@+id/recyclerviewNearYou"
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lastAdded"
-            android:layout_marginTop="30dp"
+            android:layout_below="@id/nearYou"
             />
 
         <androidx.cardview.widget.CardView
@@ -131,6 +130,26 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/md_theme_light_background"
                     android:text="Filter"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/barra"
+            android:backgroundTint="@color/md_theme_light_background"
+            app:cardCornerRadius="40dp">
+
+                <Button
+                    android:id="@+id/buttonKM"
+                    android:text="Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/md_theme_light_background"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     />
