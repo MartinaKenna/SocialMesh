@@ -37,6 +37,7 @@ import com.google.firebase.storage.StorageReference;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
+import it.unimib.socialmesh.databinding.FragmentProfileBinding;
 import it.unimib.socialmesh.model.User;
 import it.unimib.socialmesh.data.repository.user.UserRepository;
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
@@ -46,15 +47,12 @@ import it.unimib.socialmesh.util.ServiceLocator;
 
 public class ProfileFragment extends Fragment {
    int REQUEST_CODE;
-    TextView fullName, userEmail,userDate;
-    Button buttonLogout;
     ImageView profile_image_view;
     private UserViewModel userViewModel;
 
-    public ProfileFragment() {
+    private FragmentProfileBinding fragmentProfileBinding;
 
-    }
-
+    public ProfileFragment() {}
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +63,6 @@ public class ProfileFragment extends Fragment {
         userViewModel = new ViewModelProvider(
                 requireActivity(),
                 new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-
     }
     ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -94,18 +91,14 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        ImageView profileImageView;
-        fullName = root.findViewById(R.id.userName);
-        userDate = root.findViewById(R.id.userDate);
-        userEmail = root.findViewById(R.id.userEmail);
-        profile_image_view = root.findViewById(R.id.profile_image_view);
-        buttonLogout = root.findViewById(R.id.buttonLogout);
+        fragmentProfileBinding = FragmentProfileBinding.inflate(inflater, container, false);
+
+        profile_image_view = fragmentProfileBinding.profileImageView;
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
-        AppCompatImageView buttonSettings = root.findViewById(R.id.button_settings);
 
-        buttonSettings.setOnClickListener(view -> {
+
+        fragmentProfileBinding.buttonSettings.setOnClickListener(view -> {
             Intent intent = new Intent(requireActivity(), SettingsActivity.class);
             settingsLauncher.launch(intent);
         });
@@ -123,9 +116,9 @@ public class ProfileFragment extends Fragment {
                         String name = nameSnapshot.getValue(String.class);
                         String email = emailSnapshot.getValue(String.class);
                         String data_di_nascita = dateSnapshot.getValue(String.class);
-                        fullName.setText(name);
-                        userEmail.setText(email);
-                        userDate.setText(data_di_nascita);
+                        fragmentProfileBinding.userName.setText(name);
+                        fragmentProfileBinding.userEmail.setText(email);
+                        fragmentProfileBinding.userDate.setText(data_di_nascita);
                     }
                 }
             }
@@ -134,7 +127,7 @@ public class ProfileFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        return root;
+        return fragmentProfileBinding.getRoot();
     }
 
     @Override
@@ -142,7 +135,7 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         loadProfileImage();
-        buttonLogout.setOnClickListener(v -> {
+        fragmentProfileBinding.buttonLogout.setOnClickListener(v -> {
             /*
             userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
                 if (true) {

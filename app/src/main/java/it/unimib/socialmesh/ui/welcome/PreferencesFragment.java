@@ -1,185 +1,96 @@
 package it.unimib.socialmesh.ui.welcome;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
+import it.unimib.socialmesh.databinding.PreferencesFragmentBinding;
 import it.unimib.socialmesh.util.ServiceLocator;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PreferencesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PreferencesFragment extends Fragment implements View.OnClickListener{
+public class PreferencesFragment extends Fragment implements View.OnClickListener {
 
     DatabaseReference userPreferencesRef;
+    private PreferencesFragmentBinding preferencesFragmentBinding;
     private UserViewModel userViewModel;
 
-    private Button cinema, party, fumatore, viaggiLowCost, lgbt,
-            karaoke, nft, boxe, festival, crossfit, nature, beach, motorsport, instagram,
-            twitter, photography, painting, escursioni, gardening, writing, moda, programming,
-            vegetarian, vegan, carnivore, single, engaged, married, blogger, cucinaItaliana,
-            basket, facebook, navigate, freelance, imprenditoria, tecnologia, tennis, calcio,
-            destEsotiche, serieTV, libri, rock, classica, pop, ricette, dolce, yoga, palestra,
-            elettricista;
-    List<String> preferences = new ArrayList<>();
-    public PreferencesFragment() {
-        // Required empty public constructor
-    }
+    public PreferencesFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PreferencesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PreferencesFragment newInstance(String param1, String param2) {
-        PreferencesFragment fragment = new PreferencesFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public static PreferencesFragment newInstance() { return new PreferencesFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-
-        }
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.preferences_fragment, container, false);
-        cinema = view.findViewById(R.id.button_cinema);
-        party = view.findViewById(R.id.button_party);
-        viaggiLowCost = view.findViewById(R.id.button_viaggi_lowCost);
-        lgbt = view.findViewById(R.id.button_lgbt);
-        karaoke = view.findViewById(R.id.button_karaoke);
-        nft = view.findViewById(R.id.button_nft);
-        boxe = view.findViewById(R.id.button_boxe);
-        festival = view.findViewById(R.id.button_festival);
-        crossfit = view.findViewById(R.id.button_crossfit);
-        nature = view.findViewById(R.id.button_nature);
-        beach = view.findViewById(R.id.button_beach);
-        motorsport = view.findViewById(R.id.button_motorsport);
-        instagram = view.findViewById(R.id.button_instagram);
-        twitter = view.findViewById(R.id.button_twitter);
-        photography = view.findViewById(R.id.button_fotografia);
-        painting = view.findViewById(R.id.button_pittura);
-        escursioni = view.findViewById(R.id.button_escursioni);
-        gardening = view.findViewById(R.id.button_giardinaggio);
-        programming = view.findViewById(R.id.button_programmatore);
-        writing = view.findViewById(R.id.button_scrittura);
-        moda = view.findViewById(R.id.button_moda);
-        vegetarian = view.findViewById(R.id.button_vegetariano);
-        vegan = view.findViewById(R.id.button_vegan);
-        carnivore = view.findViewById(R.id.button_carnivoro);
-        single = view.findViewById(R.id.button_single);
-        married = view.findViewById(R.id.button_married);
-        engaged = view.findViewById(R.id.button_impegnato);
-        cucinaItaliana = view.findViewById(R.id.button_cucina_italiana);
-        blogger = view.findViewById(R.id.button_blogger);
-        basket = view.findViewById(R.id.button_basket);
-        fumatore = view.findViewById(R.id.button_fumatore);
-        facebook = view.findViewById(R.id.button_facebook);
-        navigate = view.findViewById(R.id.button_navigate);
-        freelance = view.findViewById(R.id.button_freelance);
-        imprenditoria = view.findViewById(R.id.button_imprenditoria);
-        elettricista = view.findViewById(R.id.button_elettricista);
-        serieTV = view.findViewById(R.id.button_serieTV);
-        libri = view.findViewById(R.id.button_libri);
-        tecnologia = view.findViewById(R.id.button_tecnologia);
-        destEsotiche = view.findViewById(R.id.button_destinazioni_esotiche);
-        rock = view.findViewById(R.id.button_rock);
-        classica = view.findViewById(R.id.button_classica);
-        pop = view.findViewById(R.id.button_pop);
-        ricette = view.findViewById(R.id.button_ricette);
-        dolce = view.findViewById(R.id.button_dolce);
-        calcio = view.findViewById(R.id.button_calcio);
-        tennis = view.findViewById(R.id.button_tennis);
-        yoga = view.findViewById(R.id.button_yoga);
-        palestra = view.findViewById(R.id.button_palestra);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        preferencesFragmentBinding = PreferencesFragmentBinding.inflate(inflater, container, false);
 
         //definisco i setOnClickListener(this) in modo tale che utilizzi il metodo OnClick(v) quando vengono premuti
-        cinema.setOnClickListener(this);
-        party.setOnClickListener(this);
-        viaggiLowCost.setOnClickListener(this);
-        lgbt.setOnClickListener(this);
-        karaoke.setOnClickListener(this);
-        nft.setOnClickListener(this);
-        boxe.setOnClickListener(this);
-        festival.setOnClickListener(this);
-        crossfit.setOnClickListener(this);
-        nature.setOnClickListener(this);
-        beach.setOnClickListener(this);
-        motorsport.setOnClickListener(this);
-        instagram.setOnClickListener(this);
-        twitter.setOnClickListener(this);
-        photography.setOnClickListener(this);
-        painting.setOnClickListener(this);
-        escursioni.setOnClickListener(this);
-        gardening.setOnClickListener(this);
-        programming.setOnClickListener(this);
-        writing.setOnClickListener(this);
-        moda.setOnClickListener(this);
-        vegetarian.setOnClickListener(this);
-        vegan.setOnClickListener(this);
-        carnivore.setOnClickListener(this);
-        single.setOnClickListener(this);
-        married.setOnClickListener(this);
-        engaged.setOnClickListener(this);
-        cucinaItaliana.setOnClickListener(this);
-        blogger.setOnClickListener(this);
-        basket.setOnClickListener(this);
-        fumatore.setOnClickListener(this);
-        facebook.setOnClickListener(this);
-        navigate.setOnClickListener(this);
-        freelance.setOnClickListener(this);
-        imprenditoria.setOnClickListener(this);
-        elettricista.setOnClickListener(this);
-        serieTV.setOnClickListener(this);
-        libri.setOnClickListener(this);
-        tecnologia.setOnClickListener(this);
-        destEsotiche.setOnClickListener(this);
-        rock.setOnClickListener(this);
-        classica.setOnClickListener(this);
-        pop.setOnClickListener(this);
-        ricette.setOnClickListener(this);
-        dolce.setOnClickListener(this);
-        calcio.setOnClickListener(this);
-        tennis.setOnClickListener(this);
-        yoga.setOnClickListener(this);
-        palestra.setOnClickListener(this);
-
-
+        preferencesFragmentBinding.buttonCinema.setOnClickListener(this);
+        preferencesFragmentBinding.buttonParty.setOnClickListener(this);
+        preferencesFragmentBinding.buttonViaggiLowCost.setOnClickListener(this);
+        preferencesFragmentBinding.buttonLgbt.setOnClickListener(this);
+        preferencesFragmentBinding.buttonKaraoke.setOnClickListener(this);
+        preferencesFragmentBinding.buttonBoxe.setOnClickListener(this);
+        preferencesFragmentBinding.buttonNft.setOnClickListener(this);
+        preferencesFragmentBinding.buttonFestival.setOnClickListener(this);
+        preferencesFragmentBinding.buttonCrossfit.setOnClickListener(this);
+        preferencesFragmentBinding.buttonNature.setOnClickListener(this);
+        preferencesFragmentBinding.buttonBeach.setOnClickListener(this);
+        preferencesFragmentBinding.buttonMotorsport.setOnClickListener(this);
+        preferencesFragmentBinding.buttonInstagram.setOnClickListener(this);
+        preferencesFragmentBinding.buttonTwitter.setOnClickListener(this);
+        preferencesFragmentBinding.buttonFotografia.setOnClickListener(this);
+        preferencesFragmentBinding.buttonPittura.setOnClickListener(this);
+        preferencesFragmentBinding.buttonEscursioni.setOnClickListener(this);
+        preferencesFragmentBinding.buttonGiardinaggio.setOnClickListener(this);
+        preferencesFragmentBinding.buttonProgrammatore.setOnClickListener(this);
+        preferencesFragmentBinding.buttonScrittura.setOnClickListener(this);
+        preferencesFragmentBinding.buttonModa.setOnClickListener(this);
+        preferencesFragmentBinding.buttonVegetariano.setOnClickListener(this);
+        preferencesFragmentBinding.buttonVegan.setOnClickListener(this);
+        preferencesFragmentBinding.buttonCarnivoro.setOnClickListener(this);
+        preferencesFragmentBinding.buttonSingle.setOnClickListener(this);
+        preferencesFragmentBinding.buttonMarried.setOnClickListener(this);
+        preferencesFragmentBinding.buttonImpegnato.setOnClickListener(this);
+        preferencesFragmentBinding.buttonCucinaItaliana.setOnClickListener(this);
+        preferencesFragmentBinding.buttonBlogger.setOnClickListener(this);
+        preferencesFragmentBinding.buttonBasket.setOnClickListener(this);
+        preferencesFragmentBinding.buttonFumatore.setOnClickListener(this);
+        preferencesFragmentBinding.buttonFacebook.setOnClickListener(this);
+        preferencesFragmentBinding.buttonFreelance.setOnClickListener(this);
+        preferencesFragmentBinding.buttonImprenditoria.setOnClickListener(this);
+        preferencesFragmentBinding.buttonElettricista.setOnClickListener(this);
+        preferencesFragmentBinding.buttonSerieTV.setOnClickListener(this);
+        preferencesFragmentBinding.buttonLibri.setOnClickListener(this);
+        preferencesFragmentBinding.buttonTecnologia.setOnClickListener(this);
+        preferencesFragmentBinding.buttonDestinazioniEsotiche.setOnClickListener(this);
+        preferencesFragmentBinding.buttonRock.setOnClickListener(this);
+        preferencesFragmentBinding.buttonClassica.setOnClickListener(this);
+        preferencesFragmentBinding.buttonPop.setOnClickListener(this);
+        preferencesFragmentBinding.buttonRicette.setOnClickListener(this);
+        preferencesFragmentBinding.buttonDolce.setOnClickListener(this);
+        preferencesFragmentBinding.buttonCalcio.setOnClickListener(this);
+        preferencesFragmentBinding.buttonTennis.setOnClickListener(this);
+        preferencesFragmentBinding.buttonYoga.setOnClickListener(this);
+        preferencesFragmentBinding.buttonPalestra.setOnClickListener(this);
 
         //prendo l'id dell'utente
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -187,119 +98,112 @@ public class PreferencesFragment extends Fragment implements View.OnClickListene
         userPreferencesRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("preferences");
 
         //change schermata
-        navigate.setOnClickListener(v ->{
+        preferencesFragmentBinding.buttonNavigate.setOnClickListener(v ->{
             Navigation.findNavController(requireView()).navigate(R.id.navigate_to_homeActivity);
         });
 
-
-        return view;
+        return preferencesFragmentBinding.getRoot();
     }
     @Override
     public void onClick(View v) {
-        IUserRepository userRepository = ServiceLocator.getInstance().
-                getUserRepository(requireActivity().getApplication());
-        userViewModel = new ViewModelProvider(
-                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+
         //salvo il nome del button cliccato in una lista
-        if (v == cinema) {
+        if (v == preferencesFragmentBinding.buttonCinema) {
             userViewModel.addPreference("Cinema");
-        } else if (v == party) {
+        } else if (v == preferencesFragmentBinding.buttonParty) {
             userViewModel.addPreference("Party");
-        } else if (v == viaggiLowCost) {
+        } else if (v == preferencesFragmentBinding.buttonViaggiLowCost) {
             userViewModel.addPreference("ViaggiLowCost");
-        } else if (v == lgbt) {
+        } else if (v == preferencesFragmentBinding.buttonLgbt) {
             userViewModel.addPreference("LGBT");
-        } else if (v == karaoke) {
+        } else if (v == preferencesFragmentBinding.buttonKaraoke) {
             userViewModel.addPreference("Karaoke");
-        } else if (v == nft) {
+        } else if (v == preferencesFragmentBinding.buttonNft) {
             userViewModel.addPreference("NFT");
-        } else if (v == boxe) {
+        } else if (v == preferencesFragmentBinding.buttonBoxe) {
             userViewModel.addPreference("Boxe");
-        } else if (v == festival) {
+        } else if (v == preferencesFragmentBinding.buttonFestival) {
             userViewModel.addPreference("Festival");
-        } else if (v == crossfit) {
+        } else if (v == preferencesFragmentBinding.buttonCrossfit) {
             userViewModel.addPreference("Crossfit");
-        } else if (v == nature) {
+        } else if (v == preferencesFragmentBinding.buttonNature) {
             userViewModel.addPreference("Nature");
-        } else if (v == beach) {
+        } else if (v == preferencesFragmentBinding.buttonBeach) {
             userViewModel.addPreference("Spiaggia");
-        } else if (v == motorsport) {
+        } else if (v == preferencesFragmentBinding.buttonMotorsport) {
             userViewModel.addPreference("Motorsport");
-        } else if (v == instagram) {
+        } else if (v == preferencesFragmentBinding.buttonInstagram) {
             userViewModel.addPreference("Instagram");
-        } else if (v == twitter) {
+        } else if (v == preferencesFragmentBinding.buttonTwitter) {
             userViewModel.addPreference("Twitter");
-        } else if (v == photography) {
+        } else if (v == preferencesFragmentBinding.buttonFotografia) {
             userViewModel.addPreference("Fotografia");
-        } else if (v == painting) {
+        } else if (v == preferencesFragmentBinding.buttonPittura) {
             userViewModel.addPreference("Pittura");
-        } else if (v == escursioni) {
+        } else if (v == preferencesFragmentBinding.buttonEscursioni) {
             userViewModel.addPreference("Escursioni");
-        } else if (v == gardening) {
+        } else if (v == preferencesFragmentBinding.buttonGiardinaggio) {
             userViewModel.addPreference("Giardinaggio");
-        } else if (v == programming) {
+        } else if (v == preferencesFragmentBinding.buttonProgrammatore) {
             userViewModel.addPreference("Programmatore");
-        } else if (v == writing) {
+        } else if (v == preferencesFragmentBinding.buttonScrittura) {
             userViewModel.addPreference("Scrittura");
-        } else if (v == moda) {
+        } else if (v == preferencesFragmentBinding.buttonModa) {
             userViewModel.addPreference("Moda");
-        } else if (v == vegetarian) {
+        } else if (v == preferencesFragmentBinding.buttonVegetariano) {
             userViewModel.addPreference("Vegetariano");
-        } else if (v == vegan) {
+        } else if (v == preferencesFragmentBinding.buttonVegan) {
             userViewModel.addPreference("Vegan");
-        } else if (v == carnivore) {
+        } else if (v == preferencesFragmentBinding.buttonCarnivoro) {
             userViewModel.addPreference("Carnivoro");
-        } else if (v == single) {
+        } else if (v == preferencesFragmentBinding.buttonSingle) {
             userViewModel.addPreference("Single");
-        } else if (v == married) {
+        } else if (v == preferencesFragmentBinding.buttonMarried) {
             userViewModel.addPreference("Sposato");
-        } else if (v == engaged) {
+        } else if (v == preferencesFragmentBinding.buttonImpegnato) {
             userViewModel.addPreference("Impegnato");
-        } else if (v == cucinaItaliana) {
+        } else if (v == preferencesFragmentBinding.buttonCucinaItaliana) {
             userViewModel.addPreference("Cucina Italiana");
-        } else if (v == blogger) {
+        } else if (v == preferencesFragmentBinding.buttonBlogger) {
             userViewModel.addPreference("Blogger");
-        } else if (v == basket) {
+        } else if (v == preferencesFragmentBinding.buttonBasket) {
             userViewModel.addPreference("Basket");
-        } else if (v == fumatore) {
+        } else if (v == preferencesFragmentBinding.buttonFumatore) {
             userViewModel.addPreference("Fumatore");
-        } else if (v == facebook) {
+        } else if (v == preferencesFragmentBinding.buttonFacebook) {
             userViewModel.addPreference("Facebook");
-        } else if (v == freelance) {
+        } else if (v == preferencesFragmentBinding.buttonFreelance) {
             userViewModel.addPreference("Freelance");
-        } else if (v == imprenditoria) {
+        } else if (v == preferencesFragmentBinding.buttonImprenditoria) {
             userViewModel.addPreference("Imprenditoria");
-        } else if (v == elettricista) {
+        } else if (v == preferencesFragmentBinding.buttonElettricista) {
             userViewModel.addPreference("Elettricista");
-        } else if (v == serieTV) {
+        } else if (v == preferencesFragmentBinding.buttonSerieTV) {
             userViewModel.addPreference("Serie TV");
-        } else if (v == libri) {
+        } else if (v == preferencesFragmentBinding.buttonLibri) {
             userViewModel.addPreference("Libri");
-        } else if (v == tecnologia) {
+        } else if (v == preferencesFragmentBinding.buttonTecnologia) {
             userViewModel.addPreference("Tecnologia");
-        } else if (v == destEsotiche) {
+        } else if (v == preferencesFragmentBinding.buttonDestinazioniEsotiche) {
             userViewModel.addPreference("Destinazioni Esotiche");
-        } else if (v == rock) {
+        } else if (v == preferencesFragmentBinding.buttonRock) {
             userViewModel.addPreference("Rock");
-        } else if (v == classica) {
+        } else if (v == preferencesFragmentBinding.buttonClassica) {
             userViewModel.addPreference("Classica");
-        } else if (v == pop) {
+        } else if (v == preferencesFragmentBinding.buttonPop) {
             userViewModel.addPreference("Pop");
-        } else if (v == ricette) {
+        } else if (v == preferencesFragmentBinding.buttonRicette) {
             userViewModel.addPreference("Ricette");
-        } else if (v == dolce) {
+        } else if (v == preferencesFragmentBinding.buttonDolce) {
             userViewModel.addPreference("Dolce");
-        } else if (v == calcio) {
+        } else if (v == preferencesFragmentBinding.buttonCalcio) {
             userViewModel.addPreference("Calcio");
-        } else if (v == tennis) {
+        } else if (v == preferencesFragmentBinding.buttonTennis) {
             userViewModel.addPreference("Tennis");
-        } else if (v == yoga) {
+        } else if (v == preferencesFragmentBinding.buttonYoga) {
             userViewModel.addPreference("Yoga");
-        } else if (v == palestra) {
+        } else if (v == preferencesFragmentBinding.buttonPalestra) {
             userViewModel.addPreference("Palestra");
         }
     }
-
-
-
 }

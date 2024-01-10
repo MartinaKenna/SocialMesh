@@ -2,6 +2,7 @@ package it.unimib.socialmesh.ui.match;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,38 +43,48 @@ import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.InterestsAdapter;
 import it.unimib.socialmesh.adapter.PhotosAdapter;
 import it.unimib.socialmesh.adapter.PhotosViewPagerAdapter;
+import it.unimib.socialmesh.databinding.UserDetailsFragmentBinding;
+import it.unimib.socialmesh.model.User;
 
 public class UserDetailsFragment extends Fragment {
     private AtomicInteger msgId = new AtomicInteger();
+    private UserDetailsFragmentBinding userDetailsFragmentBinding;
     private boolean isLiked = false;
     private String otherUserId;
-    private ImageView profile_pic;
-    private TextView textview_description;
-    private RecyclerView recyclerView;
+
     private InterestsAdapter interestsAdapter;
+
     private DatabaseReference databaseReference;
     private List<String> interestsList = new ArrayList<>();
     private ViewPager2 viewPager;
     private PhotosAdapter photosAdapter;
+
+    private ImageView profile_pic;
     private List<Uri> photoUrls = new ArrayList<>();
     int age;
-    public UserDetailsFragment() {
+    public UserDetailsFragment() {}
+
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_details_fragment, container, false);
-        textview_description = view.findViewById(R.id.textview_description);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        userDetailsFragmentBinding = UserDetailsFragmentBinding.inflate(inflater, container, false);
+        return userDetailsFragmentBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance) {
+        super.onViewCreated(view, savedInstance);
+
         if (getArguments() != null) {
             otherUserId = UserDetailsFragmentArgs.fromBundle(getArguments()).getUserId();
         }
+
         //loadProfileImage(otherUserId);
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        TextView nameTextView = view.findViewById(R.id.textview_name);
-        TextView ageTextView = view.findViewById(R.id.textview_age);
-        ImageButton backButton = view.findViewById(R.id.button_back);
-        ImageButton buttonLike = view.findViewById(R.id.buttonF);
+
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
                 .child("users")
                 .child(otherUserId);
@@ -81,18 +92,18 @@ public class UserDetailsFragment extends Fragment {
                 .child("users")
                 .child(currentUserId)
                 .child("likes");
-        backButton.setOnClickListener(CloseView -> {
+        userDetailsFragmentBinding.buttonBack.setOnClickListener(CloseView -> {
             getParentFragmentManager().popBackStack();
         });
-        buttonLike.setOnClickListener(v -> {
+        userDetailsFragmentBinding.buttonLike.setOnClickListener(v -> {
             if (isLiked) {
-                buttonLike.setImageResource(R.drawable.baseline_favorite_border_black_48dp);
+                userDetailsFragmentBinding.buttonLike.setImageResource(R.drawable.baseline_favorite_border_black_48dp);
                 removeLike(currentUserId,otherUserId);
-                Snackbar.make(view, "Like rimosso correttamente", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), "Like rimosso correttamente", Snackbar.LENGTH_SHORT).show();
             } else {
-                buttonLike.setImageResource(R.drawable.baseline_favorite_red_48dp);
-                addLike(currentUserId,otherUserId,view);
-                Snackbar.make(view, "Like aggiunto correttamente", Snackbar.LENGTH_SHORT).show();
+                userDetailsFragmentBinding.buttonLike.setImageResource(R.drawable.baseline_favorite_red_48dp);
+                addLike(currentUserId,otherUserId, requireActivity().findViewById(android.R.id.content));
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), "Like aggiunto correttamente", Snackbar.LENGTH_SHORT).show();
             }
             isLiked = !isLiked;
         });
@@ -101,10 +112,10 @@ public class UserDetailsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(otherUserId)) {
-                    buttonLike.setImageResource(R.drawable.baseline_favorite_red_48dp);
+                    userDetailsFragmentBinding.buttonLike.setImageResource(R.drawable.baseline_favorite_red_48dp);
                     isLiked = true;
                 }else{
-                    buttonLike.setImageResource(R.drawable.baseline_favorite_border_black_48dp);
+                    userDetailsFragmentBinding.buttonLike.setImageResource(R.drawable.baseline_favorite_border_black_48dp);
                     isLiked = false;
                 }
             }
@@ -122,13 +133,13 @@ public class UserDetailsFragment extends Fragment {
                     String dateOfBirth = dataSnapshot.child("data_di_nascita").getValue(String.class);
 
                     if (dateOfBirth != null) {
-                       age = calculateAge(dateOfBirth);
+                        age = calculateAge(dateOfBirth);
                     }
-                    ageTextView.setText(String.valueOf(age));
-                    nameTextView.setText(userName);
+                    userDetailsFragmentBinding.textviewAge.setText(String.valueOf(age));
+                    userDetailsFragmentBinding.textviewName.setText(userName);
                     updateDescription(otherUserId);
-                    updateInterests(otherUserId,view);
-                    retrieveImagesFromStorage(otherUserId,view);
+                    updateInterests(otherUserId, requireActivity().findViewById(android.R.id.content));
+                    retrieveImagesFromStorage(otherUserId, requireActivity().findViewById(android.R.id.content));
                 }
             }
 
@@ -136,8 +147,6 @@ public class UserDetailsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
-        return view;
     }
 
     private void addLike(String currentUserID, String likedUserID,View view) {
@@ -289,7 +298,7 @@ public class UserDetailsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String description = snapshot.getValue(String.class);
-                    textview_description.setText(description);
+                    userDetailsFragmentBinding.textviewDescription.setText(description);
                 }
             }
 
@@ -359,11 +368,9 @@ public class UserDetailsFragment extends Fragment {
         return age;
     }
     private void updateInterests(String currentUserId,View view) {
-        recyclerView = view.findViewById(R.id.recyclerInterests);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        userDetailsFragmentBinding.recyclerInterests.setLayoutManager(new LinearLayoutManager(getContext()));
         interestsAdapter = new InterestsAdapter(interestsList);
-        recyclerView.setAdapter(interestsAdapter);
+        userDetailsFragmentBinding.recyclerInterests.setAdapter(interestsAdapter);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("preferences");
         databaseReference.addValueEventListener(new ValueEventListener() {
