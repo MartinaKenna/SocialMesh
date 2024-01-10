@@ -1,10 +1,15 @@
 package it.unimib.socialmesh.model.jsonFields;
+import androidx.room.TypeConverters;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import it.unimib.socialmesh.util.Converters;
+
 public class Location {
 
     public Location() {}
-
+    @TypeConverters(Converters.class)
     @SerializedName("longitude")
     @Expose
     private double longitude;

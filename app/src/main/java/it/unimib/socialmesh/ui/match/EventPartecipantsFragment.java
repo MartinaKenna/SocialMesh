@@ -29,12 +29,14 @@ import java.util.List;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.PartecipantsAdapter;
+import it.unimib.socialmesh.databinding.FragmentEventPartecipantsBinding;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.User;
 
 public class EventPartecipantsFragment extends Fragment {
     private static final String TAG = EventPartecipantsFragment.class.getSimpleName();
-    private RecyclerView recyclerView;
+
+    private FragmentEventPartecipantsBinding fragmentEventPartecipantsBinding;
     private PartecipantsAdapter usersAdapter;
     private List<String> participantsList;
     private List<String> idList;
@@ -42,8 +44,15 @@ public class EventPartecipantsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_event_partecipants, container, false);
-        recyclerView = view.findViewById(R.id.RecyclerviewPartecipants);
+        fragmentEventPartecipantsBinding = FragmentEventPartecipantsBinding.inflate(inflater, container, false);
+        //recyclerView = view.findViewById(R.id.RecyclerviewPartecipants);
+        return fragmentEventPartecipantsBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         participantsList = new ArrayList<>();
         idList = new ArrayList<>();
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -52,21 +61,16 @@ public class EventPartecipantsFragment extends Fragment {
                     EventPartecipantsFragmentDirections.actionEventPartecipantsFragmentToUserDetailsFragment(userId);
             Navigation.findNavController(requireView()).navigate(action);
         });
-        ImageButton closeSettingsButton = view.findViewById(R.id.back_button);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(usersAdapter);
-        closeSettingsButton.setOnClickListener(CloseView -> {
+
+        fragmentEventPartecipantsBinding.RecyclerviewPartecipants.setLayoutManager(layoutManager);
+        fragmentEventPartecipantsBinding.RecyclerviewPartecipants.setAdapter(usersAdapter);
+
+        fragmentEventPartecipantsBinding.backButton.setOnClickListener(CloseView -> {
             getParentFragmentManager().popBackStack();
         });
 
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         if (getArguments() != null) {
 
@@ -77,7 +81,6 @@ public class EventPartecipantsFragment extends Fragment {
         } else {
             Log.d(TAG, "Errore, evento passato da Match a Partecipants vuoto");
         }
-
 
     }
 
@@ -131,6 +134,5 @@ public class EventPartecipantsFragment extends Fragment {
             }
         });
     }
-
 }
 

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -34,15 +33,11 @@ import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -51,6 +46,7 @@ import java.util.regex.Pattern;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
+import it.unimib.socialmesh.databinding.LoginFragmentBinding;
 import it.unimib.socialmesh.model.Result;
 import it.unimib.socialmesh.model.User;
 import it.unimib.socialmesh.ui.main.HomeActivity;
@@ -61,12 +57,10 @@ public class LoginFragment extends Fragment {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
     private static final boolean USE_NAVIGATION_COMPONENT = true;
+    private LoginFragmentBinding fragmentLoginBinding;
     GoogleSignInClient gsc;
-    private TextInputLayout passTextInput, emailTextInput;
-    private ProgressBar progressIndicator;
     CallbackManager callbackManager;
 
-    private Intent intent;
     private SignInClient oneTapClient;
 
     private UserViewModel userViewModel;
@@ -134,7 +128,8 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        return inflater.inflate(R.layout.login_fragment, container, false);
+        fragmentLoginBinding = LoginFragmentBinding.inflate(inflater, container, false);
+        return fragmentLoginBinding.getRoot();
     }
 
 
@@ -142,24 +137,16 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        emailTextInput = view.findViewById(R.id.email);
-        passTextInput = view.findViewById(R.id.insertPassword);
-        progressIndicator = view.findViewById(R.id.progress_bar);
+        fragmentLoginBinding.buttonLogin.setOnClickListener(v -> {
 
-        final Button buttonLogin = view.findViewById(R.id.buttonLogin);
-        final Button buttonSignUp = view.findViewById(R.id.buttonRegister);
-        final ImageButton buttonGoogle = view.findViewById(R.id.buttonGoogle);
-
-        buttonLogin.setOnClickListener(v -> {
-
-            String email = emailTextInput.getEditText().getText().toString().trim();
-            String password  = passTextInput.getEditText().getText().toString().trim();
+            String email = fragmentLoginBinding.email.getEditText().getText().toString().trim();
+            String password  = fragmentLoginBinding.insertPassword.getEditText().getText().toString().trim();
 
             // Start login if email and password are ok
             //TODO sistemare il controllo password, dobbiamo valutare i criteri di isPasswordOk
             if (!email.isEmpty() && !password.isEmpty()) {
                 if (!userViewModel.isAuthenticationError()) {
-                    progressIndicator.setVisibility(View.VISIBLE);
+                    fragmentLoginBinding.progressBar.setVisibility(View.VISIBLE);
                     userViewModel.getUserMutableLiveData(email, password, true).observe(
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
@@ -168,7 +155,7 @@ public class LoginFragment extends Fragment {
                                     Navigation.findNavController(requireView()).navigate(R.id.navigate_to_homeActivity);
                                 } else {
                                     userViewModel.setAuthenticationError(true);
-                                    progressIndicator.setVisibility(View.GONE);
+                                    fragmentLoginBinding.progressBar.setVisibility(View.GONE);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                             getErrorMessage(((Result.Error) result).getMessage()),
                                             Snackbar.LENGTH_SHORT).show();
@@ -184,7 +171,7 @@ public class LoginFragment extends Fragment {
         });
 
         //Google
-        buttonGoogle.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
+        fragmentLoginBinding.buttonGoogle.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
             .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
                 @Override
                 public void onSuccess(BeginSignInResult result) {
@@ -207,7 +194,7 @@ public class LoginFragment extends Fragment {
                 }
             }));
 
-        buttonSignUp.setOnClickListener(item -> {
+        fragmentLoginBinding.buttonRegister.setOnClickListener(item -> {
             Navigation.findNavController(requireView()).navigate(R.id.navigate_to_registrationFragment);
         });
 
@@ -237,10 +224,10 @@ public class LoginFragment extends Fragment {
         // Check if the email is valid through the use of this library:
         // https://commons.apache.org/proper/commons-validator/
         if (!EmailValidator.getInstance().isValid((email))) {
-            emailTextInput.setError("Email non valida");
+            fragmentLoginBinding.email.setError("Email non valida");
             return false;
         } else {
-            emailTextInput.setError(null);
+            fragmentLoginBinding.email.setError(null);
             return true;
         }
     }
@@ -249,7 +236,7 @@ public class LoginFragment extends Fragment {
 
         // If the password is empty return false
         if (password == null) {
-            passTextInput.setError(getString(R.string.error_password_invalid));
+            fragmentLoginBinding.insertPassword.setError(getString(R.string.error_password_invalid));
             return false;
         }
 
@@ -268,10 +255,10 @@ public class LoginFragment extends Fragment {
 
         // If password matches pattern return true
         if(!match) {
-            passTextInput.setError(getString(R.string.error_password_invalid));
+            fragmentLoginBinding.insertPassword.setError(getString(R.string.error_password_invalid));
             return false;
         } else {
-            passTextInput.setError(null);
+            fragmentLoginBinding.insertPassword.setError(null);
             return true;
         }
     }

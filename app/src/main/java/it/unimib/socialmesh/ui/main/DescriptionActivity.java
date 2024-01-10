@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 import it.unimib.socialmesh.R;
+import it.unimib.socialmesh.data.repository.user.IUserRepository;
+import it.unimib.socialmesh.ui.welcome.UserViewModel;
+import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
+import it.unimib.socialmesh.util.ServiceLocator;
+
 import android.widget.EditText;
 import android.widget.ImageButton;
 import androidx.annotation.NonNull;
@@ -14,9 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 public class DescriptionActivity extends AppCompatActivity {
-
+    private UserViewModel userViewModel;
     private DatabaseReference userDescriptionRef;
 
     @Override
@@ -42,13 +49,6 @@ public class DescriptionActivity extends AppCompatActivity {
 
             }
         });
-
-        userDescriptionRef = FirebaseDatabase.getInstance().getReference()
-                .child("users")
-                .child(currentUserId)
-                .child("descrizione");
-
-        // Trova il pulsante e gestisci il clic
         Button confirmButton = findViewById(R.id.button_confirm_description);
         confirmButton.setOnClickListener(v -> {
             saveDescription();
@@ -61,22 +61,14 @@ public class DescriptionActivity extends AppCompatActivity {
     }
 
     private void saveDescription() {
-
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
         EditText descriptionEditText = findViewById(R.id.descriptionEditText);
         String description = descriptionEditText.getText().toString().trim();
-        if (!description.isEmpty()) {
-            userDescriptionRef.setValue(description)
-                    .addOnSuccessListener(aVoid -> {
-                        finish();
-                        Toast.makeText(getApplicationContext(), "Descrizione salvata", Toast.LENGTH_SHORT).show();
-                    })
-                    .addOnFailureListener(e -> {
-
-                        Toast.makeText(getApplicationContext(), "Errore durante il salvataggio", Toast.LENGTH_SHORT).show();
-                    });
-        } else {
-
-            Toast.makeText(getApplicationContext(), "La descrizione non può essere vuota", Toast.LENGTH_SHORT).show();
-        }
+        userViewModel.saveDescription(description);
+        finish();
     }
 }

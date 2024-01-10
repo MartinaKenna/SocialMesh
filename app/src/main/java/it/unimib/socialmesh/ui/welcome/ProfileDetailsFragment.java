@@ -3,6 +3,7 @@ package it.unimib.socialmesh.ui.welcome;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,12 +27,15 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.data.repository.user.UserResponseCallback;
+import it.unimib.socialmesh.databinding.FragmentProfileDetailsBinding;
 import it.unimib.socialmesh.model.User;
 
 public class  ProfileDetailsFragment extends Fragment {
 
     private UserResponseCallback userResponseCallback;
     private UserViewModel userViewModel;
+
+    private FragmentProfileDetailsBinding fragmentProfileDetailsBinding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,9 +44,14 @@ public class  ProfileDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile_details, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragmentProfileDetailsBinding = FragmentProfileDetailsBinding.inflate(inflater, container, false);
+        return fragmentProfileDetailsBinding.getRoot();
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance) {
+        super.onViewCreated(view, savedInstance);
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             User user = bundle.getParcelable("user");
@@ -50,11 +59,8 @@ public class  ProfileDetailsFragment extends Fragment {
             if(user !=null) {
                 int nameOk, dateOk;
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                Button saveButton = view.findViewById(R.id.buttonRegister);
-                TextInputLayout fullNameEditText = view.findViewById(R.id.fullName);
-                TextInputLayout dateTextInput = view.findViewById(R.id.datanasc);
-                TextInputEditText dateInputEditText = view.findViewById(R.id.testo_datanasc);
-                dateInputEditText.setOnClickListener(v -> {
+
+                fragmentProfileDetailsBinding.testoDatanasc.setOnClickListener(v -> {
                     final Calendar c = Calendar.getInstance();
                     int year = c.get(Calendar.YEAR);
                     int month = c.get(Calendar.MONTH);
@@ -64,15 +70,15 @@ public class  ProfileDetailsFragment extends Fragment {
                             this.getContext(),
                             R.style.ThemeOverlay_App_Dialog,
                             (view2, year1, monthOfYear, dayOfMonth) -> {
-                                dateInputEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1);
+                                fragmentProfileDetailsBinding.testoDatanasc.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1);
                             },
                             year, month, day);
                     datePickerDialog.show();
                 });
 
-                saveButton.setOnClickListener(v -> {
-                    String fullName = fullNameEditText.getEditText().getText().toString().trim();
-                    String birthDate = dateTextInput.getEditText().getText().toString().trim();
+                fragmentProfileDetailsBinding.buttonRegister.setOnClickListener(v -> {
+                    String fullName = fragmentProfileDetailsBinding.fullName.getEditText().getText().toString().trim();
+                    String birthDate = fragmentProfileDetailsBinding.datanasc.getEditText().getText().toString().trim();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference usersRef = database.getReference().child("users");
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -86,30 +92,27 @@ public class  ProfileDetailsFragment extends Fragment {
                     });
                     usersRef.child(firebaseUser.getUid()).child("data_di_nascita").setValue(birthDate).addOnCompleteListener(setValueTask -> {
                         if (setValueTask.isSuccessful()) {
-                                Log.d("OK","PESO");
+                            Log.d("OK","PESO");
                         } else {
                             Log.d("NO","NONPESO");
                         }
                     });
 
-                        Navigation.findNavController(requireView()).navigate(R.id.action_profileDetailsFragment_to_preferencesFragment);
+                    Navigation.findNavController(requireView()).navigate(R.id.action_profileDetailsFragment_to_preferencesFragment);
 
                 });
 
 
 
                 userViewModel.getProfileFullName().observe(getViewLifecycleOwner(), fullName -> {
-                    fullNameEditText.getEditText().setText(fullName);
+                    fragmentProfileDetailsBinding.fullName.getEditText().setText(fullName);
                 });
 
                 userViewModel.getProfileBirthDate().observe(getViewLifecycleOwner(), birthDate -> {
-                    dateTextInput.getEditText().setText(birthDate);
+                    fragmentProfileDetailsBinding.datanasc.getEditText().setText(birthDate);
                 });
 
             }
         }
-
-
-        return view;
     }
 }

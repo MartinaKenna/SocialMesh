@@ -2,6 +2,7 @@
 package it.unimib.socialmesh.ui.match;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
+import it.unimib.socialmesh.databinding.FragmentMatchBinding;
 import it.unimib.socialmesh.model.Event;
 
 /**
@@ -37,33 +39,37 @@ import it.unimib.socialmesh.model.Event;
  */
 public class MatchFragment extends Fragment {
 
+    private FragmentMatchBinding fragmentMatchBinding;
     private RecyclerView recyclerView;
-    private ProgressBar progressBar;
     private SimpleEventsAdapter myEventsAdapter;
     private List<Event> myEventsList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_match, container, false);
-        recyclerView = view.findViewById(R.id.RecyclerviewMyevents);
-        progressBar = view.findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
+        fragmentMatchBinding = FragmentMatchBinding.inflate(inflater, container, false);
+        return fragmentMatchBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance) {
+        super.onViewCreated(view, savedInstance);
+
+        fragmentMatchBinding.progressBar.setVisibility(View.VISIBLE);
         myEventsList = new ArrayList<>();
         myEventsAdapter = new SimpleEventsAdapter(myEventsList, new SimpleEventsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Event event) {
+                fragmentMatchBinding.progressBar.setVisibility(View.GONE);
                 MatchFragmentDirections.ActionMatchFragmentToEventPartecipantsFragment action =
                         MatchFragmentDirections.actionMatchFragmentToEventPartecipantsFragment(event);
                 Navigation.findNavController(view).navigate(action);
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(myEventsAdapter);
+        fragmentMatchBinding.RecyclerviewMyevents.setLayoutManager(layoutManager);
+        fragmentMatchBinding.RecyclerviewMyevents.setAdapter(myEventsAdapter);
 
         retrieveMyEventsFromFirebase();
-
-        return view;
     }
 
     private void retrieveMyEventsFromFirebase() {
@@ -79,7 +85,7 @@ public class MatchFragment extends Fragment {
                     String eventId = eventSnapshot.getKey();
                     Log.d("MatchFragment", "Event ID: " + eventId);
                     retrieveEventDetailsFromFirebase(eventId);
-                    progressBar.setVisibility(View.GONE);
+                    fragmentMatchBinding.progressBar.setVisibility(View.GONE);
                 }
             }
 
