@@ -98,6 +98,7 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String receiverEmail = intent.getStringExtra("email");
+
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
 
         ImageButton closeChatButton = findViewById(R.id.backButton);
@@ -106,7 +107,7 @@ public class ChatActivity extends AppCompatActivity {
             finish();
         });
          userNameTextView = findViewById(R.id.nomeChat);
-
+        userNameTextView.setText(name);
         profile_pic = findViewById(R.id.profile_picture);
         String senderEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
@@ -157,6 +158,7 @@ public class ChatActivity extends AppCompatActivity {
                     User user = userSnapshot.getValue(User.class);
                     if (user != null) {
                         String userId = userSnapshot.getKey();
+
                         loadProfileImage(userId);
                     }
                 }
