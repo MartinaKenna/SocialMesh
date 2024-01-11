@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_eventFragment_to_eventDetailsFragment"
             app:destination="@id/eventDetailsFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_allEventFragment"
+            app:destination="@id/allEventFragment" />
     </fragment>
     <fragment
         android:id="@+id/matchFragment"
@@ -74,4 +77,17 @@
         android:name="it.unimib.socialmesh.ui.welcome.WelcomeActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/allEventFragment"
+        android:name="it.unimib.socialmesh.ui.main.AllEventFragment"
+        android:label="AllEventFragment" >
+        <argument
+            android:name="ViewType"
+            app:argType="integer" />
+        <argument
+            android:name="eventslist"
+            app:argType="com.navigation.test.eventsList[]"/>
+
+    </fragment>
+
 </navigation>

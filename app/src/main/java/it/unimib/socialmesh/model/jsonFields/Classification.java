@@ -1,4 +1,8 @@
 package it.unimib.socialmesh.model.jsonFields;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 
 import com.google.gson.annotations.Expose;
@@ -44,5 +48,6 @@ public class Classification {
     public void setSubGenre(SubGenre subGenre) {
         this.subGenre = subGenre;
     }
+
 
 }

@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 
 import it.unimib.socialmesh.R;
+import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.data.service.FirebaseEvent;
 
@@ -75,6 +76,7 @@ public class EventDetailsFragment extends Fragment {
             backButton.setOnClickListener(CloseView -> {
                 getParentFragmentManager().popBackStack();
             });
+
             joinButton.setOnClickListener(v -> {
 
                 if (userIsAuthenticated()) {

@@ -1,7 +1,12 @@
 package it.unimib.socialmesh.model.jsonFields;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class Genre {
+public class Genre{
     public Genre() {
     }
 
@@ -27,4 +32,5 @@ public class Genre {
     public void setName(String name) {
         this.name = name;
     }
+
 }
