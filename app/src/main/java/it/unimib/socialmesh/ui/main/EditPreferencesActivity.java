@@ -41,7 +41,6 @@ public class EditPreferencesActivity extends AppCompatActivity implements View.O
             basket, facebook, navigate, freelance, imprenditoria, tecnologia, tennis, calcio,
             destEsotiche, serieTV, libri, rock, classica, pop, ricette, dolce, yoga, palestra,
             elettricista;
-    List<String> preferences = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,9 +152,8 @@ public class EditPreferencesActivity extends AppCompatActivity implements View.O
             finish();
         });
 
-        //prendo l'id dell'utente
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        //definisco il campo "preferences" in firebase
+
         userPreferencesRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("preferences");
 
         //change schermata
@@ -172,7 +170,6 @@ public class EditPreferencesActivity extends AppCompatActivity implements View.O
                 getUserRepository(this.getApplication());
         userViewModel = new ViewModelProvider(
                 this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-        //salvo il nome del button cliccato in una lista
         if (v == cinema) {
             userViewModel.addPreference("Cinema");
         } else if (v == party) {

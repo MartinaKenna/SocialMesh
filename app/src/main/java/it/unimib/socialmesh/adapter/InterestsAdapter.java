@@ -19,6 +19,14 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         this.interestsList = interestsList;
     }
 
+    public List<String> getInterestsList() {
+        return interestsList;
+    }
+
+    public void setInterestsList(List<String> interestsList) {
+        this.interestsList = interestsList;
+    }
+
     @NonNull
     @Override
     public InterestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

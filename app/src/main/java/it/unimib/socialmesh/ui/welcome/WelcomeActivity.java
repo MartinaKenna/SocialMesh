@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.ui.main.HomeActivity;
+import it.unimib.socialmesh.util.FireBaseUtil;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,10 +39,8 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        // Controlla se l'utente è già autenticato
-        FirebaseUser currentUser = auth.getCurrentUser();
+        FirebaseUser currentUser = FireBaseUtil.currentUser();
         if (currentUser!=null) {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);

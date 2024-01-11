@@ -26,6 +26,7 @@ import java.util.List;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.model.Result;
 import it.unimib.socialmesh.model.User;
+import it.unimib.socialmesh.util.FireBaseUtil;
 
 public class UserViewModel extends ViewModel {
     private static final String TAG = UserViewModel.class.getSimpleName();
@@ -35,9 +36,14 @@ public class UserViewModel extends ViewModel {
     private MutableLiveData<Result> userMutableLiveData;
     private MutableLiveData<String> profileFullName = new MutableLiveData<>();
     private MutableLiveData<String> profileBirthDate = new MutableLiveData<>();
+    private final MutableLiveData<String> emailLiveData = new MutableLiveData<>();
     private MutableLiveData<List<String>> userPreferencesLiveData = new MutableLiveData<>();
     private MutableLiveData<String> imageUrlLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Uri>> photosUrlLiveData = new MutableLiveData<>();
     private MutableLiveData<String> userDescription = new MutableLiveData<>();
+    private MutableLiveData<List<String>> interestsLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> matchLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> likeLiveData = new MutableLiveData<>();
 
     private boolean authenticationError;
 
@@ -65,7 +71,7 @@ public class UserViewModel extends ViewModel {
         return profileFullName;
     }
 
-    // Getter per il LiveData della data di nascita
+
     public MutableLiveData<String> getProfileBirthDate() {
         return profileBirthDate;
     }
@@ -80,10 +86,12 @@ public class UserViewModel extends ViewModel {
         userPreferencesLiveData.setValue(currentPreferences);
         savePreferencesToFirebase(currentPreferences);
     }
-
+    public MutableLiveData<List<String>> getUserInterestsLiveData() {
+        return interestsLiveData;
+    }
     private void savePreferencesToFirebase(List<String> currentPreferences) {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        userPreferencesRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("preferences");
+        String userId = FireBaseUtil.currentUserId();
+        userPreferencesRef = FireBaseUtil.getUserRef(userId).child("preferences");
         userPreferencesRef.setValue(currentPreferences)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -115,8 +123,7 @@ public class UserViewModel extends ViewModel {
         }
     }
     public MutableLiveData<String> getProfileImageUrl(String userId) {
-         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference userRef = storageRef.child("pictures").child(userId).child("profilePic.jpg");
+        StorageReference userRef = FireBaseUtil.getCurrentProfilePicStorageRef(userId).child("profilePic.jpg");
         userRef.getDownloadUrl().addOnSuccessListener(uri -> {
             String imageURL = uri.toString();
             imageUrlLiveData.setValue(imageURL);
@@ -126,6 +133,31 @@ public class UserViewModel extends ViewModel {
 
         return imageUrlLiveData;
     }
+
+    public MutableLiveData<List<Uri>> getPhotosUrlLiveData() {
+        return photosUrlLiveData;
+    }
+
+    public void retrieveUserImages(String userId) {
+        List<Uri> photoUrls = new ArrayList<>();
+        StorageReference storageRef = FireBaseUtil.getCurrentProfilePicStorageRef(userId);
+
+        storageRef.listAll().addOnSuccessListener(listResult -> {
+            for (StorageReference item : listResult.getItems()) {
+                item.getDownloadUrl().addOnSuccessListener(uri -> {
+                    if (uri.toString().contains("profilePic.jpg")) {
+                        photoUrls.add(0, uri);
+                    } else {
+                        photoUrls.add(uri);
+                    }
+                    photosUrlLiveData.setValue(photoUrls);
+                }).addOnFailureListener(exception -> {
+                });
+            }
+        }).addOnFailureListener(e -> {
+        });
+    }
+
     public MutableLiveData<String> getUserDescriptionLiveData() {
         return userDescription;
     }
@@ -135,10 +167,8 @@ public class UserViewModel extends ViewModel {
     }
     public void saveDescription(String description) {
         if (!description.isEmpty()) {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            DatabaseReference userDescriptionRef = FirebaseDatabase.getInstance().getReference()
-                    .child("users")
-                    .child(userId)
+            String userId = FireBaseUtil.currentUserId();
+            DatabaseReference userDescriptionRef = FireBaseUtil.getUserRef(userId)
                     .child("descrizione");
             userDescription.setValue(description);
             userDescription.observeForever(newDescription -> userDescriptionRef.setValue(newDescription)
@@ -151,23 +181,47 @@ public class UserViewModel extends ViewModel {
         }
     }
     public void fetchUserDescription(String userId) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
-                .child("users")
-                .child(userId);
-        userRef.child("descrizione").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String description = snapshot.getValue(String.class);
-                    userDescription.setValue(description);
+        DatabaseReference userRef = FireBaseUtil.getUserRef(userId)
+                .child("descrizione");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (!snapshot.exists()) {
+                        userRef.setValue("");
+                        userDescription.setValue("");
+                    } else {
+                        String description = snapshot.getValue(String.class);
+                        userDescription.setValue(description);
+                    }
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+    }
+    public void updateInterests(String userId) {
+        DatabaseReference databaseReference =FireBaseUtil.getUserRef(userId)
+                .child("preferences");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> interestsList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String interest = snapshot.getValue(String.class);
+                    interestsList.add(interest);
+                }
+                interestsLiveData.setValue(interestsList);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Gestire eventuali errori
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+    }
+    public MutableLiveData<String> getEmailLiveData() {
+        return emailLiveData;
     }
 
     public MutableLiveData<Result> logout() {
@@ -179,7 +233,33 @@ public class UserViewModel extends ViewModel {
 
         return userMutableLiveData;
     }
+    public void obtainUserData(String userId) {
+        DatabaseReference userRef = FireBaseUtil.getUserRef(userId);
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    DataSnapshot nameSnapshot = snapshot.child("name");
+                    DataSnapshot emailSnapshot = snapshot.child("email");
+                    DataSnapshot dateSnapshot = snapshot.child("data_di_nascita");
 
+                    String name = nameSnapshot.exists() ? nameSnapshot.getValue(String.class) : "";
+                    String email = emailSnapshot.exists() ? emailSnapshot.getValue(String.class) : "";
+                    String birthDate = dateSnapshot.exists() ? dateSnapshot.getValue(String.class) : "";
+
+
+                    profileFullName.setValue(name);
+                    emailLiveData.setValue(email);
+                    profileBirthDate.setValue(birthDate);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Gestione errori
+            }
+        });
+    }
     public void getUser(String email, String password, boolean isUserRegistered) {
         userRepository.getUser(email, password, isUserRegistered);
     }
@@ -199,4 +279,85 @@ public class UserViewModel extends ViewModel {
     private void getUserData(String token) {
         userMutableLiveData = userRepository.getGoogleUser(token);
     }
+    private void notifyMatch() {
+        matchLiveData.setValue(true);
+    }
+
+    public void addLikeAndCheckForMatch(String currentUserID, String likedUserID) {
+        DatabaseReference currentUserLikesRef = FireBaseUtil.getUserRef(currentUserID).child("likes");
+        likeLiveData.setValue(true);
+        currentUserLikesRef.child(likedUserID).setValue(true);
+        checkForMatch(currentUserID, likedUserID);
+    }
+
+    public MutableLiveData<Boolean> getMatchLiveData() {
+        return matchLiveData;
+    }
+
+    private void checkForMatch(final String currentUserID, final String otherUserID) {
+        DatabaseReference otherUserLikesRef = FireBaseUtil.getUserRef(otherUserID).child("likes");
+        otherUserLikesRef.child(currentUserID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && Boolean.TRUE.equals(dataSnapshot.getValue())) {
+                    createMatch(currentUserID, otherUserID);
+                    //sendMatchNotificationToUsers(currentUserID, otherUserID);
+                    notifyMatch();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void createMatch(String currentUserID, String matchedUserID) {
+        DatabaseReference currentUserMatchesRef = FireBaseUtil.getUserRef(currentUserID).child("matches");
+        DatabaseReference matchedUserMatchesRef = FireBaseUtil.getUserRef(matchedUserID).child("matches");
+
+        currentUserMatchesRef.child(matchedUserID).setValue(true);
+        matchedUserMatchesRef.child(currentUserID).setValue(true);
+    }
+    public MutableLiveData<Boolean> getLikeLiveData() {
+        return likeLiveData;
+    }
+
+
+    public void removeLike(String currentUserID, String otherUserID) {
+        DatabaseReference currentUserLikesRef = FireBaseUtil.getUserRef(currentUserID).child("likes").child(otherUserID);
+
+        currentUserLikesRef.removeValue();
+
+        DatabaseReference otherUserLikesRef = FireBaseUtil.getUserRef(otherUserID).child("likes").child(currentUserID);
+
+        otherUserLikesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    removeMatch(currentUserID, otherUserID);
+                    likeLiveData.setValue(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Gestire eventuali errori
+            }
+        });
+    }
+
+    private void removeMatch(String currentUserID, String otherUserID) {
+        DatabaseReference currentUserMatchesRef = FireBaseUtil.getUserRef(currentUserID).child("matches").child(otherUserID);
+
+        currentUserMatchesRef.removeValue();
+
+        DatabaseReference matchedUserMatchesRef =FireBaseUtil.getUserRef(otherUserID)
+                .child("matches")
+                .child(currentUserID);
+
+        matchedUserMatchesRef.removeValue();
+    }
+
 }
+

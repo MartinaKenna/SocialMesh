@@ -2,39 +2,67 @@ package it.unimib.socialmesh.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.User;
 import it.unimib.socialmesh.ui.main.ChatActivity;
-//import it.unimib.socialmesh.ui.main.ChatActivity;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.UserViewHolder> {
 
     private final Context context;
     private final ArrayList<User> matchesList;
+    private final ArrayList<String> usersId;
+    private final OnItemClickListener clickListener;
 
-    public MatchesAdapter(Context context, ArrayList<User> matchesList) {
+    public interface OnItemClickListener {
+        void onUserClick(User user);
+    }
+
+    public MatchesAdapter(Context context, ArrayList<User> matchesList,ArrayList<String> usersId, OnItemClickListener clickListener) {
         this.context = context;
         this.matchesList = matchesList;
+        this.usersId = usersId;
+        this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.user_layout, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false);
         return new UserViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+        User currentUser = matchesList.get(position);
+        holder.bind(currentUser.getName(), clickListener, usersId.get(position));
+        holder.textName.setText(currentUser.getName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null) {
+                    clickListener.onUserClick(currentUser);
+                }
+            }
+        });
     }
 
     @Override
@@ -42,29 +70,33 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.UserView
         return matchesList.size();
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        User currentUser = matchesList.get(position);
-        holder.textName.setText(currentUser.getName());
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("name", currentUser.getName());
-                intent.putExtra("email", currentUser.getEmail());
-                context.startActivity(intent);
-            }
-        });
-
-    }
-
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView textName;
+        ImageView profile_pic;
 
         public UserViewHolder(View itemView) {
             super(itemView);
-            textName = itemView.findViewById(R.id.txt_name);
+            profile_pic = itemView.findViewById(R.id.profile_image);
+
+            textName = itemView.findViewById(R.id.textview_username);
+        }
+        void bind(String userName, MatchesAdapter.OnItemClickListener clickListener, String userId){
+            StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child("pictures").child(userId).child("profilePic.jpg");
+            userImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                CircularProgressDrawable drawable = new CircularProgressDrawable(itemView.getContext());
+                drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                drawable.setCenterRadius(30f);
+                drawable.setStrokeWidth(5f);
+                drawable.start();
+                Glide.with(itemView.getContext())
+                        .load(uri)
+                        .placeholder(drawable)
+                        .error(drawable)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(profile_pic);
+            }).addOnFailureListener(exception -> {
+                Log.e("PartecipantsAdapter", "Errore durante il caricamento dell'immagine: " + exception.getMessage());
+            });
         }
     }
 }

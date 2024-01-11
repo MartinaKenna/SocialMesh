@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import it.unimib.socialmesh.util.FireBaseUtil;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,7 +65,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Message currentMessage = messageList.get(position);
-        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String currentUserEmail = FireBaseUtil.currentUser().getEmail();
         if (currentUserEmail.equals(currentMessage.getSenderEmail())) {
             return ITEM_SENT;
         } else {

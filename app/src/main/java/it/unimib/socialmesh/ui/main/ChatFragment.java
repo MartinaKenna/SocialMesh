@@ -1,6 +1,7 @@
 package it.unimib.socialmesh.ui.main;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class ChatFragment extends Fragment {
 
     private FragmentChatBinding fragmentChatBinding;
     private ArrayList<User> matchesList;
+    private ArrayList<String> usersId;
     private MatchesAdapter adapter;
     private DatabaseReference mDbRef;
 
@@ -55,8 +57,15 @@ public class ChatFragment extends Fragment {
         mDbRef = FirebaseDatabase.getInstance().getReference();
         String currentUserId = mAuth.getCurrentUser().getUid();
 
+        usersId = new ArrayList<>();
         matchesList = new ArrayList<>();
-        adapter = new MatchesAdapter(getContext(), matchesList);
+
+        adapter = new MatchesAdapter(getContext(), matchesList, usersId, user -> {
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            intent.putExtra("name", user.getName());
+            intent.putExtra("email", user.getEmail());
+            startActivity(intent);
+        });
 
         fragmentChatBinding.matchesRecyclerView.findViewById(R.id.matchesRecyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -77,6 +86,7 @@ public class ChatFragment extends Fragment {
                                 if (userSnapshot.exists()) {
                                     User user = userSnapshot.getValue(User.class);
                                     matchesList.add(user);
+                                    usersId.add(matchUserId);
                                     adapter.notifyDataSetChanged();
                                 }
                             }

@@ -43,6 +43,7 @@ import it.unimib.socialmesh.adapter.PhotosAdapter;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
+import it.unimib.socialmesh.util.FireBaseUtil;
 import it.unimib.socialmesh.util.ServiceLocator;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -59,14 +60,27 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(this.getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        recyclerView2 = findViewById(R.id.recyclerPhotos);
         setContentView(R.layout.activity_settings);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String currentUserId = auth.getCurrentUser().getUid();
+        String currentUserId = FireBaseUtil.currentUserId();
+        recyclerView2 = findViewById(R.id.recyclerPhotos);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        userViewModel.getPhotosUrlLiveData().observe(this, photoUrls -> {
+            if (recyclerView2 != null) {
+                photosAdapter = new PhotosAdapter(this, photoUrls);
+                recyclerView2.setAdapter(photosAdapter);
+            } else {
+                Log.e("SETTINGS", "recyclerView2 è null");
+            }
+        });
         loadProfileImage();
         updateDescription(currentUserId);
         updateInterests(currentUserId);
-        retrieveImagesFromStorage(currentUserId);
-
+        userViewModel.retrieveUserImages(currentUserId);
         profilePic = findViewById(R.id.settings_profile_image);
         imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -129,37 +143,9 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void retrieveImagesFromStorage(String currentUserId) {
-        List<Uri> photoUrls = new ArrayList<>();
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("pictures").child(currentUserId);
-
-        storageRef.listAll().addOnSuccessListener(listResult -> {
-            for (StorageReference item : listResult.getItems()) {
-                item.getDownloadUrl().addOnSuccessListener(uri -> {
-                    if (!uri.toString().contains("profilePic.jpg")) {
-                        photoUrls.add(uri);
-                        photosAdapter.notifyDataSetChanged();
-                    }
-                }).addOnFailureListener(exception -> {
-                });
-            }
-        }).addOnFailureListener(e -> {
-        });
-
-        recyclerView2 = findViewById(R.id.recyclerPhotos);
-        recyclerView2.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        photosAdapter = new PhotosAdapter(this, photoUrls);
-        recyclerView2.setAdapter(photosAdapter);
-    }
-
-
     private void uploadPhoto(Uri imageUri) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String currentUserId = mAuth.getCurrentUser().getUid();
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference userPhotosRef = storageRef.child("pictures").child(currentUserId);
+        String currentUserId = FireBaseUtil.currentUserId();
+        StorageReference userPhotosRef = FireBaseUtil.getCurrentProfilePicStorageRef(currentUserId);
 
         if (imageUri != null) {
             StorageReference photoRef = userPhotosRef.child(imageUri.getLastPathSegment());
@@ -170,25 +156,12 @@ public class SettingsActivity extends AppCompatActivity {
     private void updateInterests(String currentUserId) {
         recyclerView = findViewById(R.id.recyclerInterests);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         interestsAdapter = new InterestsAdapter(interestsList);
         recyclerView.setAdapter(interestsAdapter);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("preferences");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                interestsList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String interest = snapshot.getValue(String.class);
-                    interestsList.add(interest);
-                }
-                interestsAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
+        userViewModel.updateInterests(currentUserId);
+        userViewModel.getUserInterestsLiveData().observe(this, interestsList -> {
+            interestsAdapter.setInterestsList(interestsList);
+            interestsAdapter.notifyDataSetChanged();
         });
     }
 
@@ -232,10 +205,9 @@ public class SettingsActivity extends AppCompatActivity {
                 getUserRepository(getApplication());
         userViewModel = new ViewModelProvider(
                 this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String currentUserId = mAuth.getCurrentUser().getUid();
+        String currentUserId = FireBaseUtil.currentUserId();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference userRef = storageRef.child("pictures").child(currentUserId).child("profilePic.jpg");
+        StorageReference userRef = FireBaseUtil.getCurrentProfilePicStorageRef(currentUserId).child("profilePic.jpg");
         userViewModel.uploadImage(selectedImageUri, userRef);
 
         userViewModel.getImageUrlLiveData().observe(this, imageUrl -> {
@@ -256,10 +228,9 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
     private void loadProfileImage() {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String currentUserId = mAuth.getCurrentUser().getUid();
+        String currentUserId = FireBaseUtil.currentUserId();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference userRef = storageRef.child("pictures").child(currentUserId).child("profilePic.jpg");
+        StorageReference userRef = FireBaseUtil.getCurrentProfilePicStorageRef(currentUserId).child("profilePic.jpg");
 
         userRef.getDownloadUrl().addOnSuccessListener(uri -> {
             String imageURL = uri.toString();
@@ -301,11 +272,14 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String currentUserId = auth.getCurrentUser().getUid();
+        String currentUserId = FireBaseUtil.currentUserId();
         updateDescription(currentUserId);
         updateInterests(currentUserId);
-        retrieveImagesFromStorage(currentUserId);
+        userViewModel.getPhotosUrlLiveData().observe(this, photoUrls -> {
+            recyclerView2.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            photosAdapter = new PhotosAdapter(this, photoUrls);
+            recyclerView2.setAdapter(photosAdapter);
+        });
 
     }
 }

@@ -2,21 +2,15 @@ package it.unimib.socialmesh.ui.main;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -25,28 +19,16 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.databinding.FragmentProfileBinding;
-import it.unimib.socialmesh.model.User;
-import it.unimib.socialmesh.data.repository.user.UserRepository;
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
-import it.unimib.socialmesh.ui.welcome.WelcomeActivity;
+import it.unimib.socialmesh.util.FireBaseUtil;
 import it.unimib.socialmesh.util.ServiceLocator;
 
 public class ProfileFragment extends Fragment {
-   int REQUEST_CODE;
     ImageView profile_image_view;
     private UserViewModel userViewModel;
 
@@ -57,7 +39,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         IUserRepository userRepository = ServiceLocator.getInstance().
                 getUserRepository(requireActivity().getApplication());
         userViewModel = new ViewModelProvider(
@@ -94,38 +75,24 @@ public class ProfileFragment extends Fragment {
         fragmentProfileBinding = FragmentProfileBinding.inflate(inflater, container, false);
 
         profile_image_view = fragmentProfileBinding.profileImageView;
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
-
+        String userId = FireBaseUtil.currentUserId();
+        userViewModel.obtainUserData(userId);
 
         fragmentProfileBinding.buttonSettings.setOnClickListener(view -> {
             Intent intent = new Intent(requireActivity(), SettingsActivity.class);
             settingsLauncher.launch(intent);
         });
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference("users").child(currentUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    DataSnapshot nameSnapshot = snapshot.child("name");
-                    DataSnapshot emailSnapshot = snapshot.child("email");
-                    DataSnapshot dateSnapshot = snapshot.child("data_di_nascita");
 
-                    if (nameSnapshot.exists() && emailSnapshot.exists()) {
-                        String name = nameSnapshot.getValue(String.class);
-                        String email = emailSnapshot.getValue(String.class);
-                        String data_di_nascita = dateSnapshot.getValue(String.class);
-                        fragmentProfileBinding.userName.setText(name);
-                        fragmentProfileBinding.userEmail.setText(email);
-                        fragmentProfileBinding.userDate.setText(data_di_nascita);
-                    }
-                }
-            }
+        userViewModel.getProfileFullName().observe(getViewLifecycleOwner(), name -> {
+            fragmentProfileBinding.userName.setText(name);
+        });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+        userViewModel.getEmailLiveData().observe(getViewLifecycleOwner(), email -> {
+            fragmentProfileBinding.userEmail.setText(email);
+        });
+
+        userViewModel.getProfileBirthDate().observe(getViewLifecycleOwner(), birthDate -> {
+            fragmentProfileBinding.userDate.setText(birthDate);
         });
         return fragmentProfileBinding.getRoot();
     }
@@ -152,12 +119,7 @@ public class ProfileFragment extends Fragment {
         });
     }
     private void loadProfileImage() {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String currentUserId = mAuth.getCurrentUser().getUid();
-        IUserRepository userRepository = ServiceLocator.getInstance().
-                getUserRepository(getActivity().getApplication());
-        userViewModel = new ViewModelProvider(
-                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        String currentUserId =FireBaseUtil.currentUserId();
         userViewModel.getProfileImageUrl(currentUserId).observe(getViewLifecycleOwner(), imageUrl -> {
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());

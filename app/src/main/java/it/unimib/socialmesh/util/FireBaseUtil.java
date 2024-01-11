@@ -2,6 +2,9 @@ package it.unimib.socialmesh.util;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -11,17 +14,21 @@ import com.google.firebase.storage.StorageReference;
 import java.text.SimpleDateFormat;
 import java.util.List;
 public class FireBaseUtil {
+    public static FirebaseUser currentUser(){
+        return FirebaseAuth.getInstance().getCurrentUser();
+    }
     public static String currentUserId(){
         return FirebaseAuth.getInstance().getUid();
     }
-    public static StorageReference  getCurrentProfilePicStorageRef(){
-        return FirebaseStorage.getInstance().getReference().child("profile_pic")
-                .child(FireBaseUtil.currentUserId());
+    public static StorageReference  getCurrentProfilePicStorageRef(String userId){
+        return FirebaseStorage.getInstance().getReference().child("pictures").child(userId);
     }
-    public static DocumentReference currentUserDetails(){
-        return FirebaseFirestore.getInstance().collection("users").document(currentUserId());
-    }
-
+   public static DatabaseReference getUserRef(String userId){
+       DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
+               .child("users")
+               .child(userId);
+       return userRef;
+   }
 
     public static String adjustPath(String path) {
         char[] pathArray;

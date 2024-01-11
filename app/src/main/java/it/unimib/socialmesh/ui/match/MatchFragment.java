@@ -31,6 +31,7 @@ import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
 import it.unimib.socialmesh.databinding.FragmentMatchBinding;
 import it.unimib.socialmesh.model.Event;
+import it.unimib.socialmesh.util.FireBaseUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,9 +74,9 @@ public class MatchFragment extends Fragment {
     }
 
     private void retrieveMyEventsFromFirebase() {
-        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String currentUserId = FireBaseUtil.currentUserId();
 
-        DatabaseReference userEventsRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("events");
+        DatabaseReference userEventsRef = FireBaseUtil.getUserRef(currentUserId).child("events");
         userEventsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

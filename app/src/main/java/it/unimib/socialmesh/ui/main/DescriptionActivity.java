@@ -24,31 +24,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class DescriptionActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
-    private DatabaseReference userDescriptionRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_description);
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String currentUserId = mAuth.getCurrentUser().getUid();
-        userDescriptionRef = FirebaseDatabase.getInstance().getReference()
-                .child("users")
-                .child(currentUserId);
-        userDescriptionRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.child("descrizione").exists()) {
-                    userDescriptionRef.setValue("");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         Button confirmButton = findViewById(R.id.button_confirm_description);
         confirmButton.setOnClickListener(v -> {
             saveDescription();
@@ -61,11 +46,6 @@ public class DescriptionActivity extends AppCompatActivity {
     }
 
     private void saveDescription() {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        IUserRepository userRepository = ServiceLocator.getInstance().
-                getUserRepository(getApplication());
-        userViewModel = new ViewModelProvider(
-                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
         EditText descriptionEditText = findViewById(R.id.descriptionEditText);
         String description = descriptionEditText.getText().toString().trim();
         userViewModel.saveDescription(description);

@@ -32,6 +32,7 @@ import it.unimib.socialmesh.adapter.PartecipantsAdapter;
 import it.unimib.socialmesh.databinding.FragmentEventPartecipantsBinding;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.User;
+import it.unimib.socialmesh.util.FireBaseUtil;
 
 public class EventPartecipantsFragment extends Fragment {
     private static final String TAG = EventPartecipantsFragment.class.getSimpleName();
@@ -55,7 +56,6 @@ public class EventPartecipantsFragment extends Fragment {
 
         participantsList = new ArrayList<>();
         idList = new ArrayList<>();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
         usersAdapter = new PartecipantsAdapter(idList, participantsList, userId -> {
             EventPartecipantsFragmentDirections.ActionEventPartecipantsFragmentToUserDetailsFragment action =
                     EventPartecipantsFragmentDirections.actionEventPartecipantsFragmentToUserDetailsFragment(userId);
@@ -109,9 +109,8 @@ public class EventPartecipantsFragment extends Fragment {
     }
 
     private void retrieveUserDetailsFromFirebase(String userId) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String currentUser = auth.getCurrentUser().getUid();
+        DatabaseReference userRef = FireBaseUtil.getUserRef(userId);
+        String currentUser = FireBaseUtil.currentUserId();
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

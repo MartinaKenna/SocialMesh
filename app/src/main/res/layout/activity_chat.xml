@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="63dp"
             android:id="@+id/profile_picture"
-            android:layout_height="wrap_content"
+            android:layout_height="63dp"
             android:layout_marginStart="12dp"
             android:padding="4dp"
             android:src="@drawable/com_facebook_profile_picture_blank_portrait"
@@ -42,11 +42,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
-        android:layout_above="@id/LinearLayoutChat"
+        android:layout_above="@+id/LinearLayoutChat"
         android:layout_alignParentTop="true"
         android:layout_marginTop="64dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/LinearLayoutChat"
@@ -59,7 +59,7 @@
 
         <EditText
             android:id="@+id/messageBox"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="85"
             android:layout_marginStart="10dp"
@@ -69,10 +69,10 @@
 
         <ImageView
             android:id="@+id/sentButton"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:src="@drawable/baseline_arrow_forward_24"
-            android:layout_weight="20" />
+            android:layout_weight="15" />
 
     </LinearLayout>
 

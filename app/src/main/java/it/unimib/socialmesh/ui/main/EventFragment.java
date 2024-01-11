@@ -59,6 +59,7 @@ import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.model.Result;
+import it.unimib.socialmesh.util.FireBaseUtil;
 import it.unimib.socialmesh.util.ServiceLocator;
 
 public class EventFragment extends Fragment{
@@ -269,8 +270,7 @@ public class EventFragment extends Fragment{
 
         int initialSize = eventsList.size();
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
+        FirebaseUser currentUser = FireBaseUtil.currentUser();
 
         if (currentUser != null) {
             Log.d("FirebaseUser", "User ID: " + currentUser.getUid());
@@ -483,14 +483,14 @@ public class EventFragment extends Fragment{
                         recyclerViewEventsAdapter.updateLocation(latitude, longitude);
 
                         //salvo tutto su firebase sul campo Position
-                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        DatabaseReference userLatitude = FirebaseDatabase.getInstance().getReference("users").child(userId).child("Positions").child("Latitude");
-                        DatabaseReference userLongitude = FirebaseDatabase.getInstance().getReference("users").child(userId).child("Positions").child("Longitude");
+                        String userId = FireBaseUtil.currentUserId();
+                        DatabaseReference userLatitude =FireBaseUtil.getUserRef(userId).child("Positions").child("Latitude");
+                        DatabaseReference userLongitude = FireBaseUtil.getUserRef(userId).child("Positions").child("Longitude");
                         userLongitude.setValue(longitude);
                         userLatitude.setValue(latitude);
 
                         Log.d(TAG, "latitudine: " + latitude.toString() + " longitudine: " + longitude.toString());
-                        fusedLocationClient.removeLocationUpdates(this); // Rimuovo l'ascoltatore
+                        fusedLocationClient.removeLocationUpdates(this);
                     }
                 }
             };
