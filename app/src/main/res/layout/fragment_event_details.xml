@@ -93,25 +93,12 @@
                 tools:text="Wonderland"  />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-
-        <TextView
-            android:id="@+id/textview_event_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="@color/md_theme_light_secondary"
-            tools:text="@string/lorem_ipsum_placeholder"/>
-
         <Button
             android:id="@+id/join_button"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="100dp"
             android:backgroundTint="@color/md_theme_light_primary"
             android:textColor="@color/md_theme_light_onPrimary"
             tools:text="JOIN" />

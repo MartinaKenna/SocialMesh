@@ -3,7 +3,14 @@ package it.unimib.socialmesh.util;
 public class Constants {
 
     public static final int LIMIT_AGE = 16;
-    public static final String USA = "US";
+    public static final String ALL_USA_DMAID = "200";
+
+    public static final int WEEKS_OF_EVENT_SEARCH = 2;
+
+    public static final int SIZE_OF_EVENT_SEARCH = 50;
+
+    //Empty for all events type
+    public static final String TYPE_OF_EVENT_SEARCH = "";
 
     public static final String FILE_JSON_TEST_API = "EventsApiTest.json";
 

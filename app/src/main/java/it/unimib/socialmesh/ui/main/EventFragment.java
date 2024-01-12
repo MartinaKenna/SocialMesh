@@ -1,5 +1,10 @@
 package it.unimib.socialmesh.ui.main;
 
+import static it.unimib.socialmesh.util.Constants.ALL_USA_DMAID;
+import static it.unimib.socialmesh.util.Constants.SIZE_OF_EVENT_SEARCH;
+import static it.unimib.socialmesh.util.Constants.TYPE_OF_EVENT_SEARCH;
+import static it.unimib.socialmesh.util.Constants.WEEKS_OF_EVENT_SEARCH;
+
 import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -11,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -41,15 +45,14 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import android.Manifest;
 import android.widget.Toast;
 
@@ -193,7 +196,7 @@ public class EventFragment extends Fragment{
 
 
 
-        eventViewModel.getEvents("music", "214", 50, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
+        eventViewModel.getEvents(TYPE_OF_EVENT_SEARCH, ALL_USA_DMAID, SIZE_OF_EVENT_SEARCH, getTodayDateString(), getDateInSomeWeeks(),10).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
                         EventApiResponse eventResponse = ((Result.EventResponseSuccess) result).getData();
@@ -386,6 +389,36 @@ public class EventFragment extends Fragment{
             Snackbar.make(rootView.findViewById(android.R.id.content), "I permessi sono necessari per ottenere la posizione", Snackbar.LENGTH_LONG).setAction("OK", v -> {}).show();
         }
     });
+
+    private static String getTodayDateString() {
+        LocalDateTime currentDateTime = null;
+        String formattedDateTime = "";
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+            formattedDateTime = currentDateTime.format(formatter);
+        }
+
+        return formattedDateTime;
+    }
+
+    public static String getDateInSomeWeeks() {
+        LocalDateTime currentDateTime = null;
+        String formattedDateTime = "";
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            currentDateTime = LocalDateTime.now();
+            LocalDateTime futureDateTime = currentDateTime.plusWeeks(WEEKS_OF_EVENT_SEARCH);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+            formattedDateTime = futureDateTime.format(formatter);
+        }
+
+        return formattedDateTime;
+    }
 
     public Double getLatitude(){
        return latitude;

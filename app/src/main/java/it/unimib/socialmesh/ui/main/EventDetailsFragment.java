@@ -71,7 +71,6 @@ public class EventDetailsFragment extends Fragment {
             fragmentEventDetailsBinding.textviewEventTitle.setText(currentEvent.getName1());
             fragmentEventDetailsBinding.textviewEventDate.setText(currentEvent.getLocalDateAndTime());
             fragmentEventDetailsBinding.textviewEventPlace.setText(currentEvent.getPlaceName());
-            fragmentEventDetailsBinding.textviewEventDetails.setText(currentEvent.getDescription());
 
 
             fragmentEventDetailsBinding.backBtn.setOnClickListener(CloseView -> {
