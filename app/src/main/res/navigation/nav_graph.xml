@@ -86,7 +86,8 @@
             app:argType="integer" />
         <argument
             android:name="eventslist"
-            app:argType="com.navigation.test.eventsList[]"/>
+            app:argType="it.unimib.socialmesh.model.Event[]"/>
+
 
     </fragment>
 

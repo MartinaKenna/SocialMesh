@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class AllEventFragment extends Fragment {
 
         if (getArguments() != null) {
             viewType = AllEventFragmentArgs.fromBundle(getArguments()).getViewType();
-            eventsList = AllEventFragmentArgs.fromBundle(getArguments()).getEventList();
+            eventsList = new ArrayList<>(Arrays.asList(AllEventFragmentArgs.fromBundle(getArguments()).getEventslist()));
         }
 
         if(viewType==0){

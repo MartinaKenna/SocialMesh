@@ -128,7 +128,6 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(@NonNull EventsViewHolder holder, int position) {
         Event event = filteredList.get(position);
         //eventuale selezione per far stampare certe cose solo in una recycler o in entrambe
-
         if (viewType == 0) {
 
             if (position == getItemCount() - 1) {
@@ -137,8 +136,9 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("eventList", new ArrayList<>(eventsList));
+
                     EventFragmentDirections.ActionEventFragmentToAllEventFragment action=
-                    EventFragmentDirections.actionEventFragmentToAllEventFragment(0, bundle);
+                    EventFragmentDirections.actionEventFragmentToAllEventFragment(0, eventsList.toArray(new Event[0]));
 
                     
                     Navigation.findNavController(parentView).navigate(action);
@@ -164,7 +164,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
                 //holder.imageView.setImageResource(R.drawable.last_recycler);
                 holder.itemView.setOnClickListener(v -> {
                     EventFragmentDirections.ActionEventFragmentToAllEventFragment action=
-                            EventFragmentDirections.actionEventFragmentToAllEventFragment(1);
+                            EventFragmentDirections.actionEventFragmentToAllEventFragment(1,eventsList.toArray(new Event[0]));
                     Navigation.findNavController(parentView).navigate(action);
                 });
             }

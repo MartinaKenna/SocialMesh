@@ -191,7 +191,7 @@ public class EventFragment extends Fragment{
             Log.d("FirebaseUser", "User is not logged in");
         }
 
-        initializeAdapters();
+
 
         eventViewModel.getEvents("music", "214", 50, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
                 result -> {
@@ -238,13 +238,10 @@ public class EventFragment extends Fragment{
     private void initializeAdapters() {
         RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(requireContext(),latitude, longitude, eventsList, 0, requireView(),
-                new RecyclerViewEventsAdapter.OnItemClickListener() {
-                    @Override
-                    public void onEventItemClick(Event event) {
-                        EventFragmentDirections.ActionEventFragmentToEventDetailsFragment action =
-                                EventFragmentDirections.actionEventFragmentToEventDetailsFragment(event);
-                        Navigation.findNavController(requireView()).navigate(action);
-                    }
+                event -> {
+                    EventFragmentDirections.ActionEventFragmentToEventDetailsFragment action =
+                            EventFragmentDirections.actionEventFragmentToEventDetailsFragment(event);
+                    Navigation.findNavController(requireView()).navigate(action);
                 });
 
         recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(requireContext(),latitude, longitude, eventsList, 1, requireView(),
@@ -363,7 +360,6 @@ public class EventFragment extends Fragment{
                         longitude = locationResult.getLocations().get(index).getLongitude();
                         recyclerViewEventsAdapterNearYou.updateLocation(latitude, longitude);
                         recyclerViewEventsAdapter.updateLocation(latitude, longitude);
-
                         //salvo tutto su firebase sul campo Position
                         String userId = FireBaseUtil.currentUserId();
                         DatabaseReference userLatitude =FireBaseUtil.getUserRef(userId).child("Positions").child("Latitude");
