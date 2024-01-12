@@ -1,10 +1,14 @@
 package it.unimib.socialmesh.model.jsonFields;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Dates {
+public class Dates{
     public Dates() {
     }
     @Embedded(prefix = "start_")

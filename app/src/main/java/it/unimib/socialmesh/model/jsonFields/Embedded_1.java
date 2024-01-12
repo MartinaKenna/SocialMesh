@@ -1,6 +1,9 @@
 package it.unimib.socialmesh.model.jsonFields;
 
-import androidx.room.Embedded;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
@@ -25,4 +28,5 @@ public class Embedded_1 {
     public void setVenues(List<Venue> venues) {
         this.venues = venues;
     }
+
 }

@@ -73,7 +73,6 @@ public class EventFragment extends Fragment{
     private SearchView searchView;
     private RecyclerViewEventsAdapter recyclerViewEventsAdapterNearYou, recyclerViewEventsAdapter;
     private EventViewModel eventViewModel;
-    private Button filter, button1, button2,button3, viewAll, buttonKM, button4, button5, button6;
     private PopupWindow popupWindow, popupWindow2;
 
     private ProgressBar progressBar;
@@ -116,8 +115,6 @@ public class EventFragment extends Fragment{
         barra3 = view.findViewById(R.id.barra3);
         nearyou = view.findViewById(R.id.nearYou);
         lastadded = view.findViewById(R.id.lastAdded);
-        viewAll = view.findViewById(R.id.viewAll);
-        buttonKM = view.findViewById(R.id.buttonKM);
         Context context = requireContext();
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
 
@@ -149,92 +146,6 @@ public class EventFragment extends Fragment{
         //richiamo il processo per la posizione
 
         //ottengo la posizione
-        filter = view.findViewById(R.id.button);
-
-        filter.setOnClickListener(v -> {
-            View popupView = inflater.inflate(R.layout.popupview, container, false);
-
-            button1 = popupView.findViewById(R.id.button1);
-            button2 = popupView.findViewById(R.id.button2);
-            button3 = popupView.findViewById(R.id.button3);
-            //dichiaro la tendina
-            popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-            // Imposto il testo per i bottoni
-            switch(getMostFrequentGenres().size()){
-                case 1: button1.setText(getMostFrequentGenres().get(0));
-                    button2.setVisibility(View.GONE);
-                    button3.setVisibility(View.GONE);
-                    break;
-                case 2: button1.setText(getMostFrequentGenres().get(0));
-                    button2.setText(getMostFrequentGenres().get(1));
-                    button3.setVisibility(View.GONE);
-                    break;
-                case 3: button1.setText(getMostFrequentGenres().get(0));
-                    button2.setText(getMostFrequentGenres().get(1));
-                    button3.setText(getMostFrequentGenres().get(2));
-                    break;
-                default:button1.setVisibility(View.GONE);
-                    button2.setVisibility(View.GONE);
-                    button3.setVisibility(View.GONE);
-                    break;
-            }
-
-            button1.setOnClickListener(t -> {
-                String buttonText = ((Button) t).getText().toString();
-                recyclerViewEventsAdapter.filterByGenre(buttonText);
-                recyclerViewEventsAdapterNearYou.filterByGenre(buttonText);
-                popupWindow.dismiss();
-            });
-            button2.setOnClickListener(t -> {
-                String buttonText = ((Button) t).getText().toString();
-                recyclerViewEventsAdapter.filterByGenre(buttonText);
-                recyclerViewEventsAdapterNearYou.filterByGenre(buttonText);
-                popupWindow.dismiss();
-            });
-            button3.setOnClickListener(t -> {
-                String buttonText = ((Button) t).getText().toString();
-                recyclerViewEventsAdapter.filterByGenre(buttonText);
-                recyclerViewEventsAdapterNearYou.filterByGenre(buttonText);
-                popupWindow.dismiss();
-            });
-
-            popupWindow.showAsDropDown(filter, 0, -popupWindow.getHeight());
-
-        });
-
-        viewAll.setOnClickListener(v -> {
-            recyclerViewEventsAdapter.setItems(eventsList);
-            recyclerViewEventsAdapterNearYou.setItems(eventsList);
-        });
-
-        buttonKM.setOnClickListener(v ->{
-            View popupView2 = inflater.inflate(R.layout.popupview2, container, false);
-
-            popupWindow2 = new PopupWindow(popupView2, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-            button4 = popupView2.findViewById(R.id.button4);
-            button5 = popupView2.findViewById(R.id.button5);
-            button6 = popupView2.findViewById(R.id.button6);
-
-            button4.setText("10km");
-            button5.setText("50km");
-            button6.setText("100km");
-
-            button4.setOnClickListener(t ->{
-                recyclerViewEventsAdapterNearYou.setKM(10);
-                popupWindow2.dismiss();
-            });
-            button5.setOnClickListener(t ->{
-                recyclerViewEventsAdapterNearYou.setKM(50);
-                popupWindow2.dismiss();
-            });
-            button6.setOnClickListener(t ->{
-                recyclerViewEventsAdapterNearYou.setKM(100);
-                popupWindow2.dismiss();
-            });
-            popupWindow2.showAsDropDown(buttonKM, 0, -popupWindow2.getHeight());
-       });
 
 
 
@@ -326,7 +237,7 @@ public class EventFragment extends Fragment{
 
     private void initializeAdapters() {
         RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(requireContext(),latitude, longitude, eventsList, 0,
+        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(requireContext(),latitude, longitude, eventsList, 0, requireView(),
                 new RecyclerViewEventsAdapter.OnItemClickListener() {
                     @Override
                     public void onEventItemClick(Event event) {
@@ -336,7 +247,7 @@ public class EventFragment extends Fragment{
                     }
                 });
 
-        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(requireContext(),latitude, longitude, eventsList, 1,
+        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(requireContext(),latitude, longitude, eventsList, 1, requireView(),
                 new RecyclerViewEventsAdapter.OnItemClickListener() {
                     @Override
                     public void onEventItemClick(Event event) {
@@ -355,35 +266,6 @@ public class EventFragment extends Fragment{
         recyclerViewEvents.setAdapter(recyclerViewEventsAdapter);
     }
 
-    public List<String> getMostFrequentGenres() {
-        Map<String, Integer> genreOccurrences = new HashMap<>();
-
-        // Conto le occorrenze di ciascun genere
-        for (Event event : eventsList) {
-            String genreName = event.getGenreName();
-            genreOccurrences.put(genreName, genreOccurrences.getOrDefault(genreName, 0) + 1);
-        }
-
-        // Trovo i tre generi piu frequenti diversi tra loro
-        List<String> mostFrequentGenres = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            int maxOccurrences = 0;
-            String mostFrequentGenre = "";
-
-            for (Map.Entry<String, Integer> entry : genreOccurrences.entrySet()) {
-                if (!mostFrequentGenres.contains(entry.getKey()) && entry.getValue() > maxOccurrences) {
-                    maxOccurrences = entry.getValue();
-                    mostFrequentGenre = entry.getKey();
-                }
-            }
-
-            if (!mostFrequentGenre.isEmpty()) {
-                mostFrequentGenres.add(mostFrequentGenre);
-            }
-        }
-
-        return mostFrequentGenres;
-    }
     private boolean isGPSEnabled() {
         //controllo se il GPS è on
         LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -509,6 +391,17 @@ public class EventFragment extends Fragment{
         }
     });
 
+    public Double getLatitude(){
+       return latitude;
+    }
+
+    public Double getLongitude(){
+        return longitude;
+    }
+    public List<Event> getList(){
+            return eventsList;
+
+    }
 }
 
 

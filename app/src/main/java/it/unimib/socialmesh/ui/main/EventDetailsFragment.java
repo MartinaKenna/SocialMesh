@@ -78,7 +78,7 @@ public class EventDetailsFragment extends Fragment {
                 getParentFragmentManager().popBackStack();
             });
             fragmentEventDetailsBinding.joinButton.setOnClickListener(v -> {
-                
+
                 if (userIsAuthenticated()) {
                     String userId = getCurrentUserId();
                     if (userId != null && !userId.isEmpty()) {

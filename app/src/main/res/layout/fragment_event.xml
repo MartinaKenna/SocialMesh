@@ -13,9 +13,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="40dp"
-            android:layout_alignParentRight="true"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="40dp">
+            android:layout_centerHorizontal="true">
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/searchView"
@@ -116,52 +115,13 @@
             android:layout_below="@id/nearYou"
             />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/cardview"
-            android:layout_marginStart="40dp"
-            android:backgroundTint="@color/md_theme_light_background"
-            app:cardCornerRadius="40dp">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/container_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
                 <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/md_theme_light_background"
-                    android:text="Filter"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/barra"
-            android:backgroundTint="@color/md_theme_light_background"
-            app:cardCornerRadius="40dp">
-
-                <Button
-                    android:id="@+id/buttonKM"
-                    android:text="Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/md_theme_light_background"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/container_fragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-        </androidx.cardview.widget.CardView>
-
-
-        <Button
                     android:id="@+id/viewAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
