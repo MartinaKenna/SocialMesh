@@ -282,7 +282,7 @@ public class EventFragment extends Fragment{
 
         initializeAdapters();
 
-        eventViewModel.getEvents("", "214", 50, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
+        eventViewModel.getEvents("music", "214", 50, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
                         EventApiResponse eventResponse = ((Result.EventResponseSuccess) result).getData();

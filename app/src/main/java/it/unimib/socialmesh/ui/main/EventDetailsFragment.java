@@ -30,59 +30,61 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 
 import it.unimib.socialmesh.R;
+import it.unimib.socialmesh.databinding.FragmentEventDetailsBinding;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.data.service.FirebaseEvent;
 
 public class EventDetailsFragment extends Fragment {
 
     private Event currentEvent;
+    private FragmentEventDetailsBinding fragmentEventDetailsBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_event_details, container, false);
+        fragmentEventDetailsBinding = FragmentEventDetailsBinding.inflate(inflater, container, false);
+        return fragmentEventDetailsBinding.getRoot();
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstance) {
         // Recupera l'evento dalla navigazione
         if (getArguments() != null) {
             currentEvent = EventDetailsFragmentArgs.fromBundle(getArguments()).getEvent();
         }
 
         if (currentEvent != null) {
-            // Inizializza gli elementi del layout con i dati dell'evento
-            ImageView imageViewEvent = view.findViewById(R.id.imageview_event);
-            TextView textViewEventTitle = view.findViewById(R.id.textview_event_title);
-            TextView textViewEventDate = view.findViewById(R.id.textview_event_date);
-            TextView textViewEventDetails = view.findViewById(R.id.textview_event_details);
-            Button joinButton = view.findViewById(R.id.join_button);
-            ImageButton backButton = view.findViewById(R.id.back_btn);
-            joinButton.setText("JOIN EVENT");
-            joinButton.requestLayout();
+            fragmentEventDetailsBinding.joinButton.setText("JOIN EVENT");
+            fragmentEventDetailsBinding.joinButton.requestLayout();
             CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
             drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
             drawable.setCenterRadius(30f);
             drawable.setStrokeWidth(5f);
             drawable.start();
+
             Glide.with(this)
-                    .load(currentEvent.getUrlImages())
+                    .load(currentEvent.getUrlImagesHD())
                     .placeholder(drawable)
                     .error(drawable)
-                    .into(imageViewEvent);
-            textViewEventTitle.setText(currentEvent.getName1());
-            textViewEventDate.setText(currentEvent.getDates1());
-            textViewEventDetails.setText(currentEvent.getDescription());
+                    .into(fragmentEventDetailsBinding.imageviewEvent);
+
+            fragmentEventDetailsBinding.textviewEventTitle.setText(currentEvent.getName1());
+            fragmentEventDetailsBinding.textviewEventDate.setText(currentEvent.getLocalDateAndTime());
+            fragmentEventDetailsBinding.textviewEventPlace.setText(currentEvent.getPlaceName());
+            fragmentEventDetailsBinding.textviewEventDetails.setText(currentEvent.getDescription());
 
 
-            backButton.setOnClickListener(CloseView -> {
+            fragmentEventDetailsBinding.backBtn.setOnClickListener(CloseView -> {
                 getParentFragmentManager().popBackStack();
             });
-            joinButton.setOnClickListener(v -> {
-
+            fragmentEventDetailsBinding.joinButton.setOnClickListener(v -> {
+                
                 if (userIsAuthenticated()) {
                     String userId = getCurrentUserId();
                     if (userId != null && !userId.isEmpty()) {
                         String eventId = currentEvent.getRemoteId();
                         if (eventId != null && !eventId.isEmpty()) {
-                            FirebaseDatabase firebaseDatabase =FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
+                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
                             DatabaseReference eventRef = firebaseDatabase.getInstance().getReference().child("events").child(eventId);
                             String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             DatabaseReference userRef = firebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
@@ -92,7 +94,6 @@ public class EventDetailsFragment extends Fragment {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (!snapshot.exists()) {
                                         userEventsRef.child(eventId).setValue(true);
-                                    } else {
                                     }
                                 }
 
@@ -105,7 +106,7 @@ public class EventDetailsFragment extends Fragment {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (!snapshot.exists()) {
-                                     uploadEventsToFirebase(currentEvent, userId);
+                                        uploadEventsToFirebase(currentEvent, userId);
                                         //Snackbar.make(view, "Iscrizione effettuata correttamente", Snackbar.LENGTH_SHORT).show();
                                     }
                                 }
@@ -119,11 +120,7 @@ public class EventDetailsFragment extends Fragment {
                     }
                 }
             });
-
-
-
         }
-        return view;
     }
     private void uploadEventsToFirebase(Event apiEvent, String userId) {
 

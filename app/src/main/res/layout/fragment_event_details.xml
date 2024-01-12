@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
@@ -31,37 +32,75 @@
 
         <ImageView
             android:id="@+id/imageview_event"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="300dp"
             android:adjustViewBounds="true"
-            android:contentDescription="description"
             android:scaleType="fitCenter"
             />
 
-        <TextView
-            android:id="@+id/textview_event_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            android:textSize="36sp"
-            android:textColor="@color/md_theme_light_primary"
-            tools:text="Titolo evento" />
 
-        <TextView
-            android:id="@+id/textview_event_date"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textColor="@color/md_theme_light_primary"
-            tools:text="00/00/0000 00:00" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/main_content">
+
+            <View
+                android:id="@+id/barraVerticale"
+                android:layout_width="2sp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="100dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textview_event_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                app:layout_constraintBaseline_toBaselineOf="@id/textview_event_title"
+                app:layout_constraintEnd_toStartOf="@id/barraVerticale"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                tools:text="0000/00/00" />
+
+            <TextView
+                android:id="@+id/textview_event_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:textSize="36sp"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/barraVerticale"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Titolo evento" />
+
+            <TextView
+                android:id="@+id/textview_event_place"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:padding="8dp"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/barraVerticale"
+                app:layout_constraintTop_toBottomOf="@id/textview_event_title"
+                tools:text="Wonderland"  />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
         <TextView
             android:id="@+id/textview_event_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:textAlignment="center"
             android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="@color/md_theme_light_secondary"
@@ -73,8 +112,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/md_theme_light_secondary"
-            android:textColor="@color/md_theme_light_onSecondary"
+            android:backgroundTint="@color/md_theme_light_primary"
+            android:textColor="@color/md_theme_light_onPrimary"
             tools:text="JOIN" />
 
     </LinearLayout>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,8 +45,6 @@ public class SignupFragment extends Fragment {
 
     private SignupFragmentBinding signupFragmentBinding;
 
-    protected static final int LIMIT_AGE = 16;
-
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -78,11 +77,19 @@ public class SignupFragment extends Fragment {
 
         signupFragmentBinding.buttonRegister.setOnClickListener(v -> {
 
+            signupFragmentBinding.progressBar.setVisibility(ProgressBar.VISIBLE);
+
             String email = signupFragmentBinding.email.getEditText().getText().toString().trim();
             String password = signupFragmentBinding.insertPassword.getEditText().getText().toString().trim();
             String confirmPassword = signupFragmentBinding.confirmpasswordSignup.getEditText().getText().toString().trim();
 
-            if (true) {
+            if (validFields(email, password, confirmPassword)) {
+
+                //resetto gli errori
+                signupFragmentBinding.email.setError(null);
+                signupFragmentBinding.insertPassword.setError(null);
+                signupFragmentBinding.confirmpasswordSignup.setError(null);
+
                 if (!userViewModel.isAuthenticationError()) {
                     userViewModel.getUserMutableLiveData(email, password, false).observe(
                             getViewLifecycleOwner(), result -> {
@@ -91,10 +98,12 @@ public class SignupFragment extends Fragment {
                                     userViewModel.setAuthenticationError(false);
                                     Bundle bundle = new Bundle();
                                     bundle.putParcelable("user", user);
+                                    signupFragmentBinding.progressBar.setVisibility(ProgressBar.GONE);
                                     Navigation.findNavController(view).navigate(
                                             R.id.navigate_to_detailsFragment, bundle);
                                 } else {
                                     userViewModel.setAuthenticationError(true);
+                                    signupFragmentBinding.progressBar.setVisibility(ProgressBar.GONE);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                             getErrorMessage(((Result.Error) result).getMessage()),
                                             Snackbar.LENGTH_SHORT).show();
@@ -104,9 +113,9 @@ public class SignupFragment extends Fragment {
                     userViewModel.getUser(email, password, false);
                 }
             } else {
-                userViewModel.setAuthenticationError(true);
+                signupFragmentBinding.progressBar.setVisibility(ProgressBar.GONE);
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
+                        R.string.check_signup_data_message, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -124,14 +133,16 @@ public class SignupFragment extends Fragment {
     }
 
 
-    private boolean validFields(String fullName, String date, String email, String password1, String password2) {
+    private boolean validFields(String email, String password1, String password2) {
+        boolean result = true;
+
         if (!EmailValidator.getInstance().isValid((email))) {
             signupFragmentBinding.email.setError(getString(R.string.error_email));
-            return false;
+            result = false;
         } else {
             signupFragmentBinding.email.setError(null);
         }  if (password1 == null) {
-            signupFragmentBinding.insertPassword.setError(getString(R.string.error_password_invalid));
+            signupFragmentBinding.insertPassword.setError(getString(R.string.error_password_null));
             return false;
         }
 
@@ -166,6 +177,6 @@ public class SignupFragment extends Fragment {
             signupFragmentBinding.insertPassword.setError(null);
             signupFragmentBinding.confirmpasswordSignup.setError(null);
         }
-        return true;
+        return result;
     }
 }

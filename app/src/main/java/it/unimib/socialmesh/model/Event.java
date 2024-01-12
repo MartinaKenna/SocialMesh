@@ -167,9 +167,9 @@ public class Event implements Parcelable {
 
         int count = 0;
         StringBuilder date = new StringBuilder();
-        if (dates != null && dates.getStart() != null && dates.getStart().getDateTime() != null){
-            while (count < dates.getStart().getDateTime().length()) {
-                char character = dates.getStart().getDateTime().charAt(count);
+        if (dates != null && dates.getStart() != null && dates.getStart().getLocalDate() != null){
+            while (count < dates.getStart().getLocalDate().length()) {
+                char character = dates.getStart().getLocalDate().charAt(count);
                 if (character == 'T') {
                     return date.toString();
                 }
@@ -180,6 +180,31 @@ public class Event implements Parcelable {
 
 
         return date.toString();
+    }
+
+    public String getLocalDateAndTime() {
+        String startDate = null;
+        String startTime = null;
+        if(this.dates != null && this.dates.getStart() != null && this.dates.getStart().getLocalDate() != null) {
+            startDate = this.dates.getStart().getLocalDate();
+            if(this.dates.getStart().getLocalTime() != null)
+                startTime = this.dates.getStart().getLocalTime();
+        }
+        if(startDate != null && startTime != null)
+            return (startDate + "\n" + startTime);
+        else {
+            if(startDate != null)
+                return startDate;
+        }
+
+        return null;
+    }
+
+    public String getPlaceName() {
+        if(this.getEmbedded().getVenues().get(0).getName() != null)
+            return this.getEmbedded().getVenues().get(0).getName();
+        else
+            return null;
     }
 
 
@@ -239,6 +264,15 @@ public class Event implements Parcelable {
     public String getUrlImages() {
         if (images != null && !images.isEmpty()) {
             return images.get(0).getUrlImages();
+        } else {
+            // Se la lista è vuota o nulla, restituisci un URL di fallback o una stringa vuota
+            return "URL di fallback o stringa vuota";
+        }
+    }
+
+    public String getUrlImagesHD() {
+        if (images != null && !images.isEmpty()) {
+            return images.get(7).getUrlImages();
         } else {
             // Se la lista è vuota o nulla, restituisci un URL di fallback o una stringa vuota
             return "URL di fallback o stringa vuota";

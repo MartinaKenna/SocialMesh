@@ -1,6 +1,8 @@
 package it.unimib.socialmesh.util;
 
 public class Constants {
+
+    public static final int LIMIT_AGE = 16;
     public static final String USA = "US";
 
     public static final String FILE_JSON_TEST_API = "EventsApiTest.json";

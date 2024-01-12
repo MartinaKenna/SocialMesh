@@ -31,11 +31,11 @@ public class EventsRepositoryWithLiveData implements IEventsRepositoryWithLiveDa
         Log.d(TAG, "Construct: Started");
     }
     @Override
-    public MutableLiveData<Result> fetchEvents(String type, String city,int size, String startDateTime, String time, long lastUpdate){
+    public MutableLiveData<Result> fetchEvents(String type, String city,int size, String startDateTime, String endDateTime, long lastUpdate){
         Log.d(TAG, "fetchEvents: Started");
       //  long currentTime = System.currentTimeMillis();
        // if (currentTime - lastUpdate > FRESH_TIMEOUT) {
-            eventsRemoteDataSource.getEvents(type, city, size,startDateTime, time);
+            eventsRemoteDataSource.getEvents(type, city, size,startDateTime, endDateTime);
        // } else {
           //  eventsLocalDataSource.getEvents();
      //   }
