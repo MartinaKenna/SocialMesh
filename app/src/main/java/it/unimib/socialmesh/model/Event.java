@@ -125,7 +125,7 @@ public class Event implements Parcelable {
 
             while (count < name.length()) {
                 char character = name.charAt(count);
-                if (character == '-' || character == ':') {
+                if (character == '-' || character == ':' || character == ' ') {
                     return word.toString();
                 }
                 word.append(character);

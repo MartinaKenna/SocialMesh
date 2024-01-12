@@ -1,8 +1,6 @@
 package it.unimib.socialmesh.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
@@ -23,27 +20,24 @@ import java.util.List;
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.jsonFields.Location;
-import it.unimib.socialmesh.ui.main.EventFragment;
-import it.unimib.socialmesh.ui.main.EventFragmentDirections;
 import it.unimib.socialmesh.ui.main.HomeActivity;
 
 public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerViewEventsAdapter.EventsViewHolder> {
     private static final String TAG = RecyclerViewEventsAdapter.class.getSimpleName();
     private final int viewType;
-    private final List<Event> eventsList; // Lista originale
+    private final  List<Event> eventsList; // Lista originale
     private List<Event> filteredList; // Lista filtrata
     private int genre, km;
     private final OnItemClickListener onItemClickListener;
     private Double userLongitude, userLatitude;
     Context context;
-    View parentView;
 
     public interface OnItemClickListener {
         void onEventItemClick(Event event);
     }
 
 
-    public RecyclerViewEventsAdapter(Context context, Double latitude, Double longitude, List<Event> eventsList, int viewType,View parentView,
+    public RecyclerViewEventsAdapter(Context context, Double latitude, Double longitude, List<Event> eventsList, int viewType,
                                      OnItemClickListener onItemClickListener) {
         this.eventsList = eventsList;
         this.viewType = viewType;
@@ -53,7 +47,6 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         this.userLongitude = longitude;
         this.userLatitude = latitude;
         this.km = 10000000;
-        this.parentView = parentView;
 
     }
 
@@ -77,10 +70,11 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
                 + Math.cos(Math.toRadians(startLat)) * Math.cos(Math.toRadians(endLat))
                 * Math.sin(longDistance / 2) * Math.sin(longDistance / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
         return earthRadius * c;
     }
 
-        public void filterByQuery(String query){
+    public void filterByQuery(String query){
         filteredList.clear();
         for (Event event : eventsList) {
             if (event.getGenreName().equalsIgnoreCase(query)) {
@@ -129,54 +123,28 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         Event event = filteredList.get(position);
         //eventuale selezione per far stampare certe cose solo in una recycler o in entrambe
         if (viewType == 0) {
-
-            if (position == getItemCount() - 1) {
-                //holder.imageView.setImageResource(R.drawable.last_recycler);
-                holder.itemView.setOnClickListener(v -> {
-
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("eventList", new ArrayList<>(eventsList));
-
-                    EventFragmentDirections.ActionEventFragmentToAllEventFragment action=
-                    EventFragmentDirections.actionEventFragmentToAllEventFragment(0, eventsList.toArray(new Event[0]));
-
-                    
-                    Navigation.findNavController(parentView).navigate(action);
-                });
-            }
-            else{
-
-                if(userLatitude != null && userLongitude != null){
-                    for (Event events : filteredList) {
-                        double eventLatitude = event.getLatitude();
-                        double eventLongitude = event.getLongitude();
-                        double distance = distance(userLatitude, userLongitude, eventLatitude, eventLongitude);
-                        // possiamo aggiungere la possibilità di filtrare per 5km, 10km, 50km, illimitato
-                        if (distance <= km) { //10km
-                            holder.bind(event.getName1(), event.getDates1(), event.getUrlImages());
-                        }
+            if(userLatitude != null && userLongitude != null){
+                for (Event events : filteredList) {
+                    double eventLatitude = event.getLatitude();
+                    double eventLongitude = event.getLongitude();
+                    double distance = distance(userLatitude, userLongitude, eventLatitude, eventLongitude);
+                    // possiamo aggiungere la possibilità di filtrare per 5km, 10km, 50km, illimitato
+                    if (distance <= km) { //10km
+                        holder.bind(event.getName1(), event.getDates1(), event.getUrlImages());
                     }
                 }
             }
         } else {
-
-            if (position == getItemCount() - 1) {
-                //holder.imageView.setImageResource(R.drawable.last_recycler);
-                holder.itemView.setOnClickListener(v -> {
-                    EventFragmentDirections.ActionEventFragmentToAllEventFragment action=
-                            EventFragmentDirections.actionEventFragmentToAllEventFragment(1,eventsList.toArray(new Event[0]));
-                    Navigation.findNavController(parentView).navigate(action);
-                });
-            }
-            else{
-                holder.bind(event.getName1(), event.getDates1(),event.getUrlImages());
-            }
-            }
+            holder.bind(event.getName1(), event.getDates1(),event.getUrlImages());
         }
+    }
 
     @Override
     public int getItemCount() {
-        return Math.min(filteredList.size(), 4);
+        if (filteredList != null) {
+            return filteredList.size();
+        }
+        return 0;
     }
     public void updateData() {
         // Aggiorna la lista degli eventi
@@ -195,7 +163,6 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
     public void updateLocation(Double userLatitude, Double userLongitude){
         this.userLatitude = userLatitude;
         this.userLongitude = userLongitude;
-        notifyDataSetChanged();
     }
 
     public class EventsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -227,6 +194,8 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View v) {
+            Log.d(TAG, "onClick called");
+
             // Chiamare il listener solo se è stato impostato
             if (onItemClickListener != null) {
                 int position = getAdapterPosition();
