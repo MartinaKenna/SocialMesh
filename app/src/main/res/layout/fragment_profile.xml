@@ -8,7 +8,6 @@
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/md_theme_light_background"
         android:paddingBottom="20dp">
 
         <!-- Immagine Utente -->
@@ -49,21 +48,19 @@
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text="@string/nome_cognome"
                 android:textColor="@color/md_theme_light_primary"
+                android:text="@string/nome_cognome"
                 android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/tvAge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Age"
+                android:layout_marginStart="7dp"
+                android:layout_toEndOf="@+id/userName"
+                android:text="Eta"
                 android:textColor="@color/md_theme_light_primary"
-                android:textSize="32sp"
-                android:fontFamily="sans-serif-light"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@+id/userName" />
+                android:textSize="32sp" />
 
         </RelativeLayout>
 
@@ -76,7 +73,6 @@
             android:fontFamily="sans-serif"
             android:text="@string/paese_nazione"
             android:textAllCaps="true"
-            android:textColor="@color/md_theme_light_primary"
             android:textSize="14sp" />
 
         <ImageView
@@ -99,13 +95,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rellay1"
         android:orientation="horizontal"
-        android:background="@color/md_theme_light_background"/>
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linlay1"
-        android:background="@color/md_theme_light_background">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,7 +110,6 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
-            android:background="@color/md_theme_light_background"
             android:orientation="vertical">
 
             <LinearLayout
@@ -122,7 +117,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_below="@+id/tv_address"
-                android:background="@color/md_theme_light_background"
                 android:orientation="vertical">
 
                 <TextView
@@ -141,14 +135,13 @@
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-light"
                     android:text="@string/email"
-                    android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/grey" />
+                    android:background="@color/md_theme_light_outline" />
 
             </LinearLayout>
 
@@ -158,7 +151,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:background="@color/md_theme_light_background"
                 android:orientation="vertical">
 
                 <TextView
@@ -174,14 +166,13 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="@string/data_di_nascita"
-                    android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/grey" />
+                    android:background="@color/md_theme_light_outline" />
 
             </LinearLayout>
             <Space
@@ -193,7 +184,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/userDate"
                 android:layout_marginTop="15dp"
-                android:background="@color/md_theme_light_background"
                 android:orientation="horizontal">
 
                 <TextView
@@ -220,7 +210,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="15dp"
-                android:background="@color/grey" />
+                />
 
 
         </LinearLayout>
@@ -232,9 +222,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:text="@string/logout"
-        android:backgroundTint="@color/md_theme_light_secondary"
-        android:textColor="@color/md_theme_light_onSecondary" />
+        android:text="@string/logout" />
 
 </RelativeLayout>
 

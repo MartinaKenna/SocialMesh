@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/md_theme_light_background">
+   >
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_light_background"
     android:descendantFocusability="blocksDescendants">
 
     <Button
@@ -22,7 +21,6 @@
         android:layout_marginTop="16dp"
         style="@style/Widget.Material3.Button.TextButton"
         android:text="Fine"
-        android:textColor="@color/socialmesh_orange"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -34,7 +32,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:padding="5dp"
-        android:background="@drawable/circle"
          />
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textDescription"
@@ -55,7 +52,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/box_text"
+        android:background="?attr/myBackgroundDrawable"
         android:padding="8dp"
         android:orientation="vertical">
 
@@ -86,7 +83,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/box_text"
+        android:background="?attr/myBackgroundDrawable"
         android:padding="8dp"
         android:orientation="vertical">
 
@@ -110,7 +107,6 @@
         android:layout_marginEnd="-1dp"
         android:padding="4dp"
         android:text="@string/modifica2"
-        android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         app:textAllCaps="false"
@@ -124,7 +120,6 @@
         android:layout_below="@id/linlay3"
         android:layout_alignParentEnd="true"
         android:text="A͟g͟g͟i͟u͟n͟g͟i͟"
-        android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         app:textAllCaps="false"
@@ -138,7 +133,6 @@
         android:layout_below="@id/linlay2"
         android:layout_alignParentEnd="true"
         android:text="@string/modifica2"
-        android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         app:textAllCaps="false"

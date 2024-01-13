@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -76,6 +77,9 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding fragmentProfileBinding;
     private LocationRequest locationRequest;
     private Double latitude, longitude;
+    private Switch themeSwitch;
+    private int currentTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+
     public ProfileFragment() {}
 
     @Override
@@ -98,7 +102,7 @@ public class ProfileFragment extends Fragment {
                     if (data != null && data.hasExtra("image_url")) {
                         String imageUrl = data.getStringExtra("image_url");
                         CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
-                        drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                        drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
                         drawable.setCenterRadius(30f);
                         drawable.setStrokeWidth(5f);
                         drawable.start();
@@ -121,7 +125,25 @@ public class ProfileFragment extends Fragment {
         profile_image_view = fragmentProfileBinding.profileImageView;
         String userId = FireBaseUtil.currentUserId();
         userViewModel.obtainUserData(userId);
+        Switch themeSwitch = fragmentProfileBinding.switchDarkMode;
+        Log.d(TAG, "themeSwitch is null: " + (themeSwitch == null));
+        themeSwitch.setChecked(currentTheme != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Cambia a tema scuro
+                currentTheme = AppCompatDelegate.MODE_NIGHT_YES;
+                Log.d("Profile","night mode");
+            } else {
+                // Cambia a tema chiaro
+                currentTheme = AppCompatDelegate.MODE_NIGHT_NO;
+            }
 
+            // Applica il nuovo tema all'attività corrente
+            AppCompatDelegate.setDefaultNightMode(currentTheme);
+
+            // Ricrea l'attività per applicare il nuovo tema
+
+        });
         fragmentProfileBinding.buttonSettings.setOnClickListener(view -> {
             Intent intent = new Intent(requireActivity(), SettingsActivity.class);
             settingsLauncher.launch(intent);
@@ -159,25 +181,23 @@ public class ProfileFragment extends Fragment {
                 }
             });
              */
-            Switch darkModeSwitch = fragmentProfileBinding.switchDarkMode;
-            darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (isChecked) {
-                    // Modalità Dark
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    requireActivity().recreate();
-                }});
+
+
+
                 userViewModel.logout();
             Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_welcomeActivity);
 
         });
-    }
+
+}
+
 
     private void loadProfileImage() {
         String currentUserId =FireBaseUtil.currentUserId();
         userViewModel.getProfileImageUrl(currentUserId).observe(getViewLifecycleOwner(), imageUrl -> {
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
-                drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
                 drawable.setCenterRadius(30f);
                 drawable.setStrokeWidth(5f);
                 drawable.start();

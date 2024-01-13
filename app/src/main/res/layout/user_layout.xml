@@ -8,7 +8,6 @@
         android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Riccardo"
         android:textSize="30sp"
         android:textStyle="bold"
         android:layout_marginStart="10dp" />
@@ -18,6 +17,6 @@
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/black"/>
+        android:background="@color/md_theme_light_outline"/>
 
 </RelativeLayout>

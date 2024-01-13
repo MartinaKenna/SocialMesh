@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <TextView
@@ -11,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Social:"
-        android:textColor="@color/black"
+
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
@@ -55,7 +54,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sport:"
-        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
@@ -129,7 +127,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cucina"
-        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
@@ -189,7 +186,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Musica"
-        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
@@ -231,7 +227,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Viaggi"
-        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
@@ -285,7 +280,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hobby:"
-        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
@@ -369,7 +363,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lavoro:"
-        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
@@ -424,7 +417,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Varie:"
-        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
@@ -504,7 +496,7 @@
         android:text="Navigate ->"
         android:layout_marginStart="300dp"
         android:layout_marginTop="15dp"
-        android:textColor="@color/black"/>
+       />
 
 
 </LinearLayout>

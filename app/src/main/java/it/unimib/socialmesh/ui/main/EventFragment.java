@@ -71,7 +71,7 @@ public class EventFragment extends Fragment{
     private static final String TAG = EventFragment.class.getSimpleName();
     private TextView nearyou, lastadded;
     private List<Event> eventsList;
-
+    private LocationCallback locationCallback;
     private RecyclerView recyclerViewEvents, recyclerViewEventsNearYou;
     private View rootView, listEvents, listNearyou, barra1, barra2, barra3;
     private SearchView searchView;
@@ -93,7 +93,7 @@ public class EventFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setRetainInstance(true);
         IEventsRepositoryWithLiveData eventsRepositoryWithLiveData =
                 ServiceLocator.getInstance().getEventRepository(
                         requireActivity().getApplication());
@@ -475,7 +475,7 @@ public class EventFragment extends Fragment{
     private void startLocationUpdates(Context context) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-            LocationCallback locationCallback = new LocationCallback() {
+            locationCallback = new LocationCallback() {
                 @Override
                 public void onLocationResult(@NonNull LocationResult locationResult) {
                     super.onLocationResult(locationResult);
@@ -484,8 +484,13 @@ public class EventFragment extends Fragment{
                         int index = locationResult.getLocations().size() - 1;
                         latitude = locationResult.getLocations().get(index).getLatitude();
                         longitude = locationResult.getLocations().get(index).getLongitude();
-                        recyclerViewEventsAdapterNearYou.updateLocation(latitude, longitude);
-                        recyclerViewEventsAdapter.updateLocation(latitude, longitude);
+                        if (recyclerViewEventsAdapterNearYou != null) {
+                            recyclerViewEventsAdapterNearYou.updateLocation(latitude, longitude);
+                        }
+
+                        if (recyclerViewEventsAdapter != null) {
+                            recyclerViewEventsAdapter.updateLocation(latitude, longitude);
+                        }
 
                         //salvo tutto su firebase sul campo Position
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -541,6 +546,14 @@ public class EventFragment extends Fragment{
         }
 
         return formattedDateTime;
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (locationCallback != null) {
+            FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
+            fusedLocationClient.removeLocationUpdates(locationCallback);
+        }
     }
 }
 

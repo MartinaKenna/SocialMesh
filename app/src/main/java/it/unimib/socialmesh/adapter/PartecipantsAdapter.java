@@ -79,7 +79,7 @@ import it.unimib.socialmesh.model.User;
                 StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child("pictures").child(userId).child("profilePic.jpg");
                 userImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     CircularProgressDrawable drawable = new CircularProgressDrawable(itemView.getContext());
-                    drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                    drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
                     drawable.setCenterRadius(30f);
                     drawable.setStrokeWidth(5f);
                     drawable.start();

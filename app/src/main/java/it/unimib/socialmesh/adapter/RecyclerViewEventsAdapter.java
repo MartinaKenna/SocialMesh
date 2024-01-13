@@ -181,7 +181,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
             textViewName.setText(name);
             textViewDate.setText(date);
             CircularProgressDrawable drawable = new CircularProgressDrawable(itemView.getContext());
-            drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+            drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
             drawable.setCenterRadius(30f);
             drawable.setStrokeWidth(5f);
             drawable.start();
