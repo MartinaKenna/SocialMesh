@@ -37,7 +37,7 @@ public class PhotosViewPagerAdapter extends RecyclerView.Adapter<PhotosViewPager
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
         Uri imageUri = photoUris.get(position);
         CircularProgressDrawable drawable = new CircularProgressDrawable(context.getApplicationContext());
-        drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+        drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
         drawable.setCenterRadius(30f);
         drawable.setStrokeWidth(5f);
         drawable.start();

@@ -26,7 +26,6 @@
                     android:id="@+id/item3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
                     android:scaleType="centerCrop" />
         </androidx.cardview.widget.CardView>
 
@@ -37,7 +36,7 @@
             android:layout_below="@id/cardview"
             android:layout_centerHorizontal="true"
             android:text="Titolo"
-            android:textColor="@color/black"/>
+            android:textColor="@color/md_theme_light_primaryContainer"/>
 
         <TextView
             android:id="@+id/item2"
@@ -46,7 +45,7 @@
             android:layout_below="@id/item1"
             android:layout_centerHorizontal="true"
             android:text="Data"
-            android:textColor="@color/black"/>
+            android:textColor="@color/md_theme_light_primaryContainer"/>
 
 
 </RelativeLayout>

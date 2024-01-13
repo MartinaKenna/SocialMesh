@@ -182,7 +182,7 @@ public class ChatActivity extends AppCompatActivity {
         userViewModel.getProfileImageUrl(otherUserID).observe(this, imageUrl -> {
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 CircularProgressDrawable drawable = new CircularProgressDrawable(this);
-                drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+                drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
                 drawable.setCenterRadius(30f);
                 drawable.setStrokeWidth(5f);
                 drawable.start();

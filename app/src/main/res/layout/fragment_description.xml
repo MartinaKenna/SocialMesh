@@ -54,7 +54,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="16dp"
-        android:textColor="@color/socialmesh_orange"
         android:textSize="16dp"
         android:background="?android:attr/selectableItemBackground"
         android:text="Conferma"
