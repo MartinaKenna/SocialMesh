@@ -131,7 +131,7 @@ public class EventFragment extends Fragment{
         cardview_filter = view.findViewById(R.id.cardview_filter);
         cardview_search = view.findViewById(R.id.cardview_search);
         cardview_reset = view.findViewById(R.id.cardview_reset);
-
+        filter = view.findViewById(R.id.button);
 
         SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         boolean isFirstRun = preferences.getBoolean("app_run", true);
@@ -175,7 +175,6 @@ public class EventFragment extends Fragment{
         //richiamo il processo per la posizione
 
         //ottengo la posizione
-        filter = view.findViewById(R.id.button);
 
         filter.setOnClickListener(v -> {
             View popupView = inflater.inflate(R.layout.popupview, container, false);
