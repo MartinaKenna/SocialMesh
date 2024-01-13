@@ -10,9 +10,9 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Social:"
+        android:text="Social"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:textStyle="italic"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
@@ -48,15 +48,16 @@
 
         </LinearLayout>
 
-
     </HorizontalScrollView>
+
+
     <TextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sport:"
+        android:text="Sport"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:textStyle="italic"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
@@ -130,7 +131,7 @@
         android:layout_height="wrap_content"
         android:text="Cucina"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:textStyle="italic"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
@@ -184,13 +185,14 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+
     <TextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Musica"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:textStyle="italic"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
@@ -226,13 +228,14 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+
     <TextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Viaggi"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:textStyle="italic"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
@@ -280,13 +283,14 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+
     <TextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hobby:"
+        android:text="Hobby"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:textStyle="italic"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
@@ -368,9 +372,9 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lavoro:"
+        android:text="Lavoro"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:textStyle="italic"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
@@ -423,9 +427,9 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Varie:"
+        android:text="Varie"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:textStyle="italic"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
@@ -505,6 +509,7 @@
         android:layout_marginStart="300dp"
         android:layout_marginTop="15dp"
         android:textColor="@color/black"/>
+
 
 
 </LinearLayout>

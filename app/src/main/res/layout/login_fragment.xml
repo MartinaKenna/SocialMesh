@@ -15,6 +15,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.028">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/email"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-60dp"
+            android:text="SOCIAL MESH"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email"
             android:layout_width="wrap_content"

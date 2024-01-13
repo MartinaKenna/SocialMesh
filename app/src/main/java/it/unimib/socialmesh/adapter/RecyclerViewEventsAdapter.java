@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,12 +25,10 @@ import it.unimib.socialmesh.ui.main.HomeActivity;
 
 public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerViewEventsAdapter.EventsViewHolder> {
     private static final String TAG = RecyclerViewEventsAdapter.class.getSimpleName();
-    private final int viewType;
-    private final  List<Event> eventsList; // Lista originale
+    private final List<Event> eventsList; // Lista originale
     private List<Event> filteredList; // Lista filtrata
-    private int genre, km;
+    private int genre;
     private final OnItemClickListener onItemClickListener;
-    private Double userLongitude, userLatitude;
     Context context;
 
     public interface OnItemClickListener {
@@ -37,17 +36,12 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
 
-    public RecyclerViewEventsAdapter(Context context, Double latitude, Double longitude, List<Event> eventsList, int viewType,
+    public RecyclerViewEventsAdapter(Context context, List<Event> eventsList,
                                      OnItemClickListener onItemClickListener) {
         this.eventsList = eventsList;
-        this.viewType = viewType;
-        this.filteredList= new ArrayList<>(eventsList);
+        this.filteredList = new ArrayList<>(eventsList);
         this.onItemClickListener = onItemClickListener;
         this.context = context;
-        this.userLongitude = longitude;
-        this.userLatitude = latitude;
-        this.km = 10000000;
-
     }
 
     public void filterByGenre(String genre) {
@@ -60,30 +54,16 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         notifyDataSetChanged();
     }
 
-    public static double distance(double startLat, double startLong, double endLat, double endLong) {
-        int earthRadius = 6371; // in chilometri
-
-        double latDistance = Math.toRadians(endLat - startLat);
-        double longDistance = Math.toRadians(endLong - startLong);
-
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(startLat)) * Math.cos(Math.toRadians(endLat))
-                * Math.sin(longDistance / 2) * Math.sin(longDistance / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        return earthRadius * c;
-    }
-
-    public void filterByQuery(String query){
+    public void filterByQuery(String query) {
         filteredList.clear();
         for (Event event : eventsList) {
             if (event.getGenreName().equalsIgnoreCase(query)) {
                 filteredList.add(event);
             }
-            if (event.getName().equalsIgnoreCase(query)){
+            if (event.getName().equalsIgnoreCase(query)) {
                 filteredList.add(event);
             }
-            if(event.getDates1().equalsIgnoreCase(query)){
+            if (event.getDates1().equalsIgnoreCase(query)) {
                 filteredList.add(event);
             }
         }
@@ -94,49 +74,23 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
 
-    public void setKM(Integer km){
-        this.km=km;
-        notifyDataSetChanged();
-    }
-
-    public void setItems(List<Event> eventsList){
+    public void setItems(List<Event> eventsList) {
         filteredList.clear();
         filteredList.addAll(eventsList);
         notifyDataSetChanged();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return viewType;
-    }
-
     @NonNull
     @Override
     public EventsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int layoutResId = viewType == 0 ? R.layout.list_nearyou : R.layout.event_list;
-        View view = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_list, parent, false);
         return new EventsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EventsViewHolder holder, int position) {
         Event event = filteredList.get(position);
-        //eventuale selezione per far stampare certe cose solo in una recycler o in entrambe
-        if (viewType == 0) {
-            if(userLatitude != null && userLongitude != null){
-                for (Event events : filteredList) {
-                    double eventLatitude = event.getLatitude();
-                    double eventLongitude = event.getLongitude();
-                    double distance = distance(userLatitude, userLongitude, eventLatitude, eventLongitude);
-                    // possiamo aggiungere la possibilità di filtrare per 5km, 10km, 50km, illimitato
-                    if (distance <= km) { //10km
-                        holder.bind(event.getName1(), event.getDates1(), event.getUrlImages());
-                    }
-                }
-            }
-        } else {
-            holder.bind(event.getName1(), event.getDates1(),event.getUrlImages());
-        }
+        holder.bind(event.getName1(), event.getDates1(), event.getUrlImages());
     }
 
     @Override
@@ -146,6 +100,7 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         }
         return 0;
     }
+
     public void updateData() {
         // Aggiorna la lista degli eventi
         eventsList.clear();
@@ -154,16 +109,13 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
         // Notifica la RecyclerView
         notifyDataSetChanged();
     }
+
     public void clearFilters() {
         filteredList.clear();
         filteredList.addAll(eventsList);
         notifyDataSetChanged();
     }
 
-    public void updateLocation(Double userLatitude, Double userLongitude){
-        this.userLatitude = userLatitude;
-        this.userLongitude = userLongitude;
-    }
 
     public class EventsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView textViewName, textViewDate;
@@ -194,14 +146,9 @@ public class RecyclerViewEventsAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "onClick called");
-
-            // Chiamare il listener solo se è stato impostato
-            if (onItemClickListener != null) {
+            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemClickListener.onEventItemClick(filteredList.get(position));
-                }
+                onItemClickListener.onEventItemClick(filteredList.get(position));
             }
         }
     }

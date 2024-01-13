@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_senza_scritta"
     app:layout_constraintEnd_toStartOf="parent"
     tools:context=".ui.welcome.WelcomeActivity"
     tools:layout_editor_absoluteY="0dp">

@@ -2,6 +2,7 @@ package it.unimib.socialmesh.ui.main;
 
 import android.content.Context;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -60,6 +62,7 @@ import android.widget.Toast;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
+import it.unimib.socialmesh.adapter.RecyclerViewEventsNearYouAdapter;
 import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
@@ -75,7 +78,8 @@ public class EventFragment extends Fragment{
     private RecyclerView recyclerViewEvents, recyclerViewEventsNearYou;
     private View rootView, listEvents, listNearyou, barra1, barra2, barra3;
     private SearchView searchView;
-    private RecyclerViewEventsAdapter recyclerViewEventsAdapterNearYou, recyclerViewEventsAdapter;
+    private RecyclerViewEventsAdapter recyclerViewEventsAdapter;
+    private RecyclerViewEventsNearYouAdapter recyclerViewEventsAdapterNearYou;
     private EventViewModel eventViewModel;
     private Button filter, button1, button2,button3, viewAll, buttonKM, button4, button5, button6;
     private PopupWindow popupWindow, popupWindow2;
@@ -83,6 +87,7 @@ public class EventFragment extends Fragment{
     private ProgressBar progressBar;
     private LocationRequest locationRequest;
     private Double latitude, longitude;
+    private CardView cardview_km, cardview_search, cardview_filter, cardview_reset;
 
 
     //questo serve
@@ -122,34 +127,51 @@ public class EventFragment extends Fragment{
         lastadded = view.findViewById(R.id.lastAdded);
         viewAll = view.findViewById(R.id.viewAll);
         buttonKM = view.findViewById(R.id.buttonKM);
-        Context context = requireContext();
-        int screenHeight = getResources().getDisplayMetrics().heightPixels;
+        cardview_km= view.findViewById(R.id.cardview_km);
+        cardview_filter = view.findViewById(R.id.cardview_filter);
+        cardview_search = view.findViewById(R.id.cardview_search);
+        cardview_reset = view.findViewById(R.id.cardview_reset);
 
-      /*  buttonAll.setTranslationX((1000));
-        hipHopRap.setTranslationX(-1000);
-        latin.setTranslationY(screenHeight);
-        rock.setTranslationX(1000);
-        recyclerViewEvents.setTranslationX(1000);
-        recyclerViewEventsNearYou.setTranslationX(1000);
-        searchView.setTranslationY(screenHeight);
-        barra2.setTranslationX(-1000);
-        barra1.setTranslationY(screenHeight);
-        barra3.setTranslationX(1000);
-        nearyou.setTranslationX(1500);
-        lastadded.setTranslationX(1500);
-        buttonAll.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(500).start();
-        hipHopRap.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(800).start();
-        latin.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1100).start();
-        rock.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(1400).start();
-        searchView.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1700).start();
-        recyclerViewEventsNearYou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2000).start();
-        recyclerViewEvents.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(2300).start();
-        barra2.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
-        barra1.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
-        barra3.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
-        nearyou.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
-        lastadded.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(3000).start();
-*/
+
+        SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        boolean isFirstRun = preferences.getBoolean("app_run", true);
+
+        if (isFirstRun) {
+            //setto le animazioni
+            int screenHeight = getResources().getDisplayMetrics().heightPixels;
+
+            cardview_km.setTranslationY(screenHeight);
+            cardview_reset.setTranslationY(screenHeight);
+            recyclerViewEvents.setTranslationX(1000f);
+            recyclerViewEventsNearYou.setTranslationX(1000f);
+            searchView.setTranslationY(screenHeight);
+            barra2.setTranslationX(-1000f);
+            barra1.setTranslationY(screenHeight);
+            barra3.setTranslationX(1000f);
+            nearyou.setTranslationX(1500);
+            lastadded.setTranslationX(1500);
+            cardview_search.setTranslationY(screenHeight);
+            cardview_filter.setTranslationY(screenHeight);
+
+            //mostro le animazioni
+            cardview_km.animate().translationY(0f).setDuration(1000).setStartDelay(1700).start();
+            cardview_reset.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 300).start();
+            searchView.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 2 * 300).start();
+            recyclerViewEventsNearYou.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 3 * 300).start();
+            recyclerViewEvents.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 4 * 300).start();
+            barra2.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 5 * 300).start();
+            barra1.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 6 * 300).start();
+            barra3.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 7 * 300).start();
+            nearyou.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 8 * 300).start();
+            lastadded.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 9 * 300).start();
+            cardview_search.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 10 * 300).start();
+            cardview_filter.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 11 * 300).start();
+
+            //Salvo l'informazione che l'app è stata avviata
+            preferences.edit().putBoolean("app_run", false).apply();
+        }
+
+
         //richiamo il processo per la posizione
 
         //ottengo la posizione
@@ -331,8 +353,8 @@ public class EventFragment extends Fragment{
 
     private void initializeAdapters() {
         RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsAdapter(requireContext(),latitude, longitude, eventsList, 0,
-                new RecyclerViewEventsAdapter.OnItemClickListener() {
+        recyclerViewEventsAdapterNearYou = new RecyclerViewEventsNearYouAdapter(requireContext(),latitude, longitude, eventsList,
+                new RecyclerViewEventsNearYouAdapter.OnItemClickListener() {
                     @Override
                     public void onEventItemClick(Event event) {
                         EventFragmentDirections.ActionEventFragmentToEventDetailsFragment action =
@@ -341,7 +363,7 @@ public class EventFragment extends Fragment{
                     }
                 });
 
-        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(requireContext(),latitude, longitude, eventsList, 1,
+        recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(requireContext(), eventsList,
                 new RecyclerViewEventsAdapter.OnItemClickListener() {
                     @Override
                     public void onEventItemClick(Event event) {
@@ -485,7 +507,6 @@ public class EventFragment extends Fragment{
                         latitude = locationResult.getLocations().get(index).getLatitude();
                         longitude = locationResult.getLocations().get(index).getLongitude();
                         recyclerViewEventsAdapterNearYou.updateLocation(latitude, longitude);
-                        recyclerViewEventsAdapter.updateLocation(latitude, longitude);
 
                         //salvo tutto su firebase sul campo Position
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();

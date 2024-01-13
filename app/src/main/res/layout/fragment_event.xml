@@ -9,13 +9,12 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardview"
+            android:id="@+id/cardview_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="40dp">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp">
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/searchView"
@@ -31,7 +30,7 @@
             android:id="@+id/lastAdded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cardview"
+            android:layout_below="@id/cardview_search"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:text="Last Added"
@@ -55,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lastAdded"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp" />
 
@@ -73,34 +72,32 @@
 
         <View
             android:id="@+id/barra"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="1dp"
             android:layout_below="@id/recyclerviewEvents"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginStart="50dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="50dp"
             android:background="@color/black"
             tools:ignore="MissingConstraints" />
         <View
             android:id="@+id/barra2"
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="1dp"
             android:layout_below="@id/recyclerviewEvents"
-            android:layout_marginEnd="370dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="25dp"
+            android:layout_alignParentLeft="true"
             android:background="@color/black"
             tools:ignore="MissingConstraints"
             android:layout_marginTop="20dp"/>
 
         <View
             android:id="@+id/barra3"
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="1dp"
             android:layout_below="@id/recyclerviewEvents"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="370dp"
+            android:layout_marginEnd="25dp"
+            android:layout_alignParentRight="true"
             android:background="@color/black"
             tools:ignore="MissingConstraints"
             android:layout_marginTop="20dp"/>
@@ -117,12 +114,14 @@
             />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/cardview"
-            android:layout_marginStart="40dp"
             android:backgroundTint="@color/md_theme_light_background"
-            app:cardCornerRadius="40dp">
+            app:cardCornerRadius="40dp"
+            android:layout_below="@id/cardview_search"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp">
 
                 <Button
                     android:id="@+id/button"
@@ -136,6 +135,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_km"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -158,17 +158,28 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/container_fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/lastAdded" />
 
-
-        <Button
-            android:id="@+id/viewAll"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:text="Reset Filters"
-            android:textColor="@color/black"
-            android:layout_below="@id/cardview"
-            android:layout_alignParentRight="true"/>
+            android:layout_below="@id/cardview_search"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="10dp"
+            app:cardCornerRadius="40dp">
+
+                <Button
+                    android:id="@+id/viewAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00FFFFFF"
+                    android:text="Reset Filters"
+                    android:textColor="@color/black" />
+
+        </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>
