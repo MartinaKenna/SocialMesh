@@ -45,7 +45,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import static it.unimib.socialmesh.util.Constants.ALL_USA_DMAID;
+import static it.unimib.socialmesh.util.Constants.SIZE_OF_EVENT_SEARCH;
+import static it.unimib.socialmesh.util.Constants.TYPE_OF_EVENT_SEARCH;
+import static it.unimib.socialmesh.util.Constants.WEEKS_OF_EVENT_SEARCH;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -282,7 +287,7 @@ public class EventFragment extends Fragment{
 
         initializeAdapters();
 
-        eventViewModel.getEvents("", "214", 50, "2023-12-30T08:00:00Z", "2024-06-30T08:00:00Z",10).observe(getViewLifecycleOwner(),
+        eventViewModel.getEvents(TYPE_OF_EVENT_SEARCH, ALL_USA_DMAID, SIZE_OF_EVENT_SEARCH, getTodayDateString(), getDateInSomeWeeks(),10).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
                         EventApiResponse eventResponse = ((Result.EventResponseSuccess) result).getData();
@@ -508,6 +513,34 @@ public class EventFragment extends Fragment{
             Snackbar.make(rootView.findViewById(android.R.id.content), "I permessi sono necessari per ottenere la posizione", Snackbar.LENGTH_LONG).setAction("OK", v -> {}).show();
         }
     });
+    private static String getTodayDateString() {
+        LocalDateTime currentDateTime = null;
+        String formattedDateTime = "";
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+            formattedDateTime = currentDateTime.format(formatter);
+        }
+
+        return formattedDateTime;
+    }
+
+    public static String getDateInSomeWeeks() {
+        LocalDateTime currentDateTime = null;
+        String formattedDateTime = "";
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            currentDateTime = LocalDateTime.now();
+            LocalDateTime futureDateTime = currentDateTime.plusWeeks(WEEKS_OF_EVENT_SEARCH);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+            formattedDateTime = futureDateTime.format(formatter);
+        }
+
+        return formattedDateTime;
+    }
 }
 

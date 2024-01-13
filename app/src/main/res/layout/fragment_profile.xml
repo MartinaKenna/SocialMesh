@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Immagine Utente -->
-
     <RelativeLayout
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
@@ -13,6 +11,7 @@
         android:background="@color/md_theme_light_background"
         android:paddingBottom="20dp">
 
+        <!-- Immagine Utente -->
         <RelativeLayout
             android:id="@+id/imgUser"
             android:layout_width="wrap_content"
@@ -36,27 +35,43 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/userName"
+        <!-- Layout Nome e Età -->
+        <RelativeLayout
+            android:id="@+id/layout_name_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/nome_cognome"
-            android:textColor="@color/md_theme_light_primary"
-            android:textSize="32sp" />
+            android:layout_centerHorizontal="true">
 
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/nome_cognome"
+                android:textColor="@color/md_theme_light_primary"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tvAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Age"
+                android:textColor="@color/md_theme_light_primary"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/userName" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/userName"
+            android:layout_below="@+id/layout_name_age"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:text="@string/paese_nazione"
@@ -77,6 +92,7 @@
 
     </RelativeLayout>
 
+
     <LinearLayout
         android:id="@+id/linlay1"
         android:layout_width="match_parent"
@@ -96,16 +112,18 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
             android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:background="@color/md_theme_light_background">
+            android:layout_marginEnd="30dp"
+            android:background="@color/md_theme_light_background"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/md_theme_light_background">
+
+                android:layout_below="@+id/tv_address"
+                android:background="@color/md_theme_light_background"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -118,6 +136,9 @@
                     android:id="@+id/userEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_address"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-light"
                     android:text="@string/email"
                     android:textColor="#000000"
@@ -131,44 +152,14 @@
 
             </LinearLayout>
 
+
             <LinearLayout
+                android:id="@+id/layout_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:orientation="vertical"
-                android:background="@color/md_theme_light_background" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Instagram"
-                    android:textColor="@color/md_theme_light_primary"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="username"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:backgroundTint="?attr/colorOnPrimary"
-                    />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/grey" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical"
-                android:background="@color/md_theme_light_background">
+                android:background="@color/md_theme_light_background"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -178,8 +169,8 @@
                     android:textSize="13sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
                     android:id="@+id/userDate"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="@string/data_di_nascita"
@@ -193,26 +184,57 @@
                     android:background="@color/grey" />
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/buttonLogout"
-                android:layout_width="wrap_content"
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="8dp" />
+            <LinearLayout
+                android:id="@+id/layout_dark_mode"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:text="@string/logout"
-                android:backgroundTint="@color/md_theme_light_secondary"
-                android:textColor="@color/md_theme_light_onSecondary" />
+                android:layout_below="@+id/userDate"
+                android:layout_marginTop="15dp"
+                android:background="@color/md_theme_light_background"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dark Mode"
+                    android:textColor="@color/md_theme_light_primary"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Switch
+                    android:id="@+id/switch_dark_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/grey" />
+
 
         </LinearLayout>
     </RelativeLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    <!-- Altri elementi UI -->
-    <!-- TextViews, Buttons, etc. -->
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="@string/logout"
+        android:backgroundTint="@color/md_theme_light_secondary"
+        android:textColor="@color/md_theme_light_onSecondary" />
 
 </RelativeLayout>
+
