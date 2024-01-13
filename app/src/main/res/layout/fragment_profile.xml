@@ -88,7 +88,7 @@
             android:layout_marginTop="15dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:src="@drawable/baseline_settings_black_36dp" />
+            android:src="@drawable/baseline_person_orange_36dp" />
 
     </RelativeLayout>
 
@@ -120,7 +120,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginTop="15dp"
                 android:layout_below="@+id/tv_address"
                 android:background="@color/md_theme_light_background"
                 android:orientation="vertical">
