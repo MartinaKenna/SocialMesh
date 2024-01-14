@@ -5,8 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Links {
-    public Links() {
-    }
+    public Links() {}
     @Embedded(prefix = "self_")
     @SerializedName("self")
     @Expose

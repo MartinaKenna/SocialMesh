@@ -116,27 +116,17 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ev
     }
 
     @Override
-    public void onSuccessLogout() {
-
-    }
+    public void onSuccessLogout() {}
 
     @Override
-    public void onSuccessFromRemote(EventApiResponse eventApiResponse, long lastUpdate) {
-
-    }
+    public void onSuccessFromRemote(EventApiResponse eventApiResponse, long lastUpdate) {}
 
     @Override
-    public void onFailureFromRemote(Exception exception) {
-
-    }
+    public void onFailureFromRemote(Exception exception) {}
 
     @Override
-    public void onSuccessFromLocal(List<Event> eventsList) {
-
-    }
+    public void onSuccessFromLocal(List<Event> eventsList) {}
 
     @Override
-    public void onFailureFromLocal(Exception exception) {
-
-    }
+    public void onFailureFromLocal(Exception exception) {}
 }

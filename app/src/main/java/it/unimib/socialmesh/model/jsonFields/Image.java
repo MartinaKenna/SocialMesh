@@ -1,14 +1,9 @@
 package it.unimib.socialmesh.model.jsonFields;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Image{
+public class Image {
     private static final String TAG = Image.class.getSimpleName();
 
     public Image() {}
@@ -70,6 +65,4 @@ public class Image{
     public void setFallback(Boolean fallback) {
         this.fallback = fallback;
     }
-
-
 }

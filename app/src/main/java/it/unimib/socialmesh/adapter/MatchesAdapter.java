@@ -1,7 +1,9 @@
 package it.unimib.socialmesh.adapter;
 
+import static it.unimib.socialmesh.util.Constants.FIREBASE_PICTURES_COLLECTION;
+import static it.unimib.socialmesh.util.Constants.FIREBASE_PROFILE_PIC_NAME;
+
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +24,6 @@ import java.util.ArrayList;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.User;
-import it.unimib.socialmesh.ui.main.ChatActivity;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.UserViewHolder> {
 
@@ -81,7 +82,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.UserView
             textName = itemView.findViewById(R.id.textview_username);
         }
         void bind(String userName, MatchesAdapter.OnItemClickListener clickListener, String userId){
-            StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child("pictures").child(userId).child("profilePic.jpg");
+            StorageReference userImageRef = FirebaseStorage.getInstance().getReference().child(FIREBASE_PICTURES_COLLECTION).child(userId).child(FIREBASE_PROFILE_PIC_NAME);
             userImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 CircularProgressDrawable drawable = new CircularProgressDrawable(itemView.getContext());
                 drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);

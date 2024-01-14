@@ -7,11 +7,6 @@ import androidx.lifecycle.ViewModelProvider;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
 
 
-/**
- * Custom ViewModelProvider to be able to have a custom constructor
- * for the UserViewModel class.
- */
-
 public class UserViewModelFactory implements ViewModelProvider.Factory {
 
     private final IUserRepository userRepository;

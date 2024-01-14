@@ -2,9 +2,8 @@ package it.unimib.socialmesh.data.source.event;
 
 import androidx.annotation.NonNull;
 
-import it.unimib.socialmesh.data.source.event.BaseEventsRemoteDataSource;
-import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.data.service.EventApiService;
+import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.util.ServiceLocator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,8 +26,8 @@ public class EventsRemoteDataSource extends BaseEventsRemoteDataSource {
                 if(response.body() != null && response.isSuccessful()){
                     eventCallback.onSuccessFromRemote(response.body(),System.currentTimeMillis());
                 }
-                    else {
-                        eventCallback.onFailureFromRemote(new Exception("Errore api key"));
+                else {
+                    eventCallback.onFailureFromRemote(new Exception("Errore api key"));
                 }
             }
 
@@ -38,5 +37,4 @@ public class EventsRemoteDataSource extends BaseEventsRemoteDataSource {
             }
         });
     }
-
 }

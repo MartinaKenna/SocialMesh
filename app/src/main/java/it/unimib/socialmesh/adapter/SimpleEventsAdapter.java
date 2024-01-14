@@ -43,7 +43,6 @@ public class SimpleEventsAdapter extends RecyclerView.Adapter<SimpleEventsAdapte
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_event, parent, false);
 
         return new ViewHolder(view);
-
     }
 
     @Override
@@ -96,9 +95,6 @@ public class SimpleEventsAdapter extends RecyclerView.Adapter<SimpleEventsAdapte
                     .placeholder(drawable)
                     .error(drawable)
                     .into(imageViewEvent);
-
-
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

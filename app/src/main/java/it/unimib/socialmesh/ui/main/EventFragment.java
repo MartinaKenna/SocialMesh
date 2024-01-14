@@ -89,11 +89,9 @@ public class EventFragment extends Fragment{
     private Double latitude, longitude;
     private CardView cardview_km, cardview_search, cardview_filter, cardview_reset;
 
-
-    //questo serve
     public EventFragment() {}
 
-    public static EventFragment newInstance(String param1, String param2) { return new EventFragment(); }
+    public static EventFragment newInstance() { return new EventFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

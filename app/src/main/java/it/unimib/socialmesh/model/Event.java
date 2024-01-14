@@ -25,8 +25,6 @@ import it.unimib.socialmesh.util.Converters;
 
 @Entity
 public class Event implements Parcelable {
-
-
     @PrimaryKey(autoGenerate = true)
     private long localId;
 
@@ -105,17 +103,6 @@ public class Event implements Parcelable {
         this.localId = localId;
     }
 
-
-
-    /* @SerializedName("info")
-     @Expose
-     private String info;
-     @Embedded(prefix = "ageRestrictions_")
-   @SerializedName("ageRestrictions")
-     @Expose
-     private AgeRestrictions ageRestrictions;
-
-     */
     public Event(){}
 
     public String getName1() {
@@ -177,8 +164,6 @@ public class Event implements Parcelable {
                 count++;
             }
         }
-
-
         return date.toString();
     }
 
@@ -211,93 +196,78 @@ public class Event implements Parcelable {
    public List<Image> getImages() {
         return images;
     }
-    public void setImages(List<Image> images) {
+   public void setImages(List<Image> images) {
         this.images = images;
     }
 
-    public void setDates(Dates dates) {
-        this.dates = dates;
-    }
+   public void setDates(Dates dates) {
+       this.dates = dates;
+   }
 
-    public Genre getGenre(){
-        return genre;
-    }
+   public Genre getGenre(){
+       return genre;
+   }
 
-    public void setGenre(Genre genre){
-        this.genre=genre;
-    }
+   public void setGenre(Genre genre){
+       this.genre=genre;
+   }
 
-    public List<Classification> getClassifications() {
-        return classifications;
-    }
+   public List<Classification> getClassifications() {
+       return classifications;
+   }
 
-    public void setClassifications(List<Classification> classifications){
-        this.classifications=classifications;
-    }
+   public void setClassifications(List<Classification> classifications){
+       this.classifications=classifications;
+   }
 
-    public String getGenreName(){
-        Log.d(TAG, classifications.get(0).getGenre().getName());
-        return classifications.get(0).getGenre().getName();
-    }
-   /* public String getInfo() {
-        return info;
-    }
-    public void setInfo(String info) {
-        this.info = info;
-    }
-   public AgeRestrictions getAgeRestrictions() {
-        return ageRestrictions;
-    }
-    public void setAgeRestrictions(AgeRestrictions ageRestrictions) {
-        this.ageRestrictions = ageRestrictions;
-    }
-*/
+   public String getGenreName(){
+       Log.d(TAG, classifications.get(0).getGenre().getName());
+       return classifications.get(0).getGenre().getName();
+   }
 
-    public Embedded_1 getEmbedded() {
-        return embedded;
-    }
+   public Embedded_1 getEmbedded() {
+       return embedded;
+   }
 
-    public void setEmbedded(Embedded_1 embedded) {
-        this.embedded = embedded;
-    }
+   public void setEmbedded(Embedded_1 embedded) {
+       this.embedded = embedded;
+   }
 
-    public String getUrlImages() {
-        if (images != null && !images.isEmpty()) {
-            return images.get(0).getUrlImages();
-        } else {
-            // Se la lista è vuota o nulla, restituisci un URL di fallback o una stringa vuota
-            return "URL di fallback o stringa vuota";
-        }
-    }
+   public String getUrlImages() {
+       if (images != null && !images.isEmpty()) {
+           return images.get(0).getUrlImages();
+       } else {
+           return "URL vuoto";
+       }
+   }
 
-    public String getUrlImagesHD() {
-        if (images != null && !images.isEmpty()) {
-            return images.get(7).getUrlImages();
-        } else {
-            // Se la lista è vuota o nulla, restituisci un URL di fallback o una stringa vuota
-            return "URL di fallback o stringa vuota";
-        }
-    }
-    public double getLatitude() {
-        return this.getEmbedded().getVenues().get(0).getLocation().getLatitude();
-    }
+   public String getUrlImagesHD() {
+       if (images != null && !images.isEmpty()) {
+           return images.get(7).getUrlImages();
+       } else {
+           return "URL vuoto";
+       }
+   }
+   public double getLatitude() {
+       return this.getEmbedded().getVenues().get(0).getLocation().getLatitude();
+   }
 
-    public double getLongitude() {
-        return this.getEmbedded().getVenues().get(0).getLocation().getLongitude();
-    }
+   public double getLongitude() {
+       return this.getEmbedded().getVenues().get(0).getLocation().getLongitude();
+   }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+   @Override
+   public int describeContents() {
+       return 0;
+   }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeLong(localId);
-        dest.writeString(name);
-        dest.writeString(type);
-        dest.writeString(remoteId);
-    }
+   @Override
+   public void writeToParcel(@NonNull Parcel dest, int flags) {
+       dest.writeLong(localId);
+       dest.writeString(name);
+       dest.writeString(type);
+       dest.writeString(remoteId);
+   }
 }
 
 

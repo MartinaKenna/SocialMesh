@@ -96,9 +96,6 @@ public class UserViewModel extends ViewModel {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Log.d("ViewModel","OK");
-                        // Toast.makeText(getContext(), "Preferenza salvata con successo!", Toast.LENGTH_SHORT).show();
-                    } else {
-                       // Toast.makeText(getContext(), "Errore nel salvataggio della preferenza", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -1,5 +1,7 @@
 package it.unimib.socialmesh.data.repository.event;
 
+import static it.unimib.socialmesh.util.Constants.FRESH_TIMEOUT;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -33,12 +35,15 @@ public class EventsRepositoryWithLiveData implements IEventsRepositoryWithLiveDa
     @Override
     public MutableLiveData<Result> fetchEvents(String type, String city,int size, String startDateTime, String endDateTime, long lastUpdate){
         Log.d(TAG, "fetchEvents: Started");
-      //  long currentTime = System.currentTimeMillis();
-       // if (currentTime - lastUpdate > FRESH_TIMEOUT) {
+
+        long currentTime = System.currentTimeMillis();
+
+        if (currentTime - lastUpdate > FRESH_TIMEOUT) {
             eventsRemoteDataSource.getEvents(type, city, size,startDateTime, endDateTime);
-       // } else {
-          //  eventsLocalDataSource.getEvents();
-     //   }
+        } else {
+          eventsLocalDataSource.getEvents();
+        }
+
         return allEventsMutableLiveData;
     }
 
@@ -68,5 +73,4 @@ public class EventsRepositoryWithLiveData implements IEventsRepositoryWithLiveDa
         Result.Error resultError = new Result.Error(exception.getMessage());
         allEventsMutableLiveData.postValue(resultError);
     }
-
 }

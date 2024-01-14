@@ -1,16 +1,17 @@
 package it.unimib.socialmesh.ui.match;
-import android.net.Uri;
+
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
-import android.view.View;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,24 +19,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.InterestsAdapter;
-import it.unimib.socialmesh.adapter.PhotosAdapter;
 import it.unimib.socialmesh.adapter.PhotosViewPagerAdapter;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.databinding.UserDetailsFragmentBinding;
-import it.unimib.socialmesh.model.User;
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.util.FireBaseUtil;
@@ -47,17 +46,9 @@ public class UserDetailsFragment extends Fragment {
     private UserViewModel userViewModel;
     private boolean isLiked = false;
     private String otherUserId;
-
     private InterestsAdapter interestsAdapter;
-
-    private DatabaseReference databaseReference;
-    private List<String> interestsList = new ArrayList<>();
     private ViewPager2 viewPager;
-    private PhotosAdapter photosAdapter;
 
-    private ImageView profile_pic;
-    private List<Uri> photoUrls = new ArrayList<>();
-    int age;
     public UserDetailsFragment() {}
 
     public void onCreate(Bundle savedInstance) {
@@ -148,7 +139,7 @@ public class UserDetailsFragment extends Fragment {
         updateDescription(otherUserId);
         updateInterests(otherUserId, requireActivity().findViewById(android.R.id.content));
         retrieveImagesFromStorage(otherUserId, requireActivity().findViewById(android.R.id.content));
-                }
+    }
 
 
 
@@ -254,7 +245,6 @@ public class UserDetailsFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
     }
-
 }
 
 

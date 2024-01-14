@@ -3,8 +3,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class SubType {
-    public SubType() {
-    }
+    public SubType() {}
 
     @SerializedName("id")
     @Expose
@@ -28,5 +27,4 @@ public class SubType {
     public void setName(String name) {
         this.name = name;
     }
-
 }

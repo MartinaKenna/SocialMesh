@@ -1,8 +1,6 @@
 package it.unimib.socialmesh.data.service;
-import java.util.ArrayList;
-import java.util.List;
 
-import it.unimib.socialmesh.model.jsonFields.Image;
+import java.util.List;
 
 public class FirebaseEvent {
 
@@ -19,7 +17,6 @@ public class FirebaseEvent {
     public void setParticipants(List<String> participants) {
         this.participants = participants;
     }
-// Altri campi necessari
 
     public Long getLocalId() {
         return localId;
@@ -29,9 +26,7 @@ public class FirebaseEvent {
         this.localId = localId;
     }
 
-    public FirebaseEvent() {
-        // Costruttore vuoto richiesto per Firebase
-    }
+    public FirebaseEvent() {}
 
     public FirebaseEvent(String remoteId,String name, Long localId, List<String> partecipants, String url) {
         this.name = name;
@@ -64,9 +59,5 @@ public class FirebaseEvent {
     public void setName(String name) {
         this.name = name;
     }
-
-
-
-
 
 }

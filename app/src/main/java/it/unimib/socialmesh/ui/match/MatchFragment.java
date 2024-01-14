@@ -1,23 +1,19 @@
 
 package it.unimib.socialmesh.ui.match;
-import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 
-import it.unimib.socialmesh.adapter.SimpleEventsAdapter;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,17 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.socialmesh.R;
-import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
+import it.unimib.socialmesh.adapter.SimpleEventsAdapter;
 import it.unimib.socialmesh.databinding.FragmentMatchBinding;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.util.FireBaseUtil;
 
-/**
- * A simple {@link Fragment} subclass.
- factory method to
- * create an instance of this fragment.
- */
 public class MatchFragment extends Fragment {
 
     private FragmentMatchBinding fragmentMatchBinding;
@@ -46,7 +36,7 @@ public class MatchFragment extends Fragment {
     private List<Event> myEventsList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentMatchBinding = FragmentMatchBinding.inflate(inflater, container, false);
         return fragmentMatchBinding.getRoot();
     }

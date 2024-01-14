@@ -22,8 +22,7 @@ public class EventApiResponse {
     }
 
 
-    public EventApiResponse() {
-    }
+    public EventApiResponse() {}
 
     public int getTotalResults() {
         return totalResults;
@@ -33,32 +32,7 @@ public class EventApiResponse {
         this.totalResults = totalResults;
     }
 
-
-
-   /* protected EventApiResponse(Parcel in) {
-        this.eventList = in.createTypedArrayList(Event.CREATOR);
-    }*/
-
-  /*  public static final Parcelable.Creator<EventApiResponse> CREATOR = new Parcelable.Creator<EventApiResponse>() {
-        @Override
-        public EventApiResponse createFromParcel(Parcel in) {
-            return new EventApiResponse(in);
-        }
-
-        @Override
-        public EventApiResponse[] newArray(int size) {
-            return new EventApiResponse[size];
-        }
-    };*/
-
-
     public int describeContents() {
         return 0;
     }
-/*
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeTypedList(this.eventList);
-    }
-}*/
 }

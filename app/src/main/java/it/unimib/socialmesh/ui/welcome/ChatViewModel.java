@@ -3,7 +3,6 @@ package it.unimib.socialmesh.ui.welcome;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,9 +16,7 @@ import java.util.List;
 import it.unimib.socialmesh.model.Message;
 
 public class ChatViewModel extends ViewModel {
-
-
-        private MutableLiveData<List<Message>> messageListLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Message>> messageListLiveData = new MutableLiveData<>();
 
     public MutableLiveData<List<Message>> getMessageListLiveData() {
         return messageListLiveData;
@@ -59,5 +56,5 @@ public class ChatViewModel extends ViewModel {
         senderNewMessageRef.setValue(message);
         receiverNewMessageRef.setValue(message);
     }
-    }
+}
 

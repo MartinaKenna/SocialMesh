@@ -1,10 +1,18 @@
 package it.unimib.socialmesh.ui.main;
 
-import static java.security.AccessController.getContext;
+import static it.unimib.socialmesh.util.Constants.FIREBASE_PROFILE_PIC_NAME;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,26 +21,10 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +45,6 @@ public class SettingsActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private InterestsAdapter interestsAdapter;
-    private DatabaseReference databaseReference;
     private RecyclerView recyclerView2;
     private PhotosAdapter photosAdapter;
     private List<String> interestsList = new ArrayList<>();
@@ -104,7 +95,7 @@ public class SettingsActivity extends AppCompatActivity {
                             selectedImageUri = data.getData();
                             uploadPhoto(selectedImageUri);
                             }
-                        }
+                    }
 
                 });
         profilePic.setOnClickListener((v) -> {
@@ -184,21 +175,21 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     private void updateProfilePic(Uri selectedImageUri) {
-     if (selectedImageUri != null) {
-         CircularProgressDrawable drawable = new CircularProgressDrawable(this);
-         drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
-         drawable.setCenterRadius(30f);
-         drawable.setStrokeWidth(5f);
-         drawable.start();
+         if (selectedImageUri != null) {
+             CircularProgressDrawable drawable = new CircularProgressDrawable(this);
+             drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
+             drawable.setCenterRadius(30f);
+             drawable.setStrokeWidth(5f);
+             drawable.start();
 
-         Glide.with(this)
-                 .load(selectedImageUri)
-                 .apply(RequestOptions.circleCropTransform())
-                 .placeholder(drawable)
-                 .error(drawable)
-                 .into(profilePic);
-     }
- }
+             Glide.with(this)
+                     .load(selectedImageUri)
+                     .apply(RequestOptions.circleCropTransform())
+                     .placeholder(drawable)
+                     .error(drawable)
+                     .into(profilePic);
+         }
+    }
 
     private void uploadProfilePic(Uri selectedImageUri) {
         IUserRepository userRepository = ServiceLocator.getInstance().
@@ -207,7 +198,7 @@ public class SettingsActivity extends AppCompatActivity {
                 this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
         String currentUserId = FireBaseUtil.currentUserId();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference userRef = FireBaseUtil.getCurrentProfilePicStorageRef(currentUserId).child("profilePic.jpg");
+        StorageReference userRef = FireBaseUtil.getCurrentProfilePicStorageRef(currentUserId).child(FIREBASE_PROFILE_PIC_NAME);
         userViewModel.uploadImage(selectedImageUri, userRef);
 
         userViewModel.getImageUrlLiveData().observe(this, imageUrl -> {
@@ -230,7 +221,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void loadProfileImage() {
         String currentUserId = FireBaseUtil.currentUserId();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference userRef = FireBaseUtil.getCurrentProfilePicStorageRef(currentUserId).child("profilePic.jpg");
+        StorageReference userRef = FireBaseUtil.getCurrentProfilePicStorageRef(currentUserId).child(FIREBASE_PROFILE_PIC_NAME);
 
         userRef.getDownloadUrl().addOnSuccessListener(uri -> {
             String imageURL = uri.toString();

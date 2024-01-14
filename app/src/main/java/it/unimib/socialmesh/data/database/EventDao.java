@@ -5,17 +5,11 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
 import it.unimib.socialmesh.model.Event;
 
-/**
- * Data Access Object (DAO) that provides methods that can be used to query,
- * update, insert, and delete data in the database.
- * <a href="https://developer.android.com/training/data-storage/room/accessing-data">...</a>
- */
 @Dao
 public interface EventDao {
     @Query("SELECT * FROM event ORDER BY CAST((ABS(CAST((localId || 'salt') AS INTEGER)) % 100000) AS INTEGER)")

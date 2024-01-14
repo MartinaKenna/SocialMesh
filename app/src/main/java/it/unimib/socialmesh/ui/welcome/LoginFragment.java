@@ -10,9 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -172,27 +169,27 @@ public class LoginFragment extends Fragment {
 
         //Google
         fragmentLoginBinding.buttonGoogle.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
-            .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
-                @Override
-                public void onSuccess(BeginSignInResult result) {
-                    Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
-                    IntentSenderRequest intentSenderRequest =
-                            new IntentSenderRequest.Builder(result.getPendingIntent()).build();
-                    activityResultLauncher.launch(intentSenderRequest);
-                }
-            })
-            .addOnFailureListener(requireActivity(), new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    // No saved credentials found. Launch the One Tap sign-up flow, or
-                    // do nothing and continue presenting the signed-out UI.
-                    Log.d(TAG, e.getLocalizedMessage());
+                .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
+                    @Override
+                    public void onSuccess(BeginSignInResult result) {
+                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                        IntentSenderRequest intentSenderRequest =
+                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                        activityResultLauncher.launch(intentSenderRequest);
+                    }
+                })
+                .addOnFailureListener(requireActivity(), new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // No saved credentials found. Launch the One Tap sign-up flow, or
+                        // do nothing and continue presenting the signed-out UI.
+                        Log.d(TAG, e.getLocalizedMessage());
 
-                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                            requireActivity().getString(R.string.error_no_google_account_found_message),
-                            Snackbar.LENGTH_SHORT).show();
-                }
-            }));
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                requireActivity().getString(R.string.error_no_google_account_found_message),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                }));
 
         fragmentLoginBinding.buttonRegister.setOnClickListener(item -> {
             Navigation.findNavController(requireView()).navigate(R.id.navigate_to_registrationFragment);

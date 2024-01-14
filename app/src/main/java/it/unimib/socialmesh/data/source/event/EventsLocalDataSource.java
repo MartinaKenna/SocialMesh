@@ -15,11 +15,7 @@ public class EventsLocalDataSource extends BaseEventsLocalDataSource {
     public EventsLocalDataSource(EventRoomDatabase eventRoomDatabase){
         this.eventDao = eventRoomDatabase.eventDao();
     }
-    /**
-     * Gets the events from the local database.
-     * The method is executed with an ExecutorService defined in EventsRoomDatabase class
-     * because the database access cannot been executed in the main thread.
-     */
+
     @Override
     public void getEvents(){
         Log.d("localdatasource", "getevents: Started");
@@ -30,11 +26,9 @@ public class EventsLocalDataSource extends BaseEventsLocalDataSource {
     @Override
     public void insertEvents(List<Event> eventsList){
         EventRoomDatabase.databaseWriteExecutor.execute(() -> {
-            //Reads the events from the db
             List<Event> allEvents = eventDao.getAll();
 
             if(eventsList != null){
-                //Check if the events downloaded have already been downloaded
                 for(Event event : allEvents){
                     if(eventsList.contains(event)){
                         eventsList.set(eventsList.indexOf(event), event);
@@ -47,9 +41,6 @@ public class EventsLocalDataSource extends BaseEventsLocalDataSource {
                 }
                 eventCallback.onSuccessFromLocal(eventsList);
             }
-
-
         });
     }
-
 }

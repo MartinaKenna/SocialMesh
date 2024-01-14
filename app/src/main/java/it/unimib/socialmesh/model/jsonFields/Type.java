@@ -3,8 +3,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class Type {
 
-    public Type() {
-    }
+    public Type() {}
 
     @SerializedName("id")
     @Expose

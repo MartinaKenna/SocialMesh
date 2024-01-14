@@ -69,8 +69,7 @@ public class User implements Parcelable {
                 '}';
     }
 
-    public User() {
-    }
+    public User() {}
 
     @Override
     public int describeContents() {

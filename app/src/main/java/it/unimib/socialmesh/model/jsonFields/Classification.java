@@ -9,8 +9,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Classification {
-    public Classification() {
-    }
+    public Classification() {}
 
     @Embedded(prefix = "segment_")
     @SerializedName("segment")
@@ -48,6 +47,4 @@ public class Classification {
     public void setSubGenre(SubGenre subGenre) {
         this.subGenre = subGenre;
     }
-
-
 }

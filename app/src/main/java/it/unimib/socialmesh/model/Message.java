@@ -5,8 +5,7 @@ public class Message {
     private String message;
     private String senderEmail;
 
-    public Message() {
-    }
+    public Message() {}
 
     public Message(String message, String senderEmail) {
         this.message = message;

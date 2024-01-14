@@ -13,9 +13,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-/**
- * Interface for Service to get news from the Web Service.
- */
+
 public interface
 EventApiService {
     @GET(EVENTS_ENDPOINT)

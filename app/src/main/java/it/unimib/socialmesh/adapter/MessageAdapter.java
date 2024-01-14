@@ -5,16 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import it.unimib.socialmesh.util.FireBaseUtil;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Message;
+import it.unimib.socialmesh.util.FireBaseUtil;
 
 public class MessageAdapter extends RecyclerView.Adapter {
 
@@ -73,19 +72,17 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
-
-    class SentViewHolder extends RecyclerView.ViewHolder {
+    private static class SentViewHolder extends RecyclerView.ViewHolder {
         SentViewHolder(@NonNull View itemView) {
             super(itemView);
         }
         TextView sentMessage = itemView.findViewById(R.id.txt_sent_message);
     }
 
-    class ReceiveViewHolder extends RecyclerView.ViewHolder {
+    private static class ReceiveViewHolder extends RecyclerView.ViewHolder {
         ReceiveViewHolder(@NonNull View itemView) {
             super(itemView);
         }
         TextView receiveMessage = itemView.findViewById(R.id.txt_receive_message);
     }
-
 }

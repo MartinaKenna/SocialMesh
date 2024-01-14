@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import it.unimib.socialmesh.util.Converters;
 
 public class Location {
-
     public Location() {}
     @TypeConverters(Converters.class)
     @SerializedName("longitude")

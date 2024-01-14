@@ -73,7 +73,6 @@ public class ProfileFragment extends Fragment {
     ImageView profile_image_view;
     TextView tvProfile;
     private UserViewModel userViewModel;
-
     private FragmentProfileBinding fragmentProfileBinding;
     private LocationRequest locationRequest;
     private Double latitude, longitude;
@@ -94,27 +93,27 @@ public class ProfileFragment extends Fragment {
 
     }
     ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
 
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    if (data != null && data.hasExtra("image_url")) {
-                        String imageUrl = data.getStringExtra("image_url");
-                        CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
-                        drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
-                        drawable.setCenterRadius(30f);
-                        drawable.setStrokeWidth(5f);
-                        drawable.start();
-                        Glide.with(this)
-                                .load(imageUrl)
-                                .apply(RequestOptions.circleCropTransform())
-                                .placeholder(drawable)
-                                .error(drawable)
-                                .into(profile_image_view);
-                    }
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Intent data = result.getData();
+                if (data != null && data.hasExtra("image_url")) {
+                    String imageUrl = data.getStringExtra("image_url");
+                    CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
+                    drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
+                    drawable.setCenterRadius(30f);
+                    drawable.setStrokeWidth(5f);
+                    drawable.start();
+                    Glide.with(this)
+                            .load(imageUrl)
+                            .apply(RequestOptions.circleCropTransform())
+                            .placeholder(drawable)
+                            .error(drawable)
+                            .into(profile_image_view);
                 }
             }
+        }
     );
 
     @Override
@@ -130,19 +129,12 @@ public class ProfileFragment extends Fragment {
         themeSwitch.setChecked(currentTheme != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                // Cambia a tema scuro
                 currentTheme = AppCompatDelegate.MODE_NIGHT_YES;
                 Log.d("Profile","night mode");
             } else {
-                // Cambia a tema chiaro
                 currentTheme = AppCompatDelegate.MODE_NIGHT_NO;
             }
-
-            // Applica il nuovo tema all'attività corrente
             AppCompatDelegate.setDefaultNightMode(currentTheme);
-
-            // Ricrea l'attività per applicare il nuovo tema
-
         });
         fragmentProfileBinding.buttonSettings.setOnClickListener(view -> {
             Intent intent = new Intent(requireActivity(), SettingsActivity.class);
@@ -171,6 +163,7 @@ public class ProfileFragment extends Fragment {
         loadProfileImage();
         fragmentProfileBinding.buttonLogout.setOnClickListener(v -> {
             /*
+            TODO
             userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
                 if (true) {
                     Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_welcomeActivity);
@@ -182,11 +175,8 @@ public class ProfileFragment extends Fragment {
             });
              */
 
-
-
-                userViewModel.logout();
+            userViewModel.logout();
             Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_welcomeActivity);
-
         });
 
 }

@@ -4,17 +4,9 @@ public abstract class Result {
     private Result() {}
 
     public boolean isSuccess() {
-        if (this instanceof EventResponseSuccess || this instanceof UserResponseSuccess) {
-            return true;
-        } else {
-            return false;
-        }
+        return (this instanceof EventResponseSuccess || this instanceof UserResponseSuccess);
     }
 
-    /**
-     * Class that represents a successful action during the interaction
-     * with a Web Service or a local database.
-     */
     public static final class EventResponseSuccess extends Result {
         private final EventApiResponse eventApiResponse;
         public EventResponseSuccess(EventApiResponse eventApiResponseResponse) { this.eventApiResponse = eventApiResponseResponse; }
@@ -33,10 +25,6 @@ public abstract class Result {
         }
     }
 
-    /**
-     * Class that represents an error occurred during the interaction
-     * with a Web Service or a local database.
-     */
     public static final class Error extends Result {
         private final String message;
         public Error(String message) {

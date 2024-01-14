@@ -9,8 +9,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Dates{
-    public Dates() {
-    }
+    public Dates() {}
     @Embedded(prefix = "start_")
     @SerializedName("start")
     @Expose

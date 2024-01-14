@@ -16,10 +16,6 @@ import java.util.concurrent.Executors;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.util.Converters;
 
-/**
- * Main access point for the underlying connection to the local database.
- * <a href="https://developer.android.com/reference/kotlin/androidx/room/Database">...</a>
- */
 @Database(entities = {Event.class}, version = DATABASE_VERSION,exportSchema = false)
 @TypeConverters({Converters.class})
 
@@ -45,5 +41,4 @@ public abstract class EventRoomDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
-
 }
