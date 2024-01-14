@@ -62,16 +62,18 @@ public class RecyclerViewEventsNearYouAdapter extends RecyclerView.Adapter<Recyc
 
     public void filterByQuery(String query){
         filteredListByPosition.clear();
-        for (Event event : eventsList) {
-            if(distanceFromUserToEvent(userLatitude, userLongitude, event.getLatitude(), event.getLongitude())){
-                if (event.getGenreName().equalsIgnoreCase(query)) {
-                    filteredListByPosition.add(event);
-                }
-                if (event.getName().equalsIgnoreCase(query)){
-                    filteredListByPosition.add(event);
-                }
-                if(event.getDates1().equalsIgnoreCase(query)){
-                    filteredListByPosition.add(event);
+        if(userLatitude != null && userLongitude != null) {
+            for (Event event : eventsList) {
+                if (distanceFromUserToEvent(userLatitude, userLongitude, event.getLatitude(), event.getLongitude())) {
+                    if (event.getGenreName().equalsIgnoreCase(query)) {
+                        filteredListByPosition.add(event);
+                    }
+                    if (event.getName().equalsIgnoreCase(query)) {
+                        filteredListByPosition.add(event);
+                    }
+                    if (event.getDates1().equalsIgnoreCase(query)) {
+                        filteredListByPosition.add(event);
+                    }
                 }
             }
         }
@@ -82,15 +84,17 @@ public class RecyclerViewEventsNearYouAdapter extends RecyclerView.Adapter<Recyc
     }
 
     public boolean distanceFromUserToEvent(Double userLatitude, Double userLongitude, Double eventLatitude, Double eventLongitude){
-        double distance = distance(userLatitude, userLongitude, eventLatitude, eventLongitude);
-        if(distance < km){
-            return true;
+        if(userLatitude != null && userLongitude != null) {
+            double distance = distance(userLatitude, userLongitude, eventLatitude, eventLongitude);
+            if (distance < km) {
+                return true;
+            }
         }
         return false;
     }
     public void filteredByPosition(List<Event> eventsList){
         filteredListByPosition.clear();
-        if(userLongitude != null && userLatitude != null) {
+        if(userLatitude != null && userLongitude != null) {
             for (Event event1 : eventsList) {
                 Double eventLongitude = event1.getLongitude();
                 Double eventLatitude = event1.getLatitude();
@@ -100,8 +104,8 @@ public class RecyclerViewEventsNearYouAdapter extends RecyclerView.Adapter<Recyc
                     filteredListByPosition.add(event1);
                 }
             }
-            notifyDataSetChanged();
         }
+        notifyDataSetChanged();
     }
 
     public void filterByGenre(String genre) {
@@ -201,13 +205,13 @@ public class RecyclerViewEventsNearYouAdapter extends RecyclerView.Adapter<Recyc
         public void onClick(View v) {
             if (getAdapterPosition() != RecyclerView.NO_POSITION) {
                 int position = getAdapterPosition();
-                    if(!filteredListByPosition.isEmpty()){
-                        onItemclickListener.onEventItemClick(filteredListByPosition.get(position));
-                    }
-                    else{
-                        filteredByPosition(eventsList);
-                        notifyDataSetChanged();
-                    }
+                if(!filteredListByPosition.isEmpty()){
+                    onItemclickListener.onEventItemClick(filteredListByPosition.get(position));
+                }
+                else{
+                    filteredByPosition(eventsList);
+                    notifyDataSetChanged();
+                }
             }
         }
     }
