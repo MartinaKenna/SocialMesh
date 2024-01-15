@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_light_background"
     android:descendantFocusability="blocksDescendants">
-
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview_search"
@@ -33,8 +31,7 @@
             android:layout_below="@id/cardview_search"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:text="Last Added"
-            android:textColor="@color/black"
+            android:text="@string/last_added"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -64,8 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/barra"
             android:layout_marginTop="25dp"
-            android:text="Near You"
-            android:textColor="@color/black"
+            android:text="@string/near_you"
             android:textStyle="bold"
             android:layout_marginStart="20dp"
             android:textSize="20dp"/>
@@ -78,7 +74,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="50dp"
             android:layout_marginTop="20dp"
-            android:background="@color/black"
+            android:background="@color/md_theme_light_primary"
             tools:ignore="MissingConstraints" />
         <View
             android:id="@+id/barra2"
@@ -87,7 +83,7 @@
             android:layout_below="@id/recyclerviewEvents"
             android:layout_marginStart="25dp"
             android:layout_alignParentLeft="true"
-            android:background="@color/black"
+            android:background="@color/md_theme_light_background"
             tools:ignore="MissingConstraints"
             android:layout_marginTop="20dp"/>
 
@@ -98,7 +94,7 @@
             android:layout_below="@id/recyclerviewEvents"
             android:layout_marginEnd="25dp"
             android:layout_alignParentRight="true"
-            android:background="@color/black"
+            android:background="@color/md_theme_light_background"
             tools:ignore="MissingConstraints"
             android:layout_marginTop="20dp"/>
 
@@ -128,9 +124,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/md_theme_light_background"
-                    android:text="Filter"
-                    android:textColor="@color/black"
+                    android:text="@string/filter"
                     android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary"
                     android:background="#00FFFFFF"
                     />
         </androidx.cardview.widget.CardView>
@@ -147,14 +143,15 @@
 
                 <Button
                     android:id="@+id/buttonKM"
-                    android:text="Filter"
+                    android:text="@string/filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/md_theme_light_background"
-                    android:textColor="@color/black"
                     android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary"
                     android:background="#00FFFFFF"
                     />
+
         </androidx.cardview.widget.CardView>
 
         <androidx.fragment.app.FragmentContainerView
@@ -163,25 +160,33 @@
             android:layout_height="match_parent"
             android:layout_below="@id/lastAdded" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardview_reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cardview_search"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="10dp"
-            app:cardCornerRadius="40dp">
+
+
 
                 <Button
                     android:id="@+id/viewAll"
+                    android:text="@string/reset_filters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:text="Reset Filters"
-                    android:textColor="@color/black" />
+                    android:textStyle="bold"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBaseline="@id/lastAdded"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="10dp"
+                    />
 
-        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/map_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modalità mappa"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp" />
+
 
 
 </RelativeLayout>

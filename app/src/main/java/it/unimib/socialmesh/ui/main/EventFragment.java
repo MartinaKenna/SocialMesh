@@ -1,6 +1,7 @@
 package it.unimib.socialmesh.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Button;
 import android.widget.PopupWindow;
@@ -81,7 +83,7 @@ public class EventFragment extends Fragment{
     private RecyclerViewEventsAdapter recyclerViewEventsAdapter;
     private RecyclerViewEventsNearYouAdapter recyclerViewEventsAdapterNearYou;
     private EventViewModel eventViewModel;
-    private Button filter, button1, button2,button3, viewAll, buttonKM, button4, button5, button6;
+    private Button filter, button1, button2,button3, viewAll, buttonKM, button4, button5, button6,mapView;
     private PopupWindow popupWindow, popupWindow2;
 
     private ProgressBar progressBar;
@@ -128,9 +130,8 @@ public class EventFragment extends Fragment{
         cardview_km= view.findViewById(R.id.cardview_km);
         cardview_filter = view.findViewById(R.id.cardview_filter);
         cardview_search = view.findViewById(R.id.cardview_search);
-        cardview_reset = view.findViewById(R.id.cardview_reset);
         filter = view.findViewById(R.id.button);
-
+        mapView = view.findViewById(R.id.map_view);
         SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         boolean isFirstRun = preferences.getBoolean("app_run", true);
 
@@ -139,7 +140,6 @@ public class EventFragment extends Fragment{
             int screenHeight = getResources().getDisplayMetrics().heightPixels;
 
             cardview_km.setTranslationY(screenHeight);
-            cardview_reset.setTranslationY(screenHeight);
             recyclerViewEvents.setTranslationX(1000f);
             recyclerViewEventsNearYou.setTranslationX(1000f);
             searchView.setTranslationY(screenHeight);
@@ -153,7 +153,6 @@ public class EventFragment extends Fragment{
 
             //mostro le animazioni
             cardview_km.animate().translationY(0f).setDuration(1000).setStartDelay(1700).start();
-            cardview_reset.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 300).start();
             searchView.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 2 * 300).start();
             recyclerViewEventsNearYou.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 3 * 300).start();
             recyclerViewEvents.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 4 * 300).start();
@@ -173,7 +172,11 @@ public class EventFragment extends Fragment{
         //richiamo il processo per la posizione
 
         //ottengo la posizione
-
+        mapView.setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), MapsMarkerActivity.class);
+            intent.putParcelableArrayListExtra("EVENT_LIST", new ArrayList<>(eventsList));
+            startActivity(intent);
+        });
         filter.setOnClickListener(v -> {
             View popupView = inflater.inflate(R.layout.popupview, container, false);
 
@@ -318,10 +321,11 @@ public class EventFragment extends Fragment{
                                 this.eventsList.addAll(fetchedEvents);
                                 recyclerViewEventsAdapter.notifyItemRangeInserted(0, this.eventsList.size());
                                 recyclerViewEventsAdapterNearYou.notifyItemRangeInserted(0, this.eventsList.size());
+                            utilCoordinates(fetchedEvents);
                             } else {
                                 eventsList.clear();
                                 eventsList.addAll(fetchedEvents);
-
+                                utilCoordinates(fetchedEvents);
                                 recyclerViewEventsAdapter.clearFilters();
                                 recyclerViewEventsAdapterNearYou.clearFilters();
                             }
@@ -339,6 +343,8 @@ public class EventFragment extends Fragment{
                             eventsList.addAll(fetchedEvents);
                             recyclerViewEventsAdapter.notifyItemRangeInserted(initialSize, eventsList.size());
                             recyclerViewEventsAdapterNearYou.notifyItemRangeInserted(initialSize, eventsList.size());
+                            utilCoordinates(fetchedEvents);
+
                         }
                     } else {
                         progressBar.setVisibility(View.GONE);
@@ -347,7 +353,16 @@ public class EventFragment extends Fragment{
 
 
     }
-
+    private void utilCoordinates(List<Event> eventsList){
+        for(int i = 0; i<eventsList.size(); i++){
+            eventsList.get(i).setVenueLatitude(eventsList.get(i).getLatitude());
+            eventsList.get(i).setPlaceName(eventsList.get(i).getPlaceName());
+            eventsList.get(i).setVenueLongitude(eventsList.get(i).getLongitude());
+            double vediamo = eventsList.get(i).getVenueLatitude();
+            double vediamo2 =  eventsList.get(i).getVenueLongitude();
+            Log.d(TAG,"prova");
+        }
+    }
     private void initializeAdapters() {
         RecyclerView.LayoutManager layoutManagerNearYou = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewEventsAdapterNearYou = new RecyclerViewEventsNearYouAdapter(requireContext(),latitude, longitude, eventsList,
@@ -361,13 +376,10 @@ public class EventFragment extends Fragment{
                 });
 
         recyclerViewEventsAdapter = new RecyclerViewEventsAdapter(requireContext(), eventsList,
-                new RecyclerViewEventsAdapter.OnItemClickListener() {
-                    @Override
-                    public void onEventItemClick(Event event) {
-                        EventFragmentDirections.ActionEventFragmentToEventDetailsFragment action =
-                                EventFragmentDirections.actionEventFragmentToEventDetailsFragment(event);
-                        Navigation.findNavController(requireView()).navigate(action);
-                    }
+                event -> {
+                    EventFragmentDirections.ActionEventFragmentToEventDetailsFragment action =
+                            EventFragmentDirections.actionEventFragmentToEventDetailsFragment(event);
+                    Navigation.findNavController(requireView()).navigate(action);
                 });
 
         // Imposta gli adapter una volta ottenuta la posizione
@@ -503,7 +515,11 @@ public class EventFragment extends Fragment{
                         int index = locationResult.getLocations().size() - 1;
                         latitude = locationResult.getLocations().get(index).getLatitude();
                         longitude = locationResult.getLocations().get(index).getLongitude();
-                        recyclerViewEventsAdapterNearYou.updateLocation(latitude, longitude);
+                        if (recyclerViewEventsAdapterNearYou != null) {
+                            recyclerViewEventsAdapterNearYou.updateLocation(latitude, longitude);
+                        } else {
+                            Log.e(TAG, "recyclerViewEventsAdapterNearYou is null");
+                        }
 
                         //salvo tutto su firebase sul campo Position
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -559,6 +575,11 @@ public class EventFragment extends Fragment{
         }
 
         return formattedDateTime;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        startLocationUpdates(getContext());
     }
 }
 

@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_below="@id/button_confirm_description"
-        android:text="DESCRIZIONE"
+        android:text="@string/descrizione"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textview_description_label"
         android:layout_marginTop="8dp"
-        android:hint="Inserisci la descrizione"
+        android:hint="@string/inserisci_la_descrizione"
         app:counterMaxLength="500">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -56,7 +56,7 @@
         android:layout_marginTop="16dp"
         android:textSize="16dp"
         android:background="?android:attr/selectableItemBackground"
-        android:text="Conferma"
+        android:text="@string/conferma"
         />
 
 </RelativeLayout>

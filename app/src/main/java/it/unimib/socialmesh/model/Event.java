@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -27,7 +28,12 @@ import it.unimib.socialmesh.util.Converters;
 public class Event implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private long localId;
-
+    @Ignore
+    private double venueLatitude;
+    @Ignore
+    private double venueLongitude;
+    @Ignore
+    private String placeName;
     private static final String TAG = Event.class.getSimpleName();
     @SerializedName("name")
     @Expose
@@ -81,6 +87,9 @@ public class Event implements Parcelable {
         type = in.readString();
         remoteId = in.readString();
         description = in.readString();
+        venueLatitude = in.readDouble();
+        venueLongitude = in.readDouble();
+        placeName = in.readString();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -191,7 +200,13 @@ public class Event implements Parcelable {
         else
             return null;
     }
+public void setPlaceName(String name){
+        this.placeName = name;
+}
+public String getPlaceNameMap(){
+        return placeName;
 
+}
 
    public List<Image> getImages() {
         return images;
@@ -247,10 +262,22 @@ public class Event implements Parcelable {
        } else {
            return "URL vuoto";
        }
-   }
+   } public void setVenueLatitude(double venueLatitude) {
+        this.venueLatitude = venueLatitude;
+    }
+
+    public void setVenueLongitude(double venueLongitude) {
+        this.venueLongitude = venueLongitude;
+    }
    public double getLatitude() {
        return this.getEmbedded().getVenues().get(0).getLocation().getLatitude();
    }
+   public double getVenueLatitude(){
+        return venueLatitude;
+   }
+    public double getVenueLongitude(){
+        return venueLongitude;
+    }
 
    public double getLongitude() {
        return this.getEmbedded().getVenues().get(0).getLocation().getLongitude();
@@ -261,13 +288,17 @@ public class Event implements Parcelable {
        return 0;
    }
 
-   @Override
-   public void writeToParcel(@NonNull Parcel dest, int flags) {
-       dest.writeLong(localId);
-       dest.writeString(name);
-       dest.writeString(type);
-       dest.writeString(remoteId);
-   }
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeLong(localId);
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeString(remoteId);
+        dest.writeString(description);
+        dest.writeDouble(venueLatitude);
+        dest.writeDouble(venueLongitude);
+        dest.writeString(placeName);
+    }
 }
 
 

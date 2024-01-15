@@ -1,12 +1,15 @@
 package it.unimib.socialmesh.ui.main;
 
+import static androidx.core.app.ActivityCompat.recreate;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -17,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -45,9 +49,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -66,6 +70,8 @@ import it.unimib.socialmesh.databinding.FragmentProfileBinding;
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.util.FireBaseUtil;
+import it.unimib.socialmesh.util.LanguageDialogFragment;
+import it.unimib.socialmesh.util.LocaleManager;
 import it.unimib.socialmesh.util.ServiceLocator;
 
 public class ProfileFragment extends Fragment {
@@ -76,7 +82,6 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding fragmentProfileBinding;
     private LocationRequest locationRequest;
     private Double latitude, longitude;
-    private Switch themeSwitch;
     private int currentTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
 
     public ProfileFragment() {}
@@ -122,9 +127,16 @@ public class ProfileFragment extends Fragment {
         fragmentProfileBinding = FragmentProfileBinding.inflate(inflater, container, false);
         tvProfile = fragmentProfileBinding.tvAddress;
         profile_image_view = fragmentProfileBinding.profileImageView;
+        ImageView country = fragmentProfileBinding.country;
         String userId = FireBaseUtil.currentUserId();
         userViewModel.obtainUserData(userId);
-        Switch themeSwitch = fragmentProfileBinding.switchDarkMode;
+        country.setOnClickListener(view -> {
+            LanguageDialogFragment dialog = new LanguageDialogFragment();
+            dialog.show(getParentFragmentManager(), "language_dialog");
+
+        });
+        updateCountryFlag();
+        SwitchMaterial themeSwitch = fragmentProfileBinding.switchDarkMode;
         Log.d(TAG, "themeSwitch is null: " + (themeSwitch == null));
         themeSwitch.setChecked(currentTheme != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -368,9 +380,47 @@ public class ProfileFragment extends Fragment {
         }
         return age;
     }
+
+        // ... Altri metodi del fragment
+
+        private void updateCountryFlag() {
+
+                ImageView countryFlag = fragmentProfileBinding.country;
+
+                // Ora puoi impostare l'immagine in base alla lingua corrente
+                if (countryFlag != null) {
+                    // Ottenere la lingua corrente dal LocaleManager
+                    LocaleManager localeManager = new LocaleManager(getContext());
+                    String currentLanguage = localeManager.getCurrentLanguage();
+
+                    // Impostare l'immagine in base alla lingua corrente
+                    switch (currentLanguage) {
+                        case "it":
+                            countryFlag.setImageResource(R.drawable.italy_flag_icon);
+                            break;
+                        case "en":
+                            countryFlag.setImageResource(R.drawable.ukflag);
+                            break;
+                        case "es":
+                            countryFlag.setImageResource(R.drawable.spain_country_flag);
+                            break;
+                        case "zh":
+                            countryFlag.setImageResource(R.drawable.china_flag_icon);
+                            break;
+                        // Aggiungi altri casi per le lingue supportate
+                        default:
+                            // Usa un'immagine di default o gestisci il caso secondo le tue esigenze
+                            break;
+                    }
+                }
+            }
+
+
+
     @Override
     public void onResume() {
         super.onResume();
         loadProfileImage();
+        updateCountryFlag();
     }
 }

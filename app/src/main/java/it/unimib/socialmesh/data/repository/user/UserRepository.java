@@ -30,9 +30,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback, Ev
     private final MutableLiveData<Result> userMutableLiveData;
 
 
-    private static UserRepository instance;
-    private DatabaseReference databaseReference; // Riferimento al nodo dell'utente
-
     public UserRepository(BaseUserAuthenticationRemoteDataSource userRemoteDataSource,
                           BaseUserDataRemoteDataSource userDataRemoteDataSource,
                           BaseEventsLocalDataSource eventsLocalDataSource) {

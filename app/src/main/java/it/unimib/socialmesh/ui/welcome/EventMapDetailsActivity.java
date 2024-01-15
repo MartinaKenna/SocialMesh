@@ -1,83 +1,67 @@
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.welcome;
+
 import static it.unimib.socialmesh.util.Constants.FIREBASE_REALTIME_DATABASE;
 
-import androidx.fragment.app.Fragment;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 
 import it.unimib.socialmesh.R;
-import it.unimib.socialmesh.databinding.FragmentEventDetailsBinding;
-import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.data.service.FirebaseEvent;
+import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.util.FireBaseUtil;
 
-public class EventDetailsFragment extends Fragment {
-
-    private Event currentEvent;
-    private FragmentEventDetailsBinding fragmentEventDetailsBinding;
-
-
-    @Nullable
+public class EventMapDetailsActivity extends AppCompatActivity {
+ImageView imageViewEvent;
+TextView eventTitle, eventDate, eventPlace;
+Button joinButton;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentEventDetailsBinding = FragmentEventDetailsBinding.inflate(inflater, container, false);
-        return fragmentEventDetailsBinding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstance) {
-        // Recupera l'evento dalla navigazione
-        if (getArguments() != null) {
-            currentEvent = EventDetailsFragmentArgs.fromBundle(getArguments()).getEvent();
-        }
-
-        if (currentEvent != null) {
-            fragmentEventDetailsBinding.joinButton.requestLayout();
-            CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_event_map_details);
+        imageViewEvent=findViewById(R.id.imageview_event);
+        eventTitle = findViewById(R.id.textview_event_title);
+        eventDate = findViewById(R.id.textview_event_date);
+        eventPlace = findViewById(R.id.textview_event_place);
+        joinButton= findViewById(R.id.join_button);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("EVENT_KEY")) {
+            Event event = bundle.getParcelable("EVENT_KEY");
+            Event currentEvent = bundle.getParcelable("EVENT_KEY");
+            Log.d("MapDetails",currentEvent.getName());// Fai qualcosa con l'oggetto Event
+            CircularProgressDrawable drawable = new CircularProgressDrawable(this);
             drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
             drawable.setCenterRadius(30f);
             drawable.setStrokeWidth(5f);
             drawable.start();
-
             Glide.with(this)
                     .load(currentEvent.getUrlImagesHD())
                     .placeholder(drawable)
                     .error(drawable)
-                    .into(fragmentEventDetailsBinding.imageviewEvent);
+                    .into(imageViewEvent);
 
-            fragmentEventDetailsBinding.textviewEventTitle.setText(currentEvent.getName1());
-            fragmentEventDetailsBinding.textviewEventDate.setText(currentEvent.getLocalDateAndTime());
-            fragmentEventDetailsBinding.textviewEventPlace.setText(currentEvent.getPlaceName());
-
-
-            fragmentEventDetailsBinding.backBtn.setOnClickListener(CloseView -> {
-                getParentFragmentManager().popBackStack();
-            });
-            fragmentEventDetailsBinding.joinButton.setOnClickListener(v -> {
+            eventTitle.setText(currentEvent.getName1());
+            eventDate.setText(currentEvent.getLocalDateAndTime());
+            eventPlace.setText(currentEvent.getPlaceNameMap());
+            joinButton.setOnClickListener(v -> {
 
                 if (userIsAuthenticated()) {
                     String userId = FireBaseUtil.currentUserId();
@@ -120,7 +104,17 @@ public class EventDetailsFragment extends Fragment {
                     }
                 }
             });
+
+
+
+
+
         }
+    }
+    private boolean userIsAuthenticated() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        return user != null;
     }
     private void uploadEventsToFirebase(Event apiEvent, String userId) {
 
@@ -142,18 +136,10 @@ public class EventDetailsFragment extends Fragment {
                     eventRef.setValue(firebaseEvent);
                 }
                 eventRef.child("participants").child(userId).setValue(true);
-            }
-
-            @Override
+            }  @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("detailsfragment", "uploadEventsToFirebase onCancelled", error.toException());
             }
         });
-    }
-
-    private boolean userIsAuthenticated() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-        return user != null;
     }
 }

@@ -133,7 +133,9 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        fragmentLoginBinding.buttonForgotPassword.setOnClickListener(vi -> {
+            Navigation.findNavController(requireView()).navigate(R.id.action_login_fragment_to_forgotPasswordFragment);
+        });
         fragmentLoginBinding.buttonLogin.setOnClickListener(v -> {
 
             String email = fragmentLoginBinding.email.getEditText().getText().toString().trim();

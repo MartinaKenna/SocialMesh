@@ -6,15 +6,18 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Social"
-        android:textColor="@color/black"
-        android:textStyle="italic"
+        android:text="@string/social"
+        style="@style/Widget.MaterialComponents.TextView"
+        android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginStart="8sp"
+        android:layout_marginBottom="5dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        />
     <HorizontalScrollView
         android:id="@+id/HorizontalScrollViewSocialMedia"
         android:layout_width="match_parent"
@@ -29,36 +32,38 @@
                 android:id="@+id/button_instagram"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Instagram"
-                android:layout_marginRight="7dp" />
+                android:text="@string/instagram"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_twitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Twitter"
-                android:layout_marginRight="7dp" />
+                android:text="@string/twitter"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Facebook"
-                android:layout_marginRight="7dp" />
+                android:text="@string/facebook"
+                android:layout_marginEnd="7dp" />
 
         </LinearLayout>
 
+
     </HorizontalScrollView>
-
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sport"
-        android:textColor="@color/black"
-        android:textStyle="italic"
+        android:text="@string/sport"
+        android:textStyle="bold"
         android:textSize="20dp"
+        android:layout_marginStart="8sp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        style="@style/Widget.MaterialComponents.TextView"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
         android:id="@+id/HorizontalScrollViewSport"
@@ -75,64 +80,68 @@
                 android:id="@+id/button_calcio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Calcio"
-                android:layout_marginRight="7dp" />
+                android:text="@string/calcio"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_basket"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Basket"
-                android:layout_marginRight="7dp" />
+                android:text="@string/basket"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_tennis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tennis"
-                android:layout_marginRight="7dp" />
+                android:text="@string/tennis"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_boxe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Boxe"
-                android:layout_marginRight="7dp" />
+                android:text="@string/boxe"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_crossfit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Crossfit"
-                android:layout_marginRight="7dp" />
+                android:text="@string/crossfit"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_yoga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Yoga"
-                android:layout_marginRight="7dp" />
+                android:text="@string/yoga"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_palestra"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Palestra"
-                android:layout_marginRight="7dp" />
+                android:text="@string/palestra"
+                android:layout_marginEnd="7dp"
+                style="?android:attr/buttonBarButtonStyle" />
             <Button
                 android:id="@+id/button_motorsport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="MotorSport"
-                android:layout_marginRight="7dp" />
+                android:text="@string/motorsport"
+                android:layout_marginEnd="7dp" />
 
         </LinearLayout>
     </HorizontalScrollView>
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cucina"
-        android:textColor="@color/black"
-        android:textStyle="italic"
+        android:text="@string/cucina"
+        android:textStyle="bold"
         android:textSize="20dp"
+        android:layout_marginStart="8sp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        style="@style/Widget.MaterialComponents.TextView"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
         android:id="@+id/HorizontalScrollViewCucina"
@@ -148,52 +157,54 @@
                 android:id="@+id/button_ricette"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ricette"
-                android:layout_marginRight="7dp" />
+                android:text="@string/ricette"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_cucina_italiana"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cucina italiana"
-                android:layout_marginRight="7dp" />
+                android:text="@string/cucina_italiana"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_dolce"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dolce"
-                android:layout_marginRight="7dp" />
+                android:text="@string/dolce"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_vegan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vegan"
-                android:layout_marginRight="7dp" />
+                android:text="@string/vegan"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_vegetariano"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vegetariano"
-                android:layout_marginRight="7dp" />
+                android:text="@string/vegetariano"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_carnivoro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Carinavoro"
-                android:layout_marginRight="7dp" />
+                android:text="@string/carniavoro"
+                android:layout_marginEnd="7dp" />
 
         </LinearLayout>
     </HorizontalScrollView>
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Musica"
-        android:textColor="@color/black"
-        android:textStyle="italic"
+        android:text="@string/musica"
+        android:textStyle="bold"
         android:textSize="20dp"
+        android:layout_marginStart="8sp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        style="@style/Widget.MaterialComponents.TextView"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
         android:id="@+id/HorizontalScrollViewMusica"
@@ -209,34 +220,36 @@
                 android:id="@+id/button_rock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rock"
-                android:layout_marginRight="7dp" />
+                android:text="@string/rock"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_pop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pop"
-                android:layout_marginRight="7dp" />
+                android:text="@string/pop"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_classica"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Classica"
-                android:layout_marginRight="7dp" />
+                android:text="@string/classica"
+                android:layout_marginEnd="7dp" />
 
         </LinearLayout>
     </HorizontalScrollView>
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Viaggi"
-        android:textColor="@color/black"
-        android:textStyle="italic"
+        android:text="@string/viaggi"
+        android:textStyle="bold"
         android:textSize="20dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        style="@style/Widget.MaterialComponents.TextView"
+        android:layout_marginStart="8sp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
         android:id="@+id/HorizontalScrollViewViaggi"
@@ -252,46 +265,49 @@
                 android:id="@+id/button_destinazioni_esotiche"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Destinazioni esotiche"
-                android:layout_marginRight="7dp" />
+                android:text="@string/destinazioni_esotiche"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_escursioni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Escursioni"
-                android:layout_marginRight="7dp" />
+                android:text="@string/escursioni"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_viaggi_lowCost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Viaggi low cost"
-                android:layout_marginRight="7dp" />
+                android:text="@string/viaggi_low_cost"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_beach"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Spiaggia"
-                android:layout_marginRight="7dp" />
+                android:text="@string/spiaggia"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_nature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Natura"
-                android:layout_marginRight="7dp" />
+                android:text="@string/natura"
+                android:layout_marginEnd="7dp" />
 
         </LinearLayout>
     </HorizontalScrollView>
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hobby"
-        android:textColor="@color/black"
-        android:textStyle="italic"
+        android:text="@string/hobby"
+        android:textStyle="bold"
         android:textSize="20dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        style="@style/Widget.MaterialComponents.TextView"
+        android:layout_marginStart="8sp"
         android:layout_marginBottom="5dp"/>
     <HorizontalScrollView
         android:id="@+id/HorizontalScrollViewHobbyCreativi"
@@ -307,76 +323,79 @@
                 android:id="@+id/button_pittura"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pittura"
-                android:layout_marginRight="7dp" />
+                android:text="@string/pittura"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_fotografia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fotografia"
-                android:layout_marginRight="7dp" />
+                android:text="@string/fotografia"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_scrittura"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Scrittura"
-                android:layout_marginRight="7dp" />
+                android:text="@string/scrittura"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_cinema"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cinema"
-                android:layout_marginRight="7dp" />
+                android:text="@string/cinema"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_serieTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Serie TV"
-                android:layout_marginRight="7dp" />
+                android:text="@string/serie_tv"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_libri"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Libri"
-                android:layout_marginRight="7dp" />
+                android:text="@string/libri"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_giardinaggio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Giardinaggio"
-                android:layout_marginRight="7dp" />
+                android:text="@string/giardinaggio"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_moda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Moda"
-                android:layout_marginRight="7dp" />
+                android:text="@string/moda"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_tecnologia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tecnologia"
-                android:layout_marginRight="7dp" />
+                android:text="@string/tecnologia"
+                android:layout_marginEnd="7dp" />
 
         </LinearLayout>
     </HorizontalScrollView>
 
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lavoro"
-        android:textColor="@color/black"
-        android:textStyle="italic"
+        android:text="@string/lavoro"
+        android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_marginStart="8sp"
+        style="@style/Widget.MaterialComponents.TextView"/>
     <HorizontalScrollView
         android:id="@+id/HorizontalScrollViewLavoroCarriera"
         android:layout_width="match_parent"
@@ -391,47 +410,48 @@
                 android:id="@+id/button_freelance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Freelance"
-                android:layout_marginRight="7dp" />
+                android:text="@string/freelance"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_imprenditoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Imprenditoria"
-                android:layout_marginRight="7dp" />
+                android:text="@string/imprenditoria"
+                android:layout_marginEnd="7dp" />
 
             <Button
                 android:id="@+id/button_elettricista"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Elettricista"
-                android:layout_marginRight="7dp" />
+                android:text="@string/elettricista"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_blogger"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Blogger"
-                android:layout_marginRight="7dp" />
+                android:text="@string/blogger"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_programmatore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Programmatore"
-                android:layout_marginRight="7dp" />
+                android:text="@string/programmatore"
+                android:layout_marginEnd="7dp" />
 
         </LinearLayout>
     </HorizontalScrollView>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Varie"
-        android:textColor="@color/black"
-        android:textStyle="italic"
+        android:text="@string/varie"
+        android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="8sp"/>
     <HorizontalScrollView
         android:id="@+id/HorizontalScrollViewVarie"
         android:layout_width="match_parent"
@@ -446,60 +466,63 @@
                 android:id="@+id/button_lgbt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LGBT"
-                android:layout_marginRight="7dp" />
+                android:text="@string/lgbt"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_single"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Single"
-                android:layout_marginRight="7dp" />
+                android:text="@string/single"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_married"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sposato"
-                android:layout_marginRight="7dp" />
+                android:text="@string/sposato"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_impegnato"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Impegnato"
-                android:layout_marginRight="7dp" />
+                android:text="@string/impegnato"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_festival"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Festival"
-                android:layout_marginRight="7dp" />
+                android:text="@string/festival"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_nft"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NFT"
-                android:layout_marginRight="7dp" />
+                android:text="@string/nft"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_party"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Party"
-                android:layout_marginRight="7dp" />
+                android:text="@string/party"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_karaoke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Karaoke"
-                android:layout_marginRight="7dp" />
+                android:text="@string/karaoke"
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_fumatore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fumatore"
-                android:layout_marginRight="7dp" />
+                android:text="@string/fumatore"
+                android:layout_marginEnd="7dp" />
 
 
         </LinearLayout>
     </HorizontalScrollView>
+
+
 
     <Button
         android:id="@+id/button_navigate"

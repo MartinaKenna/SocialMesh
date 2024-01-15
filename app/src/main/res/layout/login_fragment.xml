@@ -21,7 +21,7 @@
             android:layout_alignTop="@id/email"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-60dp"
-            android:text="SOCIAL MESH"
+            android:text="@string/social_mesh_login"
             android:textColor="@color/white"
             android:textSize="40dp"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:layout_marginTop="370dp"
             android:layout_marginEnd="30dp"
             app:boxStrokeColor="#000000"
-            app:startIconDrawable="@drawable/baseline_person_outline_24"
+            app:startIconDrawable="@drawable/baseline_mail_outline24dp"
             tools:ignore="MissingConstraints">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -140,7 +140,7 @@
             android:layout_marginStart="169dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="167dp"
-            android:text="Sign In With"
+            android:text="@string/sign_in_with"
             android:textSize="12sp"
             android:textStyle="bold"
             tools:ignore="MissingConstraints" />
