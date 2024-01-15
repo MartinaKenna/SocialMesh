@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.main.eventslist;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

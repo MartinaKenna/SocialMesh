@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".ui.welcome.EventMapDetailsActivity"
+            android:name=".ui.main.eventsmap.EventMapDetailsActivity"
             android:exported="false" />
 
         <meta-data
@@ -29,17 +29,17 @@
             android:name=".ui.main.DarkActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.main.ChatActivity"
+            android:name=".ui.main.chat.ChatActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.main.SettingsActivity"
+            android:name=".ui.main.profile.SettingsActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.main.DescriptionActivity"
+            android:name=".ui.main.profile.DescriptionActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.main.EditPreferencesActivity"
+            android:name=".ui.main.profile.EditPreferencesActivity"
             android:exported="true" />
         <activity
             android:name=".ui.main.HomeActivity"
@@ -48,7 +48,7 @@
             android:name=".ui.main.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.main.MapsMarkerActivity"
+            android:name=".ui.main.eventsmap.MapsMarkerActivity"
             android:exported="true" />
         <activity
             android:name=".ui.welcome.WelcomeActivity"

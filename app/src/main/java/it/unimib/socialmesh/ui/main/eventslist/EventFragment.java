@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.main.eventslist;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Button;
 import android.widget.PopupWindow;
@@ -47,8 +46,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 import static it.unimib.socialmesh.util.Constants.ALL_USA_DMAID;
 import static it.unimib.socialmesh.util.Constants.SIZE_OF_EVENT_SEARCH;
 import static it.unimib.socialmesh.util.Constants.TYPE_OF_EVENT_SEARCH;
@@ -70,6 +68,7 @@ import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.model.Result;
+import it.unimib.socialmesh.ui.main.eventsmap.MapsMarkerActivity;
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.util.ServiceLocator;

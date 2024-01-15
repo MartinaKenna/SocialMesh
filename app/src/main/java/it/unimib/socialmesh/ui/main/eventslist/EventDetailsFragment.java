@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.main.eventslist;
 import static it.unimib.socialmesh.util.Constants.FIREBASE_REALTIME_DATABASE;
 
 import androidx.fragment.app.Fragment;
@@ -8,17 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +30,6 @@ import it.unimib.socialmesh.databinding.FragmentEventDetailsBinding;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.data.service.FirebaseEvent;
 import it.unimib.socialmesh.util.FireBaseUtil;
-import it.unimib.socialmesh.util.LocaleManager;
 
 public class EventDetailsFragment extends Fragment {
 
@@ -160,9 +155,12 @@ public class EventDetailsFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
                             userEventsRef.removeValue();
+                            Snackbar.make(requireView(), R.string.user_unsubscribed_message, Snackbar.LENGTH_SHORT).show();
+
                         } else {
                             uploadEventsToFirebase(currentEvent, userId);
                             userEventsRef.setValue(true);
+                            Snackbar.make(requireView(), R.string.user_subscribed_message, Snackbar.LENGTH_SHORT).show();
                         }
 
                         checkSubscriptionStatus();

@@ -138,10 +138,22 @@
     <string name="sign_in_with">Iniciar sesión con</string>
     <string name="join">PARTICIPA EN EL EVENTO</string>
     <string name="elettricista">Electricista</string>
-    <string name="invia_mail_di_recupero">Invia mail di recupero</string>
-    <string name="reset">Reset</string>
-    <string name="modalit_lista">Modalità lista</string>
-    <string name="hai_bisogno_di_aiuto">Hai bisogno di aiuto?</string>
+    <string name="invia_mail_di_recupero">Enviar correo de recuperación</string>
+    <string name="reset">Restablecer</string>
+    <string name="modalit_lista">Modo de lista</string>
+    <string name="hai_bisogno_di_aiuto">¿Necesitas ayuda?</string>
+    <string name="torna_al_login">VOLVER AL INICIO DE SESIÓN</string>
     <string name="join_button_text">SUSCRIBIR</string>
     <string name="dismiss_button_text">BORRARSE</string>
+    <string name="title_activity_maps">Detalles del lugar actual</string>
+    <string name="default_info_title">Ubicación predeterminada</string>
+    <string name="default_info_snippet">No se encontraron lugares, porque los permisos de ubicación están deshabilitados.</string>
+    <string name="option_get_place">Obtener lugar</string>
+    <string name="pick_place">Elegir un lugar</string>
+    <string name="user_unsubscribed_message">Usuario dado de baja con éxito</string>
+    <string name="user_subscribed_message">Usuario inscrito correctamente</string>
+    <string name="avanti_button">Adelante</string>
+    <string name="user_description_message">¡Descripción guardada con éxito!</string>
+    <string name="preference_added_message">¡Preferencia agregada con éxito!</string>
+
 </resources>

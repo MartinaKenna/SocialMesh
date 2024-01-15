@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.main.profile;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,6 +12,8 @@ import it.unimib.socialmesh.util.ServiceLocator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import androidx.annotation.NonNull;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,6 +51,7 @@ public class DescriptionActivity extends AppCompatActivity {
         EditText descriptionEditText = findViewById(R.id.descriptionEditText);
         String description = descriptionEditText.getText().toString().trim();
         userViewModel.saveDescription(description);
+        Snackbar.make(findViewById(android.R.id.content), R.string.user_description_message, Snackbar.LENGTH_SHORT).show();
         finish();
     }
 }

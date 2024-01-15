@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.welcome;
+package it.unimib.socialmesh.ui.main.eventsmap;
 
 import static it.unimib.socialmesh.util.Constants.FIREBASE_REALTIME_DATABASE;
 
@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +36,7 @@ ImageView imageViewEvent;
 TextView eventTitle, eventDate, eventPlace;
 Button joinButton;
 ImageButton backButton;
+    private boolean isUserSubscribed = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,47 +65,10 @@ ImageButton backButton;
             eventTitle.setText(currentEvent.getName1());
             eventDate.setText(currentEvent.getDateAndTime());
             eventPlace.setText(currentEvent.getPlaceNameMap());
-            joinButton.setOnClickListener(v -> {
-
+            checkSubscriptionStatus(currentEvent);
+        joinButton.setOnClickListener(v -> {
                 if (userIsAuthenticated()) {
-                    String userId = FireBaseUtil.currentUserId();
-                    if (userId != null && !userId.isEmpty()) {
-                        String eventId = currentEvent.getRemoteId();
-                        if (eventId != null && !eventId.isEmpty()) {
-                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
-                            DatabaseReference eventRef = firebaseDatabase.getInstance().getReference().child("events").child(eventId);
-                            String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            DatabaseReference userRef = firebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
-                            DatabaseReference userEventsRef = userRef.child("events");
-                            userEventsRef.child(eventId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (!snapshot.exists()) {
-                                        userEventsRef.child(eventId).setValue(true);
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                            eventRef.child("participants").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (!snapshot.exists()) {
-                                        uploadEventsToFirebase(currentEvent, userId);
-                                        //Snackbar.make(view, "Iscrizione effettuata correttamente", Snackbar.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                }
-                            });
-
-                        }
-                    }
+                    toggleSubscriptionStatus(currentEvent);
                 }
             });
 
@@ -147,5 +112,61 @@ ImageButton backButton;
                 Log.e("detailsfragment", "uploadEventsToFirebase onCancelled", error.toException());
             }
         });
+    }
+    private void checkSubscriptionStatus(Event currentEvent) {
+        String userId = FireBaseUtil.currentUserId();
+        if (userId != null && !userId.isEmpty()) {
+            String eventId = currentEvent.getRemoteId();
+            if (eventId != null && !eventId.isEmpty()) {
+                DatabaseReference userEventsRef = FireBaseUtil.getUserRef(userId).child("events").child(eventId);
+
+                userEventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            isUserSubscribed = true;
+                            joinButton.setText(R.string.dismiss_button_text);
+                        } else {
+                            isUserSubscribed = false;
+                            joinButton.setText(R.string.join_button_text);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+            }
+        }
+    }
+    private void toggleSubscriptionStatus(Event currentEvent) {
+        String userId = FireBaseUtil.currentUserId();
+        if (userId != null && !userId.isEmpty()) {
+            String eventId = currentEvent.getRemoteId();
+            if (eventId != null && !eventId.isEmpty()) {
+                DatabaseReference userEventsRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("events").child(eventId);
+                userEventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            userEventsRef.removeValue();
+                            Snackbar.make(findViewById(android.R.id.content), R.string.user_unsubscribed_message, Snackbar.LENGTH_SHORT).show();
+
+                        } else {
+                            uploadEventsToFirebase(currentEvent, userId);
+                            userEventsRef.setValue(true);
+                            Snackbar.make(findViewById(android.R.id.content), R.string.user_subscribed_message, Snackbar.LENGTH_SHORT).show();
+
+                        }
+
+                        checkSubscriptionStatus(currentEvent);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+            }
+        }
     }
 }

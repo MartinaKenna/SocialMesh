@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.welcome;
+package it.unimib.socialmesh.ui.main.chat;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
