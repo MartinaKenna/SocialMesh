@@ -76,11 +76,10 @@ import it.unimib.socialmesh.util.ServiceLocator;
 public class EventFragment extends Fragment{
 
     private static final String TAG = EventFragment.class.getSimpleName();
-    private TextView nearyou, lastadded;
     private List<Event> eventsList;
 
     private RecyclerView recyclerViewEvents, recyclerViewEventsNearYou;
-    private View rootView, listEvents, listNearyou, barra1, barra2, barra3;
+    private View rootView;
     private SearchView searchView;
     private RecyclerViewEventsAdapter recyclerViewEventsAdapter;
     private RecyclerViewEventsNearYouAdapter recyclerViewEventsAdapterNearYou;
@@ -91,7 +90,6 @@ public class EventFragment extends Fragment{
     private ProgressBar progressBar;
     private LocationRequest locationRequest;
     private Double latitude, longitude;
-    private CardView cardview_search;
     private UserViewModel userViewModel;
 
     public EventFragment() {}
@@ -123,53 +121,15 @@ public class EventFragment extends Fragment{
         recyclerViewEventsNearYou = view.findViewById(R.id.recyclerviewNearYou);
         recyclerViewEvents = view.findViewById(R.id.recyclerviewEvents);
         searchView = view.findViewById(R.id.searchView);
-        barra1 = view.findViewById(R.id.barra);
-        barra2 = view.findViewById(R.id.barra2);
-        barra3 = view.findViewById(R.id.barra3);
-        nearyou = view.findViewById(R.id.nearYou);
-        lastadded = view.findViewById(R.id.lastAdded);
         viewAll = view.findViewById(R.id.viewAll);
         buttonKM = view.findViewById(R.id.buttonKM);
-        cardview_search = view.findViewById(R.id.cardview_search);
         filter = view.findViewById(R.id.button);
         mapView = view.findViewById(R.id.map_view);
-        SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-        boolean isFirstRun = preferences.getBoolean("app_run", true);
-
-        if (isFirstRun) {
-            //setto le animazioni
-            int screenHeight = getResources().getDisplayMetrics().heightPixels;
-
-            buttonKM.setTranslationY(screenHeight);
-            recyclerViewEvents.setTranslationX(1000f);
-            recyclerViewEventsNearYou.setTranslationX(1000f);
-            searchView.setTranslationY(screenHeight);
-            barra2.setTranslationX(-1000f);
-            barra1.setTranslationY(screenHeight);
-            barra3.setTranslationX(1000f);
-            nearyou.setTranslationX(1500);
-            lastadded.setTranslationX(1500);
-            cardview_search.setTranslationY(screenHeight);
-            filter.setTranslationY(screenHeight);
-
-            //mostro le animazioni
-            buttonKM.animate().translationY(0f).setDuration(1000).setStartDelay(1700).start();
-            searchView.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 2 * 300).start();
-            recyclerViewEventsNearYou.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 3 * 300).start();
-            recyclerViewEvents.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 4 * 300).start();
-            barra2.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 5 * 300).start();
-            barra1.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 6 * 300).start();
-            barra3.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 7 * 300).start();
-            nearyou.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 8 * 300).start();
-            lastadded.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 9 * 300).start();
-            cardview_search.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 10 * 300).start();
-            filter.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 11 * 300).start();
-
-            preferences.edit().putBoolean("app_run", false).apply();
-        }
 
 
+        //richiamo il processo per la posizione
 
+        //ottengo la posizione
         mapView.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), MapsMarkerActivity.class);
             intent.putParcelableArrayListExtra("EVENT_LIST", new ArrayList<>(eventsList));
@@ -307,7 +267,7 @@ public class EventFragment extends Fragment{
 
         initializeAdapters();
 
-        eventViewModel.getEvents(TYPE_OF_EVENT_SEARCH, ALL_USA_DMAID, SIZE_OF_EVENT_SEARCH, getTodayDateString(), getDateInSomeWeeks(),10).observe(getViewLifecycleOwner(),
+        eventViewModel.getEvents(TYPE_OF_EVENT_SEARCH, ALL_USA_DMAID, SIZE_OF_EVENT_SEARCH, getTodayDateString(), getDateInSomeWeeks()).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
                         EventApiResponse eventResponse = ((Result.EventResponseSuccess) result).getData();
