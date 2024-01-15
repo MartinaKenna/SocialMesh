@@ -155,5 +155,6 @@
     <string name="avanti_button">Adelante</string>
     <string name="user_description_message">¡Descripción guardada con éxito!</string>
     <string name="preference_added_message">¡Preferencia agregada con éxito!</string>
+    <string name="contattaci">Contáctenos</string>
 
 </resources>

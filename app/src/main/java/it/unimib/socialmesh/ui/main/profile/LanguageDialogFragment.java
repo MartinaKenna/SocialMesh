@@ -61,7 +61,6 @@ public class LanguageDialogFragment extends DialogFragment {
         }
 
 
-        Snackbar.make(requireView(), R.string.language, Snackbar.LENGTH_SHORT).show();
         dismiss();
         getActivity().recreate();
     }

@@ -214,7 +214,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hai bisogno di aiuto?"
+                    android:text="@string/hai_bisogno_di_aiuto"
                     android:textColor="@color/md_theme_light_primary"
                     android:textSize="16sp" />
 
@@ -225,7 +225,7 @@
 
                 <Button
                     android:id="@+id/btn_contattaci"
-                    android:text="Contattaci"
+                    android:text="@string/contattaci"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false" />

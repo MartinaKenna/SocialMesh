@@ -155,5 +155,6 @@
     <string name="avanti_button">Go on</string>
     <string name="user_description_message">Description saved successfully!</string>
     <string name="preference_added_message">Preference added successfully!</string>
+    <string name="contattaci">Contact us</string>
 
 </resources>

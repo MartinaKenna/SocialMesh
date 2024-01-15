@@ -127,7 +127,6 @@ public class ProfileFragment extends Fragment {
         });
         updateCountryFlag();
         SwitchMaterial themeSwitch = fragmentProfileBinding.switchDarkMode;
-        Log.d(TAG, "themeSwitch is null: " + (themeSwitch == null));
         themeSwitch.setChecked(currentTheme != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
