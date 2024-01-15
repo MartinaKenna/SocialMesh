@@ -34,11 +34,33 @@ public class Event implements Parcelable {
     private double venueLongitude;
     @Ignore
     private String placeName;
+    @Ignore
+    private String mainUrlImage;
+    @Ignore
+    private String dateAndTime;
+
+    public String getDateAndTime() {
+        return dateAndTime;
+    }
+
+    public void setDateAndTime(String dateAndTime) {
+        this.dateAndTime = dateAndTime;
+    }
+
     private static final String TAG = Event.class.getSimpleName();
     @SerializedName("name")
     @Expose
     @ColumnInfo(name = "name")
     private String name;
+
+    public String getMainUrlImage() {
+        return mainUrlImage;
+    }
+
+    public void setMainUrlImage(String mainUrlImage) {
+        this.mainUrlImage = mainUrlImage;
+    }
+
     @SerializedName("type")
     @Expose
     private String type;
@@ -90,6 +112,8 @@ public class Event implements Parcelable {
         venueLatitude = in.readDouble();
         venueLongitude = in.readDouble();
         placeName = in.readString();
+        mainUrlImage = in.readString();
+        dateAndTime = in.readString();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -298,6 +322,8 @@ public String getPlaceNameMap(){
         dest.writeDouble(venueLatitude);
         dest.writeDouble(venueLongitude);
         dest.writeString(placeName);
+        dest.writeString(mainUrlImage);
+        dest.writeString(dateAndTime);
     }
 }
 

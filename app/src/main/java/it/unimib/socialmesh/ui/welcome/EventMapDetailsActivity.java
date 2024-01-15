@@ -4,12 +4,13 @@ import static it.unimib.socialmesh.util.Constants.FIREBASE_REALTIME_DATABASE;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class EventMapDetailsActivity extends AppCompatActivity {
 ImageView imageViewEvent;
 TextView eventTitle, eventDate, eventPlace;
 Button joinButton;
+ImageButton backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,24 +44,24 @@ Button joinButton;
         eventDate = findViewById(R.id.textview_event_date);
         eventPlace = findViewById(R.id.textview_event_place);
         joinButton= findViewById(R.id.join_button);
+        backButton = findViewById(R.id.back_btn);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null && bundle.containsKey("EVENT_KEY")) {
-            Event event = bundle.getParcelable("EVENT_KEY");
             Event currentEvent = bundle.getParcelable("EVENT_KEY");
-            Log.d("MapDetails",currentEvent.getName());// Fai qualcosa con l'oggetto Event
+            Log.d("MapDetails",currentEvent.getName());
             CircularProgressDrawable drawable = new CircularProgressDrawable(this);
             drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
             drawable.setCenterRadius(30f);
             drawable.setStrokeWidth(5f);
             drawable.start();
             Glide.with(this)
-                    .load(currentEvent.getUrlImagesHD())
+                    .load(currentEvent.getMainUrlImage())
                     .placeholder(drawable)
                     .error(drawable)
                     .into(imageViewEvent);
 
             eventTitle.setText(currentEvent.getName1());
-            eventDate.setText(currentEvent.getLocalDateAndTime());
+            eventDate.setText(currentEvent.getDateAndTime());
             eventPlace.setText(currentEvent.getPlaceNameMap());
             joinButton.setOnClickListener(v -> {
 
@@ -99,7 +101,7 @@ Button joinButton;
                                 public void onCancelled(@NonNull DatabaseError error) {
                                 }
                             });
-                            Navigation.findNavController(v).popBackStack();
+
                         }
                     }
                 }
@@ -110,6 +112,10 @@ Button joinButton;
 
 
         }
+        backButton.setOnClickListener(view -> {
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        });
     }
     private boolean userIsAuthenticated() {
         FirebaseAuth auth = FirebaseAuth.getInstance();

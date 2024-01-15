@@ -164,14 +164,11 @@ public class EventFragment extends Fragment{
             cardview_search.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 10 * 300).start();
             cardview_filter.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 11 * 300).start();
 
-            //Salvo l'informazione che l'app è stata avviata
             preferences.edit().putBoolean("app_run", false).apply();
         }
 
 
-        //richiamo il processo per la posizione
 
-        //ottengo la posizione
         mapView.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), MapsMarkerActivity.class);
             intent.putParcelableArrayListExtra("EVENT_LIST", new ArrayList<>(eventsList));
@@ -358,9 +355,10 @@ public class EventFragment extends Fragment{
             eventsList.get(i).setVenueLatitude(eventsList.get(i).getLatitude());
             eventsList.get(i).setPlaceName(eventsList.get(i).getPlaceName());
             eventsList.get(i).setVenueLongitude(eventsList.get(i).getLongitude());
-            double vediamo = eventsList.get(i).getVenueLatitude();
-            double vediamo2 =  eventsList.get(i).getVenueLongitude();
-            Log.d(TAG,"prova");
+            eventsList.get(i).setMainUrlImage(eventsList.get(i).getUrlImagesHD());
+            eventsList.get(i).setDateAndTime(eventsList.get(i).getLocalDateAndTime());
+            String prova = eventsList.get(i).getDateAndTime();
+            Log.d(TAG,"BOH");
         }
     }
     private void initializeAdapters() {

@@ -140,4 +140,5 @@
     <string name="elettricista">Electricista</string>
     <string name="invia_mail_di_recupero">Invia mail di recupero</string>
     <string name="reset">Reset</string>
+    <string name="modalit_lista">Modalità lista</string>
 </resources>
