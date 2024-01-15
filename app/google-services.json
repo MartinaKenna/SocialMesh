@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "972096125045",
+    "firebase_url": "https://socialmeshunimib-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "socialmeshunimib",
+    "storage_bucket": "socialmeshunimib.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972096125045:android:269b5a4259e7270a02203c",
+        "android_client_info": {
+          "package_name": "it.unimib.socialmesh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972096125045-erep2g4ont3rl56sj6v526s2dab04k4b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.unimib.socialmesh",
+            "certificate_hash": "20d0819ec3843bdfc870c32d1c2061bad18f70fd"
+          }
+        },
+        {
+          "client_id": "972096125045-n4ulq7pfcij7tv2o3e65963cac5rdpec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxx3lrvA-vJDkAzQ7--5VSrEXGauC7uqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972096125045-n4ulq7pfcij7tv2o3e65963cac5rdpec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
