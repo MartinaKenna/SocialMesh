@@ -3,10 +3,12 @@ package it.unimib.socialmesh.ui.main;
 import static androidx.core.app.ActivityCompat.recreate;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -20,6 +22,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -76,13 +80,14 @@ import it.unimib.socialmesh.util.ServiceLocator;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = ProfileFragment.class.getSimpleName();
-    ImageView profile_image_view;
+    ImageView profile_image_view,country ;
     TextView tvProfile;
     private UserViewModel userViewModel;
     private FragmentProfileBinding fragmentProfileBinding;
     private LocationRequest locationRequest;
     private Double latitude, longitude;
     private int currentTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+
 
     public ProfileFragment() {}
 
@@ -127,10 +132,12 @@ public class ProfileFragment extends Fragment {
         fragmentProfileBinding = FragmentProfileBinding.inflate(inflater, container, false);
         tvProfile = fragmentProfileBinding.tvAddress;
         profile_image_view = fragmentProfileBinding.profileImageView;
-        ImageView country = fragmentProfileBinding.country;
+        country = fragmentProfileBinding.country;
         String userId = FireBaseUtil.currentUserId();
         userViewModel.obtainUserData(userId);
-        country.setOnClickListener(view -> {
+
+
+                country.setOnClickListener(view -> {
             LanguageDialogFragment dialog = new LanguageDialogFragment();
             dialog.show(getParentFragmentManager(), "language_dialog");
 

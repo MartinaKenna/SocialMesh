@@ -70,6 +70,7 @@ public class ChatFragment extends Fragment {
         fragmentChatBinding.matchesRecyclerView.setLayoutManager(linearLayoutManager);
         fragmentChatBinding.matchesRecyclerView.setAdapter(adapter);
 
+
         mDbRef.child("users").child(currentUserId).child("matches").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
