@@ -2,7 +2,9 @@ package it.unimib.socialmesh.model.jsonFields;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class Address {
-    public Address() {}
+    public Address() {
+    }
+
     @SerializedName("line1")
     @Expose
     private String line1;
