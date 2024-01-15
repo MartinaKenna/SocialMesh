@@ -27,7 +27,6 @@
     <color name="followersBg">#65DCE5</color>
     <color name="followingBg">#49BEFF</color>
     <color name="grey">#E5E5E5</color>
-    // material design colors
 
 
     <color name="seed">#bf001a</color>
@@ -60,8 +59,10 @@
     <color name="md_theme_light_surfaceTint">#C0011A</color>
     <color name="md_theme_light_outlineVariant">#D8C2BF</color>
     <color name="md_theme_light_scrim">#000000</color>
-    <color name="md_theme_dark_primary">#FFB3AD</color>
-    <color name="md_theme_dark_onPrimary">#680009</color>
+
+
+    <color name="md_theme_dark_primary">#AE2C1E</color>
+    <color name="md_theme_dark_onPrimary">#FFFFFF</color>
     <color name="md_theme_dark_primaryContainer">#930011</color>
     <color name="md_theme_dark_onPrimaryContainer">#FFDAD6</color>
     <color name="md_theme_dark_secondary">#FFB4AA</color>
@@ -70,18 +71,18 @@
     <color name="md_theme_dark_onSecondaryContainer">#FFDAD5</color>
     <color name="md_theme_dark_tertiary">#FFB4A4</color>
     <color name="md_theme_dark_onTertiary">#5E1607</color>
-    <color name="md_theme_dark_tertiaryContainer">#7D2C1B</color>
+    <color name="md_theme_dark_tertiaryContainer">#555555</color>
     <color name="md_theme_dark_onTertiaryContainer">#FFDAD3</color>
     <color name="md_theme_dark_error">#FFB4AB</color>
     <color name="md_theme_dark_errorContainer">#93000A</color>
     <color name="md_theme_dark_onError">#690005</color>
     <color name="md_theme_dark_onErrorContainer">#FFDAD6</color>
-    <color name="md_theme_dark_background">#101010</color>
+    <color name="md_theme_dark_background">#212121</color>
     <color name="md_theme_dark_onBackground">#FFDAD7</color>
     <color name="md_theme_dark_surface">#290003</color>
-    <color name="md_theme_dark_onSurface">#FFDAD7</color>
+    <color name="md_theme_dark_onSurface">#6A0008</color>
     <color name="md_theme_dark_surfaceVariant">#534342</color>
-    <color name="md_theme_dark_onSurfaceVariant">#D8C2BF</color>
+    <color name="md_theme_dark_onSurfaceVariant">#534342</color>
     <color name="md_theme_dark_outline">#A08C8A</color>
     <color name="md_theme_dark_inverseOnSurface">#410005</color>
     <color name="md_theme_dark_inverseSurface">#FFDAD7</color>
@@ -91,6 +92,9 @@
     <color name="md_theme_dark_outlineVariant">#534342</color>
     <color name="md_theme_dark_scrim">#000000</color>
 
+    <color name="cardview_background">#830011</color>
+    <color name="sent_message">#E9AE2C1E</color>
+    <color name="received_message">#830011</color>
 
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GFG | 更改应用语言</string>
+    <string name="app_name">Socialmesh</string>
     <string name="selected_language">中文</string>
     <string name="language">你好，GFG</string>
     <string name="login">登录</string>

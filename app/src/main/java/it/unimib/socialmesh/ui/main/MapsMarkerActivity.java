@@ -62,8 +62,6 @@ public class MapsMarkerActivity extends AppCompatActivity
     private static final int DEFAULT_ZOOM = 8;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
-
-
     private Location lastKnownLocation;
 
     private static final String KEY_CAMERA_POSITION = "camera_position";

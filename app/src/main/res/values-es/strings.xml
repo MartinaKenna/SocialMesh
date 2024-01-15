@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GFG | Cambiar idioma de la aplicación</string>
+    <string name="app_name">Socialmesh</string>
     <string name="selected_language">Español</string>
     <string name="language">Hola, GFG</string>
     <string name="login">Iniciar sesión</string>

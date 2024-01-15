@@ -92,7 +92,7 @@ public class EventFragment extends Fragment{
     private ProgressBar progressBar;
     private LocationRequest locationRequest;
     private Double latitude, longitude;
-    private CardView cardview_km, cardview_search, cardview_filter, cardview_reset;
+    private CardView cardview_search;
     private UserViewModel userViewModel;
 
     public EventFragment() {}
@@ -131,8 +131,6 @@ public class EventFragment extends Fragment{
         lastadded = view.findViewById(R.id.lastAdded);
         viewAll = view.findViewById(R.id.viewAll);
         buttonKM = view.findViewById(R.id.buttonKM);
-        cardview_km= view.findViewById(R.id.cardview_km);
-        cardview_filter = view.findViewById(R.id.cardview_filter);
         cardview_search = view.findViewById(R.id.cardview_search);
         filter = view.findViewById(R.id.button);
         mapView = view.findViewById(R.id.map_view);
@@ -143,7 +141,7 @@ public class EventFragment extends Fragment{
             //setto le animazioni
             int screenHeight = getResources().getDisplayMetrics().heightPixels;
 
-            cardview_km.setTranslationY(screenHeight);
+            buttonKM.setTranslationY(screenHeight);
             recyclerViewEvents.setTranslationX(1000f);
             recyclerViewEventsNearYou.setTranslationX(1000f);
             searchView.setTranslationY(screenHeight);
@@ -153,10 +151,10 @@ public class EventFragment extends Fragment{
             nearyou.setTranslationX(1500);
             lastadded.setTranslationX(1500);
             cardview_search.setTranslationY(screenHeight);
-            cardview_filter.setTranslationY(screenHeight);
+            filter.setTranslationY(screenHeight);
 
             //mostro le animazioni
-            cardview_km.animate().translationY(0f).setDuration(1000).setStartDelay(1700).start();
+            buttonKM.animate().translationY(0f).setDuration(1000).setStartDelay(1700).start();
             searchView.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 2 * 300).start();
             recyclerViewEventsNearYou.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 3 * 300).start();
             recyclerViewEvents.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 4 * 300).start();
@@ -166,7 +164,7 @@ public class EventFragment extends Fragment{
             nearyou.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 8 * 300).start();
             lastadded.animate().translationX(0f).setDuration(1000).setStartDelay(1700 + 9 * 300).start();
             cardview_search.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 10 * 300).start();
-            cardview_filter.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 11 * 300).start();
+            filter.animate().translationY(0f).setDuration(1000).setStartDelay(1700 + 11 * 300).start();
 
             preferences.edit().putBoolean("app_run", false).apply();
         }

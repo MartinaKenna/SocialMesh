@@ -121,8 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/palestra"
-                android:layout_marginEnd="7dp"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:layout_marginEnd="7dp" />
             <Button
                 android:id="@+id/button_motorsport"
                 android:layout_width="match_parent"
@@ -528,11 +527,10 @@
         android:id="@+id/button_navigate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Navigate ->"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/black"/>
-
-
+        android:text="@string/avanti_button"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="15dp" />
 
 </LinearLayout>

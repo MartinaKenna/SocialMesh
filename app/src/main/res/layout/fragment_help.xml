@@ -47,7 +47,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            android:src="@drawable/whatsapp_image_2024_01_15_at_17_52_32_modified"/>
+            android:src="@drawable/fotoprofilo_martina"/>
 
         <TextView
             android:id="@+id/textview_username"
@@ -102,7 +102,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            android:src="@drawable/whatsapp_image_2024_01_15_at_17_52_31_modified"/>
+            android:src="@drawable/fotoprofilo_francesco"/>
 
         <TextView
             android:id="@+id/textview_username2"
@@ -156,7 +156,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            android:src="@drawable/whatsapp_image_2024_01_15_at_17_52_30_modified"/>
+            android:src="@drawable/fotoprofilo_giovanni"/>
 
         <TextView
             android:id="@+id/textview_username3"

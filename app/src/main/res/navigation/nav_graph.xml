@@ -80,7 +80,7 @@
         android:id="@+id/welcomeActivity"
         android:name="it.unimib.socialmesh.ui.welcome.WelcomeActivity"
         android:label="activity_login"
-        tools:layout="@layout/activity_login" />
+        tools:layout="@layout/activity_welcome" />
     <fragment
         android:id="@+id/helpFragment"
         android:name="it.unimib.socialmesh.ui.main.HelpFragment"

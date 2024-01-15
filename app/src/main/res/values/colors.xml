@@ -28,7 +28,9 @@
     <color name="followersBg">#65DCE5</color>
     <color name="followingBg">#49BEFF</color>
     <color name="grey">#E5E5E5</color>
-    // material design colors
+
+
+
     <color name="seed">#bf001a</color>
     <color name="md_theme_light_primary">#C0011A</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
@@ -42,7 +44,7 @@
     <color name="md_theme_light_onTertiary">#FFFFFF</color>
     <color name="md_theme_light_tertiaryContainer">#FFDAD3</color>
     <color name="md_theme_light_onTertiaryContainer">#3D0600</color>
-    <color name="md_theme_light_error">#BA1A1A</color>
+    <color name="md_theme_light_error">#FFDAD6</color>
     <color name="md_theme_light_errorContainer">#FFDAD6</color>
     <color name="md_theme_light_onError">#FFFFFF</color>
     <color name="md_theme_light_onErrorContainer">#410002</color>
@@ -60,6 +62,8 @@
     <color name="md_theme_light_surfaceTint">#C0011A</color>
     <color name="md_theme_light_outlineVariant">#D8C2BF</color>
     <color name="md_theme_light_scrim">#000000</color>
+
+
     <color name="md_theme_dark_primary">#FFB3AD</color>
     <color name="md_theme_dark_onPrimary">#680009</color>
     <color name="md_theme_dark_primaryContainer">#930011</color>
@@ -91,8 +95,9 @@
     <color name="md_theme_dark_outlineVariant">#534342</color>
     <color name="md_theme_dark_scrim">#000000</color>
 
-
-
+    <color name="cardview_background">#830011</color>
+    <color name="sent_message">#E9AE2C1E</color>
+    <color name="received_message">#830011</color>
 
 
 

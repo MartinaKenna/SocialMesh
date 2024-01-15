@@ -12,8 +12,8 @@
 
     <!-- Date picker theme -->
     <style name="ThemeOverlay.App.Dialog" parent="@style/ThemeOverlay.MaterialComponents.Dialog">
-        <item name="colorSecondary">@color/socialmesh_orange</item>
-        <item name="colorPrimary">@color/socialmesh_orange</item> <!-- button text color -->
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorPrimary">@color/md_theme_light_primary</item> <!-- button text color -->
     </style>
 
 

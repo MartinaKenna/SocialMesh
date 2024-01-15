@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/signup2"
-            android:backgroundTint="#6AFFFFFF"
+            android:backgroundTint="#CCFFFFFF"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
 
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/signup2"
-            android:backgroundTint="#6AFFFFFF"
+            android:backgroundTint="#CCFFFFFF"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textStyle="bold" />
@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/signup2"
-            android:backgroundTint="#6AFFFFFF"
+            android:backgroundTint="#CCFFFFFF"
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:textStyle="bold" />
@@ -104,7 +104,8 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="100dp"
-        android:backgroundTint="#6AFFFFFF"
+        android:backgroundTint="#CCFFFFFF"
+        android:textColor="@color/black"
         android:text="@string/register"
         android:textSize="16sp"
         app:icon="@drawable/baseline_login_black_24dp"
@@ -114,6 +115,7 @@
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
+        android:indeterminateTint="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
