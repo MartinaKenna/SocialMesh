@@ -36,11 +36,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.commons.validator.routines.EmailValidator;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.databinding.LoginFragmentBinding;
@@ -142,7 +137,6 @@ public class LoginFragment extends Fragment {
             String password  = fragmentLoginBinding.insertPassword.getEditText().getText().toString().trim();
 
             // Start login if email and password are ok
-            //TODO sistemare il controllo password, dobbiamo valutare i criteri di isPasswordOk
             if (!email.isEmpty() && !password.isEmpty()) {
                 if (!userViewModel.isAuthenticationError()) {
                     fragmentLoginBinding.progressBar.setVisibility(View.VISIBLE);
@@ -219,49 +213,6 @@ public class LoginFragment extends Fragment {
                 return requireActivity().getString(R.string.unexpected_error);
         }
     }
-    private boolean isEmailOk(String email) {
-        // Check if the email is valid through the use of this library:
-        // https://commons.apache.org/proper/commons-validator/
-        if (!EmailValidator.getInstance().isValid((email))) {
-            fragmentLoginBinding.email.setError("Email non valida");
-            return false;
-        } else {
-            fragmentLoginBinding.email.setError(null);
-            return true;
-        }
-    }
-
-    private boolean isPasswordOk(String password) {
-
-        // If the password is empty return false
-        if (password == null) {
-            fragmentLoginBinding.insertPassword.setError(getString(R.string.error_password_invalid));
-            return false;
-        }
-
-        // Regex to check valid password.
-        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!()_%])(?=\\S+$).{8,20}$";
-
-        // Compile the ReGex
-        Pattern p = Pattern.compile(regex);
-
-        // Pattern class contains matcher() method
-        // to find matching between given password
-        // and regular expression.
-        Matcher m = p.matcher(password);
-
-        boolean match = m.matches();
-
-        // If password matches pattern return true
-        if(!match) {
-            fragmentLoginBinding.insertPassword.setError(getString(R.string.error_password_invalid));
-            return false;
-        } else {
-            fragmentLoginBinding.insertPassword.setError(null);
-            return true;
-        }
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
