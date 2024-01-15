@@ -171,8 +171,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         loadProfileImage();
+        fragmentProfileBinding.btnContattaci.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_helpFragment);
+        });
         fragmentProfileBinding.buttonLogout.setOnClickListener(v -> {
             /*
             TODO
@@ -291,35 +293,33 @@ public class ProfileFragment extends Fragment {
     }
 
     private void startLocationUpdates(Context context) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-            LocationCallback locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(@NonNull LocationResult locationResult) {
-                    super.onLocationResult(locationResult);
-                    Log.d(TAG, "prima del if");
-                    if (locationResult != null && !locationResult.getLocations().isEmpty()) {
-                        int index = locationResult.getLocations().size() - 1;
-                        latitude = locationResult.getLocations().get(index).getLatitude();
-                        longitude = locationResult.getLocations().get(index).getLongitude();
+        if (isAdded()) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+                LocationCallback locationCallback = new LocationCallback() {
+                    @Override
+                    public void onLocationResult(@NonNull LocationResult locationResult) {
+                        super.onLocationResult(locationResult);
+                        Log.d(TAG, "prima del if");
+                        if (locationResult != null && !locationResult.getLocations().isEmpty()) {
+                            int index = locationResult.getLocations().size() - 1;
+                            latitude = locationResult.getLocations().get(index).getLatitude();
+                            longitude = locationResult.getLocations().get(index).getLongitude();
+                            Log.d(TAG, "latitudine: " + latitude.toString() + " longitudine: " + longitude.toString());
+                            fusedLocationClient.removeLocationUpdates(this); // Rimuovo l'ascoltatore
 
-                        //salvo tutto su firebase sul campo Position
-                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        DatabaseReference userLatitude = FirebaseDatabase.getInstance().getReference("users").child(userId).child("Positions").child("Latitude");
-                        DatabaseReference userLongitude = FirebaseDatabase.getInstance().getReference("users").child(userId).child("Positions").child("Longitude");
-                        userLongitude.setValue(longitude);
-                        userLatitude.setValue(latitude);
-
-                        Log.d(TAG, "latitudine: " + latitude.toString() + " longitudine: " + longitude.toString());
-                        fusedLocationClient.removeLocationUpdates(this); // Rimuovo l'ascoltatore
-                       String location =getCountryAndCityFromLocation(latitude, longitude);
-                        tvProfile.setText(location);
+                            if (tvProfile != null && isAdded()) {
+                                String location = getCountryAndCityFromLocation(latitude, longitude);
+                                tvProfile.setText(location);
+                            }
+                        }
                     }
-                }
-            };
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+                };
+                fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+            }
         }
     }
+
     private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted) {
             if (isGPSEnabled()) {

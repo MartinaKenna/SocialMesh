@@ -66,9 +66,12 @@ import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsAdapter;
 import it.unimib.socialmesh.adapter.RecyclerViewEventsNearYouAdapter;
 import it.unimib.socialmesh.data.repository.event.IEventsRepositoryWithLiveData;
+import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.model.EventApiResponse;
 import it.unimib.socialmesh.model.Result;
+import it.unimib.socialmesh.ui.welcome.UserViewModel;
+import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.util.ServiceLocator;
 
 public class EventFragment extends Fragment{
@@ -90,6 +93,7 @@ public class EventFragment extends Fragment{
     private LocationRequest locationRequest;
     private Double latitude, longitude;
     private CardView cardview_km, cardview_search, cardview_filter, cardview_reset;
+    private UserViewModel userViewModel;
 
     public EventFragment() {}
 
@@ -357,8 +361,6 @@ public class EventFragment extends Fragment{
             eventsList.get(i).setVenueLongitude(eventsList.get(i).getLongitude());
             eventsList.get(i).setMainUrlImage(eventsList.get(i).getUrlImagesHD());
             eventsList.get(i).setDateAndTime(eventsList.get(i).getLocalDateAndTime());
-            String prova = eventsList.get(i).getDateAndTime();
-            Log.d(TAG,"BOH");
         }
     }
     private void initializeAdapters() {
@@ -504,6 +506,11 @@ public class EventFragment extends Fragment{
     private void startLocationUpdates(Context context) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+            IUserRepository userRepository = ServiceLocator.getInstance().
+                    getUserRepository(this.getActivity().getApplication());
+            userViewModel = new ViewModelProvider(
+                    this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+
             LocationCallback locationCallback = new LocationCallback() {
                 @Override
                 public void onLocationResult(@NonNull LocationResult locationResult) {
@@ -518,13 +525,7 @@ public class EventFragment extends Fragment{
                         } else {
                             Log.e(TAG, "recyclerViewEventsAdapterNearYou is null");
                         }
-
-                        //salvo tutto su firebase sul campo Position
-                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        DatabaseReference userLatitude = FirebaseDatabase.getInstance().getReference("users").child(userId).child("Positions").child("Latitude");
-                        DatabaseReference userLongitude = FirebaseDatabase.getInstance().getReference("users").child(userId).child("Positions").child("Longitude");
-                        userLongitude.setValue(longitude);
-                        userLatitude.setValue(latitude);
+                        userViewModel.updateLocation(latitude, longitude);
 
                         Log.d(TAG, "latitudine: " + latitude.toString() + " longitudine: " + longitude.toString());
                         fusedLocationClient.removeLocationUpdates(this); // Rimuovo l'ascoltatore

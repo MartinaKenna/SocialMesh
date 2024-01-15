@@ -38,6 +38,13 @@
         <action
             android:id="@+id/action_profileFragment_to_welcomeActivity"
             app:destination="@id/welcomeActivity" />
+        <action
+            android:id="@+id/action_profileFragment_to_helpFragment"
+            app:destination="@id/helpFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_enter_anim"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/nav_default_enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/eventDetailsFragment"
@@ -74,6 +81,10 @@
         android:name="it.unimib.socialmesh.ui.welcome.WelcomeActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="it.unimib.socialmesh.ui.main.HelpFragment"
+        android:label="HelpFragment" />
 
 
 </navigation>

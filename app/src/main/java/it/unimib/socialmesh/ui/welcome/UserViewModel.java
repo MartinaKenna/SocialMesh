@@ -44,8 +44,26 @@ public class UserViewModel extends ViewModel {
     private MutableLiveData<List<String>> interestsLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> matchLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> likeLiveData = new MutableLiveData<>();
+    private MutableLiveData<Double> latitudeLiveData = new MutableLiveData<>();
+    private MutableLiveData<Double> longitudeLiveData = new MutableLiveData<>();
 
     private boolean authenticationError;
+
+    public MutableLiveData<Double> getLongitudeLiveData() {
+        return longitudeLiveData;
+    }
+
+    public void setLongitudeLiveData(MutableLiveData<Double> longitudeLiveData) {
+        this.longitudeLiveData = longitudeLiveData;
+    }
+
+    public MutableLiveData<Double> getLatitudeLiveData() {
+        return latitudeLiveData;
+    }
+
+    public void setLatitudeLiveData(MutableLiveData<Double> latitudeLiveData) {
+        this.latitudeLiveData = latitudeLiveData;
+    }
 
     public UserViewModel(IUserRepository userRepository) {
         this.userRepository = userRepository;
@@ -354,6 +372,19 @@ public class UserViewModel extends ViewModel {
                 .child(currentUserID);
 
         matchedUserMatchesRef.removeValue();
+    }
+    public void updateLocation(double latitude, double longitude) {
+        latitudeLiveData.setValue(latitude);
+        longitudeLiveData.setValue(longitude);
+        String userId = FireBaseUtil.currentUserId();
+        DatabaseReference userLatitude = FireBaseUtil.getUserRef(userId)
+                .child("Positions")
+                .child("Latitude");
+        DatabaseReference userLongitude = FireBaseUtil.getUserRef(userId)
+                .child("Positions")
+                .child("Longitude");
+        userLongitude.setValue(longitudeLiveData.getValue());
+        userLatitude.setValue(latitudeLiveData.getValue());
     }
 
 }
