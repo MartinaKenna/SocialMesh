@@ -165,19 +165,6 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_helpFragment);
         });
         fragmentProfileBinding.buttonLogout.setOnClickListener(v -> {
-            /*
-            TODO
-            userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
-                if (true) {
-                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_welcomeActivity);
-                } else {
-                    Snackbar.make(view,
-                            requireActivity().getString(R.string.unexpected_error),
-                            Snackbar.LENGTH_SHORT).show();
-                }
-            });
-             */
-
             userViewModel.logout();
             Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_welcomeActivity);
         });

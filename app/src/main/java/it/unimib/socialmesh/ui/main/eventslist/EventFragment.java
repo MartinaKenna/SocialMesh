@@ -224,7 +224,6 @@ public class EventFragment extends Fragment{
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            //TODO raga funziona il filtro ma la searchview non permette di scriverci sopra, solo di incollare  del testo. Da questo problema solo dentro il fragment_event.
             @Override
             public boolean onQueryTextSubmit(String query) {
                 recyclerViewEventsAdapter.filterByQuery(query);

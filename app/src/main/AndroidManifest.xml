@@ -20,14 +20,9 @@
         <activity
             android:name=".ui.main.eventsmap.EventMapDetailsActivity"
             android:exported="false" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <activity
-            android:name=".ui.main.DarkActivity"
-            android:exported="true" />
         <activity
             android:name=".ui.main.chat.ChatActivity"
             android:exported="true"
@@ -43,9 +38,6 @@
             android:exported="true" />
         <activity
             android:name=".ui.main.HomeActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.main.MainActivity"
             android:exported="true" />
         <activity
             android:name=".ui.main.eventsmap.MapsMarkerActivity"
@@ -66,23 +58,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
-
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-        <activity
-            android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/fb_login_protocol_scheme" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
