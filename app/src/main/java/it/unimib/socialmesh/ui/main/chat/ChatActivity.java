@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.main.chat;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -37,7 +37,6 @@ import it.unimib.socialmesh.adapter.MessageAdapter;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.model.Message;
 import it.unimib.socialmesh.model.User;
-import it.unimib.socialmesh.ui.welcome.ChatViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.util.FireBaseUtil;

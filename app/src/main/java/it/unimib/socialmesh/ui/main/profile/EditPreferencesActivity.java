@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.main.profile;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -172,99 +173,148 @@ public class EditPreferencesActivity extends AppCompatActivity implements View.O
                 this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
         if (v == cinema) {
             userViewModel.addPreference("Cinema");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
+
         } else if (v == party) {
             userViewModel.addPreference("Party");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == viaggiLowCost) {
             userViewModel.addPreference("ViaggiLowCost");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == lgbt) {
             userViewModel.addPreference("LGBT");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == karaoke) {
             userViewModel.addPreference("Karaoke");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == nft) {
             userViewModel.addPreference("NFT");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == boxe) {
             userViewModel.addPreference("Boxe");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == festival) {
             userViewModel.addPreference("Festival");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == crossfit) {
             userViewModel.addPreference("Crossfit");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == nature) {
             userViewModel.addPreference("Nature");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == beach) {
             userViewModel.addPreference("Spiaggia");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == motorsport) {
             userViewModel.addPreference("Motorsport");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == instagram) {
             userViewModel.addPreference("Instagram");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == twitter) {
             userViewModel.addPreference("Twitter");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == photography) {
             userViewModel.addPreference("Fotografia");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == painting) {
             userViewModel.addPreference("Pittura");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == escursioni) {
             userViewModel.addPreference("Escursioni");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == gardening) {
             userViewModel.addPreference("Giardinaggio");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == programming) {
             userViewModel.addPreference("Programmatore");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == writing) {
             userViewModel.addPreference("Scrittura");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == moda) {
             userViewModel.addPreference("Moda");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == vegetarian) {
             userViewModel.addPreference("Vegetariano");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == vegan) {
             userViewModel.addPreference("Vegan");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == carnivore) {
             userViewModel.addPreference("Carnivoro");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == single) {
             userViewModel.addPreference("Single");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == married) {
             userViewModel.addPreference("Sposato");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == engaged) {
             userViewModel.addPreference("Impegnato");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == cucinaItaliana) {
             userViewModel.addPreference("Cucina Italiana");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == blogger) {
             userViewModel.addPreference("Blogger");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == basket) {
             userViewModel.addPreference("Basket");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == fumatore) {
             userViewModel.addPreference("Fumatore");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == facebook) {
             userViewModel.addPreference("Facebook");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == freelance) {
             userViewModel.addPreference("Freelance");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == imprenditoria) {
             userViewModel.addPreference("Imprenditoria");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == elettricista) {
             userViewModel.addPreference("Elettricista");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == serieTV) {
             userViewModel.addPreference("Serie TV");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == libri) {
             userViewModel.addPreference("Libri");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == tecnologia) {
             userViewModel.addPreference("Tecnologia");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == destEsotiche) {
             userViewModel.addPreference("Destinazioni Esotiche");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == rock) {
             userViewModel.addPreference("Rock");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == classica) {
             userViewModel.addPreference("Classica");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == pop) {
             userViewModel.addPreference("Pop");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == ricette) {
             userViewModel.addPreference("Ricette");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == dolce) {
             userViewModel.addPreference("Dolce");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == calcio) {
             userViewModel.addPreference("Calcio");
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
         } else if (v == tennis) {
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
             userViewModel.addPreference("Tennis");
         } else if (v == yoga) {
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
             userViewModel.addPreference("Yoga");
         } else if (v == palestra) {
+            Snackbar.make(findViewById(android.R.id.content), R.string.preference_added_message, Snackbar.LENGTH_SHORT).show();
             userViewModel.addPreference("Palestra");
         }
     }

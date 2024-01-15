@@ -70,7 +70,7 @@
     <string name="foto">FOTO</string>
     <string name="titolo">Titolo</string>
     <string name="data">Data</string>
-    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode">Modalità scura</string>
     <string name="inserisci_la_descrizione">Inserisci la descrizione</string>
     <string name="conferma">Conferma</string>
     <string name="back">Back</string>
@@ -149,6 +149,10 @@
     <string name="hai_bisogno_di_aiuto">Hai bisogno di aiuto?</string>
     <string name="join_button_text">PARTECIPA</string>
     <string name="dismiss_button_text">DISISCRIVITI</string>
+    <string name="user_unsubscribed_message">Utente disiscritto con successo</string>
+    <string name="user_subscribed_message">Utente iscritto con successo</string>
     <string name="avanti_button">Avanti</string>
+    <string name="user_description_message">Descrizione salvata con successo!</string>
+    <string name="preference_added_message">Preferenza salvata con successo! </string>
 
 </resources>

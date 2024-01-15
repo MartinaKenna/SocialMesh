@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.util;
+package it.unimib.socialmesh.model;
 import java.io.Serializable;
 
 public class LatLong implements Serializable {

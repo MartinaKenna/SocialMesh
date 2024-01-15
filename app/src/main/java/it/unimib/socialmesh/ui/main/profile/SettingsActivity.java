@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.main;
+package it.unimib.socialmesh.ui.main.profile;
 
 import static it.unimib.socialmesh.util.Constants.FIREBASE_PROFILE_PIC_NAME;
 
@@ -22,7 +22,6 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -33,6 +32,8 @@ import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.adapter.InterestsAdapter;
 import it.unimib.socialmesh.adapter.PhotosAdapter;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
+import it.unimib.socialmesh.ui.main.profile.DescriptionActivity;
+import it.unimib.socialmesh.ui.main.profile.EditPreferencesActivity;
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.util.FireBaseUtil;
