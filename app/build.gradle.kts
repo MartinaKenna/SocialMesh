@@ -124,7 +124,6 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.6.0")
     implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("com.google.android.gms:play-services-location:18.0.0")
-    implementation ("com.google.android.gms:play-services-location:18.0.0")
     implementation ("com.google.android.gms:play-services-maps:18.0.0")
     implementation ("com.google.android.libraries.places:places:3.3.0")
 }

@@ -34,7 +34,6 @@ public class EditPreferencesActivity extends AppCompatActivity implements View.O
 
     DatabaseReference userPreferencesRef;
     private UserViewModel userViewModel;
-
     private Button cinema, party, fumatore, viaggiLowCost, lgbt,
             karaoke, nft, boxe, festival, crossfit, nature, beach, motorsport, instagram,
             twitter, photography, painting, escursioni, gardening, writing, moda, programming,
@@ -318,6 +317,7 @@ public class EditPreferencesActivity extends AppCompatActivity implements View.O
             userViewModel.addPreference("Palestra");
         }
     }
+
 }
 
 

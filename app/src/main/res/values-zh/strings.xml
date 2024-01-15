@@ -155,5 +155,6 @@
     <string name="avanti_button">前进</string>
     <string name="user_description_message">描述保存成功！</string>
     <string name="preference_added_message">偏好添加成功！</string>
+    <string name="contattaci">联系我们？</string>
 
 </resources>

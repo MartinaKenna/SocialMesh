@@ -100,9 +100,12 @@ public class UserViewModel extends ViewModel {
         if (currentPreferences == null) {
             currentPreferences = new ArrayList<>();
         }
-        currentPreferences.add(preference);
-        userPreferencesLiveData.setValue(currentPreferences);
-        savePreferencesToFirebase(currentPreferences);
+        if(!currentPreferences.contains(preference)){
+            currentPreferences.add(preference);
+            userPreferencesLiveData.setValue(currentPreferences);
+            savePreferencesToFirebase(currentPreferences);
+        }
+
     }
     public MutableLiveData<List<String>> getUserInterestsLiveData() {
         return interestsLiveData;

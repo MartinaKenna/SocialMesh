@@ -54,8 +54,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="16dp"
-        android:textSize="16dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:textSize="16dsp"
+        style="@style/Widget.Material3.Button.TextButton"
         android:text="@string/conferma"
         />
 

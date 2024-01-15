@@ -154,5 +154,6 @@
     <string name="avanti_button">Avanti</string>
     <string name="user_description_message">Descrizione salvata con successo!</string>
     <string name="preference_added_message">Preferenza salvata con successo! </string>
+    <string name="contattaci">Contattaci</string>
 
 </resources>
