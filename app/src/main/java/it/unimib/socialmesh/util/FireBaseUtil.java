@@ -18,10 +18,13 @@ public class FireBaseUtil {
         return FirebaseStorage.getInstance().getReference().child("pictures").child(userId);
     }
    public static DatabaseReference getUserRef(String userId){
-       DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
-               .child("users")
-               .child(userId);
-       return userRef;
+        if(userId != null) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
+                    .child("users")
+                    .child(userId);
+            return userRef;
+        }
+       return null;
    }
 
     public static String adjustPath(String path) {

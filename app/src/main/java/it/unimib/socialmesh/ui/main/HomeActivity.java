@@ -23,7 +23,8 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         NavigationUI.setupWithNavController(bottomNav, navController);
-}}
+    }
+}
 
 
 
