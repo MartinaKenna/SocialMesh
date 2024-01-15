@@ -138,10 +138,22 @@
     <string name="social_mesh_login">SOCIAL MESH</string>
     <string name="sign_in_with">Sign In With</string>
     <string name="join">JOIN</string>
-    <string name="invia_mail_di_recupero">Invia mail di recupero</string>
+    <string name="invia_mail_di_recupero">Send recovery email</string>
     <string name="reset">Reset</string>
-    <string name="modalit_lista">Modalità lista</string>
-    <string name="hai_bisogno_di_aiuto">Hai bisogno di aiuto?</string>
+    <string name="modalit_lista">List mode</string>
+    <string name="hai_bisogno_di_aiuto">Need help?</string>
     <string name="join_button_text">JOIN</string>
     <string name="dismiss_button_text">UNSUBSCRIBE</string>
+    <string name="torna_al_login">BACK TO LOGIN</string>
+    <string name="title_activity_maps">Current Place Details</string>
+    <string name="default_info_title">Default Location</string>
+    <string name="default_info_snippet">No places found, because location permission is disabled.</string>
+    <string name="option_get_place">Get place</string>
+    <string name="pick_place">Choose a place</string>
+    <string name="user_unsubscribed_message">User unsubscribed successfully</string>
+    <string name="user_subscribed_message">User subscribed successfully</string>
+    <string name="avanti_button">Go on</string>
+    <string name="user_description_message">Description saved successfully!</string>
+    <string name="preference_added_message">Preference added successfully!</string>
+
 </resources>

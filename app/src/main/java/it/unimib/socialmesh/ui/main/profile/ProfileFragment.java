@@ -1,17 +1,11 @@
-package it.unimib.socialmesh.ui.main;
-
-import static androidx.core.app.ActivityCompat.recreate;
+package it.unimib.socialmesh.ui.main.profile;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -22,11 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,9 +46,6 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -74,20 +61,18 @@ import it.unimib.socialmesh.databinding.FragmentProfileBinding;
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.util.FireBaseUtil;
-import it.unimib.socialmesh.util.LanguageDialogFragment;
 import it.unimib.socialmesh.util.LocaleManager;
 import it.unimib.socialmesh.util.ServiceLocator;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = ProfileFragment.class.getSimpleName();
-    ImageView profile_image_view,country ;
+    ImageView profile_image_view;
     TextView tvProfile;
     private UserViewModel userViewModel;
     private FragmentProfileBinding fragmentProfileBinding;
     private LocationRequest locationRequest;
     private Double latitude, longitude;
     private int currentTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-
 
     public ProfileFragment() {}
 
@@ -132,12 +117,10 @@ public class ProfileFragment extends Fragment {
         fragmentProfileBinding = FragmentProfileBinding.inflate(inflater, container, false);
         tvProfile = fragmentProfileBinding.tvAddress;
         profile_image_view = fragmentProfileBinding.profileImageView;
-        country = fragmentProfileBinding.country;
+        ImageView country = fragmentProfileBinding.country;
         String userId = FireBaseUtil.currentUserId();
         userViewModel.obtainUserData(userId);
-
-
-                country.setOnClickListener(view -> {
+        country.setOnClickListener(view -> {
             LanguageDialogFragment dialog = new LanguageDialogFragment();
             dialog.show(getParentFragmentManager(), "language_dialog");
 
@@ -149,7 +132,7 @@ public class ProfileFragment extends Fragment {
         themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 currentTheme = AppCompatDelegate.MODE_NIGHT_YES;
-                Log.d("Profile","night mode");
+                Snackbar.make(requireView(), R.string.dark_mode, Snackbar.LENGTH_SHORT).show();
             } else {
                 currentTheme = AppCompatDelegate.MODE_NIGHT_NO;
             }

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/eventFragment"
-        android:name="it.unimib.socialmesh.ui.main.EventFragment"
+        android:name="it.unimib.socialmesh.ui.main.eventslist.EventFragment"
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/matchFragment"
-        android:name="it.unimib.socialmesh.ui.match.MatchFragment"
+        android:name="it.unimib.socialmesh.ui.main.match.MatchFragment"
         android:label="fragment_match"
         tools:layout="@layout/fragment_match" >
         <action
@@ -27,12 +27,12 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="it.unimib.socialmesh.ui.main.ChatFragment"
+        android:name="it.unimib.socialmesh.ui.main.chat.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="it.unimib.socialmesh.ui.main.ProfileFragment"
+        android:name="it.unimib.socialmesh.ui.main.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventDetailsFragment"
-        android:name="it.unimib.socialmesh.ui.main.EventDetailsFragment"
+        android:name="it.unimib.socialmesh.ui.main.eventslist.EventDetailsFragment"
         android:label="EventDetailsFragment" >
         <argument
             android:name="event"
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventPartecipantsFragment"
-        android:name="it.unimib.socialmesh.ui.match.EventPartecipantsFragment"
+        android:name="it.unimib.socialmesh.ui.main.match.EventPartecipantsFragment"
         android:label="fragment_event_partecipants"
         tools:layout="@layout/fragment_event_partecipants" >
         <argument
@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/userDetailsFragment"
-        android:name="it.unimib.socialmesh.ui.match.UserDetailsFragment"
+        android:name="it.unimib.socialmesh.ui.main.match.UserDetailsFragment"
         android:label="UserDetailsFragment">
         <argument
             android:name="userId"
@@ -83,7 +83,7 @@
         tools:layout="@layout/activity_welcome" />
     <fragment
         android:id="@+id/helpFragment"
-        android:name="it.unimib.socialmesh.ui.main.HelpFragment"
+        android:name="it.unimib.socialmesh.ui.main.profile.HelpFragment"
         android:label="HelpFragment" />
 
 

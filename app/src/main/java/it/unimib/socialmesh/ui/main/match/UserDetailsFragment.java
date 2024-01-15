@@ -1,4 +1,4 @@
-package it.unimib.socialmesh.ui.match;
+package it.unimib.socialmesh.ui.main.match;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,6 +35,7 @@ import it.unimib.socialmesh.adapter.InterestsAdapter;
 import it.unimib.socialmesh.adapter.PhotosViewPagerAdapter;
 import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.databinding.UserDetailsFragmentBinding;
+
 import it.unimib.socialmesh.ui.welcome.UserViewModel;
 import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.util.FireBaseUtil;

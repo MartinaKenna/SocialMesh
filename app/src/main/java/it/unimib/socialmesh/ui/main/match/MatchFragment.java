@@ -1,5 +1,5 @@
 
-package it.unimib.socialmesh.ui.match;
+package it.unimib.socialmesh.ui.main.match;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +26,7 @@ import java.util.List;
 import it.unimib.socialmesh.adapter.SimpleEventsAdapter;
 import it.unimib.socialmesh.databinding.FragmentMatchBinding;
 import it.unimib.socialmesh.model.Event;
+
 import it.unimib.socialmesh.util.FireBaseUtil;
 
 public class MatchFragment extends Fragment {
