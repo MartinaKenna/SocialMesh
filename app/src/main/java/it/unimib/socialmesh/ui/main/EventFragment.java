@@ -308,7 +308,7 @@ public class EventFragment extends Fragment{
 
         initializeAdapters();
 
-        eventViewModel.getEvents(TYPE_OF_EVENT_SEARCH, ALL_USA_DMAID, SIZE_OF_EVENT_SEARCH, getTodayDateString(), getDateInSomeWeeks(),10).observe(getViewLifecycleOwner(),
+        eventViewModel.getEvents(TYPE_OF_EVENT_SEARCH, ALL_USA_DMAID, SIZE_OF_EVENT_SEARCH, getTodayDateString(), getDateInSomeWeeks()).observe(getViewLifecycleOwner(),
                 result -> {
                     if (result.isSuccess()) {
                         EventApiResponse eventResponse = ((Result.EventResponseSuccess) result).getData();
