@@ -48,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
     private InterestsAdapter interestsAdapter;
     private RecyclerView recyclerView2;
     private PhotosAdapter photosAdapter;
+    private boolean isEditingProfilePic = false;
     private List<String> interestsList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
             if (recyclerView2 != null) {
                 photosAdapter = new PhotosAdapter(this, photoUrls);
                 recyclerView2.setAdapter(photosAdapter);
+                photosAdapter.notifyDataSetChanged();
             } else {
                 Log.e("SETTINGS", "recyclerView2 è null");
             }
@@ -127,7 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         Button editPhotosButton = findViewById(R.id.button_edit_photos);
         editPhotosButton.setOnClickListener(v -> {
-
+            isEditingProfilePic = false;
             ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512, 512)
                     .createIntent(intent -> {
                         imagePickerLauncher.launch(intent);
@@ -176,7 +178,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     private void updateProfilePic(Uri selectedImageUri) {
-         if (selectedImageUri != null) {
+         if (selectedImageUri != null  && selectedImageUri != null) {
              CircularProgressDrawable drawable = new CircularProgressDrawable(this);
              drawable.setColorSchemeColors(R.color.md_theme_light_primary, R.color.md_theme_dark_primary, R.color.md_theme_dark_inversePrimary);
              drawable.setCenterRadius(30f);

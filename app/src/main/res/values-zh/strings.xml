@@ -156,5 +156,9 @@
     <string name="user_description_message">描述保存成功！</string>
     <string name="preference_added_message">偏好添加成功！</string>
     <string name="contattaci">联系我们？</string>
-
+    <string name="no_matches_message">目前没有匹配 :(\</string>
+    <string name="le_tue_chat">Le tue chat</string>
+    <string name="i_tuoi_eventi">I tuoi eventi</string>
+    <string name="non_sei_iscritto_a_nessun_evento">Non sei iscritto a nessun evento</string>
+    <string name="modalit_mappa">地图模式</string>
 </resources>

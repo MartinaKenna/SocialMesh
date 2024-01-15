@@ -155,5 +155,9 @@
     <string name="user_description_message">Descrizione salvata con successo!</string>
     <string name="preference_added_message">Preferenza salvata con successo! </string>
     <string name="contattaci">Contattaci</string>
-
+    <string name="no_matches_message">Nessun match per ora :(\</string>
+    <string name="le_tue_chat">Le tue chat</string>
+    <string name="i_tuoi_eventi">I tuoi eventi</string>
+    <string name="non_sei_iscritto_a_nessun_evento">Non sei iscritto a nessun evento</string>
+    <string name="modalit_mappa">Modalità mappa</string>
 </resources>

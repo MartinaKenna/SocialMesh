@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +51,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance) {
         super.onViewCreated(view, savedInstance);
-
+        TextView noMatchesTextView = fragmentChatBinding.noMatchesTextView;
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mDbRef = FirebaseDatabase.getInstance().getReference();
         String currentUserId = mAuth.getCurrentUser().getUid();
@@ -88,6 +89,7 @@ public class ChatFragment extends Fragment {
                                     usersId.add(matchUserId);
                                     adapter.notifyDataSetChanged();
                                 }
+                                noMatchesTextView.setVisibility(View.GONE);
                             }
 
                             @Override
@@ -99,8 +101,7 @@ public class ChatFragment extends Fragment {
                     }
                     adapter.notifyDataSetChanged();
                 } else {
-                    //messaggio di errore
-                    Log.d("Errore", "snapshot.exists()");
+                    noMatchesTextView.setVisibility(View.VISIBLE);
                 }
             }
 

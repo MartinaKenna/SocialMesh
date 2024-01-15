@@ -30,6 +30,7 @@ import it.unimib.socialmesh.util.FireBaseUtil;
 
 public class UserViewModel extends ViewModel {
     private static final String TAG = UserViewModel.class.getSimpleName();
+    private MutableLiveData<Boolean> unsubscribeSuccessLiveData = new MutableLiveData<>();
 
     private final IUserRepository userRepository;
     DatabaseReference userPreferencesRef;
@@ -278,6 +279,11 @@ public class UserViewModel extends ViewModel {
             }
         });
     }
+
+    public MutableLiveData<Boolean> getUnsubscribeSuccessLiveData() {
+        return unsubscribeSuccessLiveData;
+    }
+
     public void getUser(String email, String password, boolean isUserRegistered) {
         userRepository.getUser(email, password, isUserRegistered);
     }
@@ -388,6 +394,56 @@ public class UserViewModel extends ViewModel {
                 .child("Longitude");
         userLongitude.setValue(longitudeLiveData.getValue());
         userLatitude.setValue(latitudeLiveData.getValue());
+    }
+    public void unsubscribeFromEvent(String userId, String eventId) {
+        DatabaseReference userEventsRef = FireBaseUtil.getUserRef(userId).child("events");
+        DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference().child("events").child(eventId);
+
+        userEventsRef.child(eventId).removeValue()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Rimuovi l'utente dall'evento nel nodo "users"
+                        eventRef.child("users").child(userId).removeValue()
+                                .addOnCompleteListener(eventTask -> {
+                                    if (eventTask.isSuccessful()) {
+                                        // Rimuovi l'evento dall'utente nel nodo "events" dell'utente
+                                        removeEventIdFromUserNode(userId, eventId);
+
+                                        // Rimuovi l'utente dall'evento nel nodo corrispondente all'ID dell'evento sotto il nodo "events"
+                                        removeUserIdFromEventNode(eventId, userId);
+
+                                        // Notifica il successo
+                                        unsubscribeSuccessLiveData.setValue(true);
+                                    } else {
+                                        Log.e(TAG, "Error removing user from event: " + eventTask.getException().getMessage());
+                                        unsubscribeSuccessLiveData.setValue(false);
+                                    }
+                                });
+                    } else {
+                        Log.e(TAG, "Error removing event from user: " + task.getException().getMessage());
+                        unsubscribeSuccessLiveData.setValue(false);
+                    }
+                });
+    }
+
+    private void removeEventIdFromUserNode(String userId, String eventId) {
+        DatabaseReference userEventsRef = FirebaseDatabase.getInstance().getReference().child("events");
+        userEventsRef.child(eventId).removeValue()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.e(TAG, "Error removing event from user node: " + task.getException().getMessage());
+                    }
+                });
+    }
+
+    private void removeUserIdFromEventNode(String eventId, String userId) {
+        DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference().child("events").child(eventId);
+        eventRef.child("users").child(userId).removeValue()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.e(TAG, "Error removing user from event node: " + task.getException().getMessage());
+                    }
+                });
     }
 
 }

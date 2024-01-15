@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
@@ -26,17 +27,21 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 
 import it.unimib.socialmesh.R;
+import it.unimib.socialmesh.data.repository.user.IUserRepository;
 import it.unimib.socialmesh.databinding.FragmentEventDetailsBinding;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.data.service.FirebaseEvent;
+import it.unimib.socialmesh.ui.welcome.UserViewModel;
+import it.unimib.socialmesh.ui.welcome.UserViewModelFactory;
 import it.unimib.socialmesh.util.FireBaseUtil;
+import it.unimib.socialmesh.util.ServiceLocator;
 
 public class EventDetailsFragment extends Fragment {
 
     private Event currentEvent;
     private boolean isUserSubscribed = false;
     private FragmentEventDetailsBinding fragmentEventDetailsBinding;
-
+    private UserViewModel userViewModel;
 
     @Nullable
     @Override
@@ -47,11 +52,13 @@ public class EventDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstance) {
-        // Recupera l'evento dalla navigazione
         if (getArguments() != null) {
             currentEvent = EventDetailsFragmentArgs.fromBundle(getArguments()).getEvent();
         }
-
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
         if (currentEvent != null) {
             fragmentEventDetailsBinding.joinButton.requestLayout();
             CircularProgressDrawable drawable = new CircularProgressDrawable(getContext());
@@ -154,7 +161,7 @@ public class EventDetailsFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
-                            userEventsRef.removeValue();
+                            userViewModel.unsubscribeFromEvent(userId, eventId);
                             Snackbar.make(requireView(), R.string.user_unsubscribed_message, Snackbar.LENGTH_SHORT).show();
 
                         } else {

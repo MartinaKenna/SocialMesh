@@ -26,6 +26,7 @@
             android:background="@drawable/circle"
             android:padding="8dp"
             android:scaleType="centerCrop"
+            android:src="@drawable/baseline_person_orange_36dp"
             />
 
         <!-- Layout Nome e Età -->
@@ -87,7 +88,7 @@
         android:orientation="horizontal"
         />
 
-    <RelativeLayout
+     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

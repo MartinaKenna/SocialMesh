@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,13 +25,20 @@ import java.util.List;
 import it.unimib.socialmesh.R;
 import it.unimib.socialmesh.model.Event;
 public class SimpleEventsAdapter extends RecyclerView.Adapter<SimpleEventsAdapter.ViewHolder> {
-
+    private OnUnsubscribeClickListener unsubscribeClickListener;
     private final List<Event> eventsList;
     private final OnItemClickListener listener;
 
     public interface OnItemClickListener {
         void onItemClick(Event event);
     }
+    public interface OnUnsubscribeClickListener {
+        void onUnsubscribeClick(String eventId);
+    }
+    public void setOnUnsubscribeClickListener(OnUnsubscribeClickListener listener) {
+        this.unsubscribeClickListener = listener;
+    }
+
 
     public SimpleEventsAdapter(List<Event> eventsList, OnItemClickListener listener) {
         this.eventsList = eventsList;
@@ -81,6 +89,17 @@ public class SimpleEventsAdapter extends RecyclerView.Adapter<SimpleEventsAdapte
             super(itemView);
             imageViewEvent = itemView.findViewById(R.id.imageview_event);
             eventNameTextView = itemView.findViewById(R.id.textview_event_title);
+            Button unsubscribeButton = itemView.findViewById(R.id.button_unsubscribe);
+            unsubscribeButton.setOnClickListener(v -> {
+                // Chiamato quando si fa clic sul pulsante "Unsubscribe"
+                if (unsubscribeClickListener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        String eventId = eventsList.get(position).getRemoteId(); // Sostituisci con la logica per ottenere l'ID dell'evento
+                        unsubscribeClickListener.onUnsubscribeClick(eventId);
+                    }
+                }
+            });
         }
 
         public void bind(final Event event, String image, final OnItemClickListener listener) {

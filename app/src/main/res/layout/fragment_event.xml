@@ -150,7 +150,7 @@
             android:id="@+id/map_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Modalità mappa"
+            android:text="@string/modalit_mappa"
             android:textSize="17sp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
