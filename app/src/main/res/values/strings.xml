@@ -147,5 +147,7 @@
     <string name="pick_place">Choose a place</string>
     <string name="modalit_lista">Modalità lista</string>
     <string name="hai_bisogno_di_aiuto">Hai bisogno di aiuto?</string>
+    <string name="join_button_text">PARTECIPA</string>
+    <string name="dismiss_button_text">DISISCRIVITI</string>
 
 </resources>

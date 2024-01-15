@@ -34,10 +34,12 @@ import it.unimib.socialmesh.databinding.FragmentEventDetailsBinding;
 import it.unimib.socialmesh.model.Event;
 import it.unimib.socialmesh.data.service.FirebaseEvent;
 import it.unimib.socialmesh.util.FireBaseUtil;
+import it.unimib.socialmesh.util.LocaleManager;
 
 public class EventDetailsFragment extends Fragment {
 
     private Event currentEvent;
+    private boolean isUserSubscribed = false;
     private FragmentEventDetailsBinding fragmentEventDetailsBinding;
 
 
@@ -72,54 +74,18 @@ public class EventDetailsFragment extends Fragment {
             fragmentEventDetailsBinding.textviewEventTitle.setText(currentEvent.getName1());
             fragmentEventDetailsBinding.textviewEventDate.setText(currentEvent.getLocalDateAndTime());
             fragmentEventDetailsBinding.textviewEventPlace.setText(currentEvent.getPlaceName());
-
+            checkSubscriptionStatus();
 
             fragmentEventDetailsBinding.backBtn.setOnClickListener(CloseView -> {
                 getParentFragmentManager().popBackStack();
             });
+
             fragmentEventDetailsBinding.joinButton.setOnClickListener(v -> {
-
                 if (userIsAuthenticated()) {
-                    String userId = FireBaseUtil.currentUserId();
-                    if (userId != null && !userId.isEmpty()) {
-                        String eventId = currentEvent.getRemoteId();
-                        if (eventId != null && !eventId.isEmpty()) {
-                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
-                            DatabaseReference eventRef = firebaseDatabase.getInstance().getReference().child("events").child(eventId);
-                            String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            DatabaseReference userRef = firebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
-                            DatabaseReference userEventsRef = userRef.child("events");
-                            userEventsRef.child(eventId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (!snapshot.exists()) {
-                                        userEventsRef.child(eventId).setValue(true);
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                            eventRef.child("participants").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (!snapshot.exists()) {
-                                        uploadEventsToFirebase(currentEvent, userId);
-                                        //Snackbar.make(view, "Iscrizione effettuata correttamente", Snackbar.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                }
-                            });
-                            Navigation.findNavController(v).popBackStack();
-                        }
-                    }
+                    toggleSubscriptionStatus();
                 }
             });
+
         }
     }
     private void uploadEventsToFirebase(Event apiEvent, String userId) {
@@ -156,4 +122,59 @@ public class EventDetailsFragment extends Fragment {
         FirebaseUser user = auth.getCurrentUser();
         return user != null;
     }
+
+    private void checkSubscriptionStatus() {
+        String userId = FireBaseUtil.currentUserId();
+        if (userId != null && !userId.isEmpty()) {
+            String eventId = currentEvent.getRemoteId();
+            if (eventId != null && !eventId.isEmpty()) {
+                DatabaseReference userEventsRef = FireBaseUtil.getUserRef(userId).child("events").child(eventId);
+
+                userEventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            isUserSubscribed = true;
+                            fragmentEventDetailsBinding.joinButton.setText(R.string.dismiss_button_text);
+                        } else {
+                            isUserSubscribed = false;
+                            fragmentEventDetailsBinding.joinButton.setText(R.string.join_button_text);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+            }
+        }
+    }
+    private void toggleSubscriptionStatus() {
+        String userId = FireBaseUtil.currentUserId();
+        if (userId != null && !userId.isEmpty()) {
+            String eventId = currentEvent.getRemoteId();
+            if (eventId != null && !eventId.isEmpty()) {
+                DatabaseReference userEventsRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("events").child(eventId);
+                userEventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            userEventsRef.removeValue();
+                        } else {
+                            uploadEventsToFirebase(currentEvent, userId);
+                            userEventsRef.setValue(true);
+                        }
+
+                        checkSubscriptionStatus();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+            }
+        }
+    }
+
+
 }

@@ -99,7 +99,7 @@
             android:layout_marginTop="100dp"
             android:backgroundTint="@color/md_theme_light_primary"
             android:textColor="@color/md_theme_light_onPrimary"
-            android:text="@string/join" />
+           />
 
     </LinearLayout>
 </RelativeLayout>
