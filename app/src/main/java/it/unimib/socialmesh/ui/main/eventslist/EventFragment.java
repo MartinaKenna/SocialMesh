@@ -102,7 +102,8 @@ public class EventFragment extends Fragment{
 
         IEventsRepositoryWithLiveData eventsRepositoryWithLiveData =
                 ServiceLocator.getInstance().getEventRepository(
-                        requireActivity().getApplication());
+                        requireActivity().getApplication(),
+                        requireActivity().getApplication().getResources().getBoolean(R.bool.test_mode));
 
 
         eventViewModel = new ViewModelProvider(
