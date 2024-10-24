@@ -20,7 +20,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        resValue("string", "events_api_key", gradleLocalProperties(rootDir).getProperty("events_api_key"))
+        resValue("string", "events_api_key", gradleLocalProperties(rootDir, providers).getProperty("events_api_key"))
+        resValue("bool", "test_mode", gradleLocalProperties(rootDir, providers).getProperty("test_mode"))
+
         vectorDrawables {
             useSupportLibrary = true
         }
