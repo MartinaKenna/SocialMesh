@@ -8,5 +8,4 @@ events_api_key=ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j <br/>
 MAPS_API_KEY=AIzaSyB3WFIwU3fCEYmeuX0APxNQibeo6G4Kuww <br/>
 
 Per ottenere correttamente gli eventi nelle vicinanze, è necessario impostare la posizione fittizia dell'emulatore negli Stati Uniti, preferibilmente nella zona di Indianapolis(zona piu ricca di eventi), essendo l'API di ticketmaster funzionante solamente in america.
-
-Purtroppo c'è stata una svista da parte nostra nel button "viewAll" del fragment_event.xml, ovvero la sua colorazione è stata erroneamente settata sul colore bianco, rendendolo invisibile nella modalità "light". <br/>
+<br/>
