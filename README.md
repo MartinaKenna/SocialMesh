@@ -8,7 +8,7 @@ Che tu stia cercando compagnia per un evento o voglia semplicemente conoscere pe
 
 ---
 
-## 📌 Indice
+## Indice
 
 - [Descrizione](#descrizione)
 - [Requisiti](#requisiti)
@@ -21,23 +21,23 @@ Che tu stia cercando compagnia per un evento o voglia semplicemente conoscere pe
 
 ---
 
-## 🧠 Descrizione
+## Descrizione
 
 SocialMesh è un’app Android pensata per migliorare l’esperienza sociale legata agli eventi.  
 Con SocialMesh puoi:
 
-- 💬 **Matchare** con altri partecipanti agli eventi  
-- 📍 Usare la **Map Mode** per esplorare chi ti circonda  
-- 📋 Vedere la **lista degli iscritti** a un evento  
-- ❤️ Mettere **like** e ricevere match  
-- 🔎 Applicare **filtri** per trovare persone affini  
+- **Matchare** con altri partecipanti agli eventi  
+- Usare la **Map Mode** per esplorare chi ti circonda  
+- Vedere la **lista degli iscritti** a un evento  
+- Mettere **like** e ricevere match  
+- Applicare **filtri** per trovare persone affini  
 
 L'app è alimentata dalle API di Ticketmaster per il recupero degli eventi e utilizza Google Maps per la visualizzazione interattiva.  
 > **Nota:** L’API di Ticketmaster funziona solo negli Stati Uniti, quindi è consigliato impostare la posizione fittizia dell’emulatore su **Indianapolis** (zona ricca di eventi).
 
 ---
 
-## ⚙️ Requisiti
+## Requisiti
 
 - Linguaggio: Java  
 - Build System: Gradle  
@@ -46,15 +46,15 @@ L'app è alimentata dalle API di Ticketmaster per il recupero degli eventi e uti
 
 ---
 
-## 🚀 Installazione e Configurazione
+## Installazione e Configurazione
 
-1. Clona il repository:
+### 1. Clona il repository
 
 ```bash
 git clone https://github.com/MartinaKenna/SocialMesh.git
 ```
 
-2. Configura le API Keys:
+### 2. Configura le API Keys
 
 Crea o modifica il file `local.properties` nella root del progetto con:
 
@@ -63,12 +63,12 @@ events_api_key=ymPPalpoNoG8lG5xyca0AQ6uhACG4y3j
 MAPS_API_KEY=AIzaSyB3WFIwU3fCEYmeuX0APxNQibeo6G4Kuww
 ```
 
-3. Imposta la posizione sull’emulatore Android:
+### 3. Imposta la posizione sull’emulatore Android
 
 - Apri l’emulatore  
 - Imposta una posizione fittizia su **Indianapolis, USA**
 
-4. Avvia l’app:
+### 4. Avvia l’app
 
 ```bash
 ./gradlew build
@@ -77,7 +77,7 @@ MAPS_API_KEY=AIzaSyB3WFIwU3fCEYmeuX0APxNQibeo6G4Kuww
 
 ---
 
-## 📱 Utilizzo dell'Applicazione
+## Utilizzo dell'applicazione
 
 - Consenti i permessi di posizione  
 - Naviga nella mappa interattiva per vedere eventi e persone  
@@ -87,7 +87,7 @@ MAPS_API_KEY=AIzaSyB3WFIwU3fCEYmeuX0APxNQibeo6G4Kuww
 
 ---
 
-## 🗂️ Struttura del Repository
+## Struttura del repository
 
 ```text
 app/                  → Codice sorgente
@@ -100,7 +100,7 @@ local.properties      → File locale con le API keys (non incluso nel repo)
 
 ---
 
-## 👥 Contributori
+## Contributori
 
 - Martina Kenna – 879403  
 - Giovanni Mensi – 886516  
@@ -108,14 +108,14 @@ local.properties      → File locale con le API keys (non incluso nel repo)
 
 ---
 
-## 📄 Licenza
+## Licenza
 
 Licenza non specificata.  
 Contattare gli sviluppatori per utilizzo o collaborazione.
 
 ---
 
-## 📬 Contatti e Supporto
+## Contatti e Supporto
 
 Per dubbi, problemi o proposte:
 
